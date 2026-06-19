@@ -1,44 +1,34 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
-import { NewAppScreen } from '@react-native/new-app-screen';
-import { StatusBar, StyleSheet, useColorScheme, View } from 'react-native';
-import {
-  SafeAreaProvider,
-  useSafeAreaInsets,
-} from 'react-native-safe-area-context';
+import React, { useState } from 'react';
+import { StatusBar, StyleSheet, View } from 'react-native';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import ChannelGridScreen from './src/screens/ChannelGridScreen';
+import PlayerScreen from './src/screens/PlayerScreen';
+import { MergedChannel } from './src/services/channelMerger';
 
 function App() {
-  const isDarkMode = useColorScheme() === 'dark';
+  const [selectedChannel, setSelectedChannel] = useState<MergedChannel | null>(null);
 
   return (
     <SafeAreaProvider>
-      <StatusBar barStyle={isDarkMode ? 'light-content' : 'dark-content'} />
-      <AppContent />
+      <StatusBar barStyle="light-content" backgroundColor="#1A1A1E" />
+      <View style={styles.container}>
+        {selectedChannel ? (
+          <PlayerScreen
+            channel={selectedChannel}
+            onBack={() => setSelectedChannel(null)}
+          />
+        ) : (
+          <ChannelGridScreen onSelectChannel={setSelectedChannel} />
+        )}
+      </View>
     </SafeAreaProvider>
-  );
-}
-
-function AppContent() {
-  const safeAreaInsets = useSafeAreaInsets();
-
-  return (
-    <View style={styles.container}>
-      <NewAppScreen
-        templateFileName="App.tsx"
-        safeAreaInsets={safeAreaInsets}
-      />
-    </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: '#121214',
   },
 });
 

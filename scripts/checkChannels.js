@@ -1,16 +1,23 @@
 const fs = require('fs');
 const path = require('path');
 
-// M3U Playlist URLs
+// M3U Playlist URLs (Bổ sung thêm các nguồn danh sách kênh của Việt Nam và cộng đồng)
 const M3U_URLS = [
   'https://iptv-org.github.io/iptv/countries/vn.m3u',
-  'https://iptv-org.github.io/iptv/languages/vie.m3u'
+  'https://iptv-org.github.io/iptv/languages/vie.m3u',
+  'https://raw.githubusercontent.com/FptPlayBox/IPTV/main/fptplaybox.m3u',
+  'https://raw.githubusercontent.com/vthanhtv/iptv/master/iptv.m3u'
 ];
 
 const OUTPUT_FILE = path.join(__dirname, '../channels-verified.json');
 
-// Priority channels to show at the top
-const PRIORITY_CHANNELS = ['VTV1', 'VTV3', 'HTV7', 'THVL1', 'VTV2', 'VTV6', 'VTV9', 'HTV9', 'THVL2'];
+// Danh sách các kênh ưu tiên hiển thị ở hàng đầu (Đầy đủ VTV, HTV, THVL, VTC)
+const PRIORITY_CHANNELS = [
+  'VTV1', 'VTV2', 'VTV3', 'VTV4', 'VTV5', 'VTV7', 'VTV8', 'VTV9',
+  'HTV7', 'HTV9', 'HTV THE THAO', 'HTV KEY',
+  'THVL1', 'THVL2', 'THVL3', 'THVL4',
+  'VTC1', 'VTC2', 'VTC3', 'VTC7', 'VTC9', 'VTC14', 'VTC16'
+];
 
 function parseM3U(m3uText) {
   const lines = m3uText.split(/\r?\n/);
@@ -64,7 +71,10 @@ function parseM3U(m3uText) {
 function normalizeChannelName(name) {
   if (!name) return '';
   
-  let normalized = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  // Replace Đ and đ manually
+  let normalized = name.replace(/Đ/g, 'D').replace(/đ/g, 'd');
+  
+  normalized = normalized.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   normalized = normalized.toUpperCase();
   
   if (normalized.includes('VINH LONG 1') || normalized.includes('THVL 1') || normalized.includes('THVL1')) {

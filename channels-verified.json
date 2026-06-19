@@ -9,15 +9,6 @@
     "group": "Undefined"
   },
   {
-    "id": "vtv3",
-    "name": "VTV3",
-    "logoUrl": "https://i.imgur.com/4lJG1fu.png",
-    "streamUrls": [
-      "https://live.fptplay53.net/live/media/vtv3/live247-hls-avc/index.m3u8"
-    ],
-    "group": "Undefined"
-  },
-  {
     "id": "vtv2",
     "name": "VTV2",
     "logoUrl": "https://i.imgur.com/qWWpYRR.png",
@@ -27,13 +18,40 @@
     "group": "Undefined"
   },
   {
-    "id": "vtv6",
-    "name": "VTV6",
-    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/VTV6_logo_2026_final.svg/960px-VTV6_logo_2026_final.svg.png",
+    "id": "vtv3",
+    "name": "VTV3",
+    "logoUrl": "https://i.imgur.com/4lJG1fu.png",
     "streamUrls": [
-      "https://live.fptplay53.net/live/media/vtv6/live247-hls-avc/index.m3u8"
+      "https://live.fptplay53.net/live/media/vtv3/live247-hls-avc/index.m3u8"
     ],
-    "group": "Sports"
+    "group": "Undefined"
+  },
+  {
+    "id": "vtv4",
+    "name": "VTV4",
+    "logoUrl": "https://i.imgur.com/WsLLmR2.png",
+    "streamUrls": [
+      "https://live.fptplay53.net/live/media/vtv4/live247-hls-avc/index.m3u8"
+    ],
+    "group": "Undefined"
+  },
+  {
+    "id": "vtv5",
+    "name": "VTV5",
+    "logoUrl": "https://i.imgur.com/Vnnna1C.png",
+    "streamUrls": [
+      "https://live-a.fptplay53.net/live/media/vtv5/live247-hls-avc/index.m3u8"
+    ],
+    "group": "Undefined"
+  },
+  {
+    "id": "vtv7",
+    "name": "VTV7",
+    "logoUrl": "https://i.imgur.com/ZwoP823.png",
+    "streamUrls": [
+      "https://live.fptplay53.net/live/media/vtv7/live247-hls-avc/index.m3u8"
+    ],
+    "group": "Undefined"
   },
   {
     "id": "vtv9",
@@ -43,24 +61,6 @@
       "https://live.fptplay53.net/live/media/vtv9/live247-hls-avc/index.m3u8"
     ],
     "group": "Undefined"
-  },
-  {
-    "id": "a-nang-tv1-not247",
-    "name": "A NANG TV1 NOT247",
-    "logoUrl": "https://i.imgur.com/EOMuO1z.png",
-    "streamUrls": [
-      "https://live.mediatech.vn/live/285b59a111d76974225a8e3004bfc31a509/chunklist.m3u8"
-    ],
-    "group": "General"
-  },
-  {
-    "id": "a-nang-tv2-not247",
-    "name": "A NANG TV2 NOT247",
-    "logoUrl": "",
-    "streamUrls": [
-      "https://live.mediatech.vn/live/2859145290d0d7947ef88b6240123b62474/chunklist.m3u8"
-    ],
-    "group": "General"
   },
   {
     "id": "an-giang-tv1-geoblocked",
@@ -97,6 +97,15 @@
       "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8"
     ],
     "group": "Undefined"
+  },
+  {
+    "id": "brian-tv720p-not247",
+    "name": "BRIAN TV720P NOT247",
+    "logoUrl": "https://i.imgur.com/zG1WNgU.jpg",
+    "streamUrls": [
+      "https://livefta.malimarcdn.com/ftaedge00/briantv.sdp/playlist.m3u8"
+    ],
+    "group": "News"
   },
   {
     "id": "ca-mau-tv720p-geoblocked",
@@ -144,6 +153,24 @@
     "group": "Legislative"
   },
   {
+    "id": "da-nang-tv1-not247",
+    "name": "DA NANG TV1 NOT247",
+    "logoUrl": "https://i.imgur.com/EOMuO1z.png",
+    "streamUrls": [
+      "https://live.mediatech.vn/live/285b59a111d76974225a8e3004bfc31a509/chunklist.m3u8"
+    ],
+    "group": "General"
+  },
+  {
+    "id": "da-nang-tv2-not247",
+    "name": "DA NANG TV2 NOT247",
+    "logoUrl": "",
+    "streamUrls": [
+      "https://live.mediatech.vn/live/2859145290d0d7947ef88b6240123b62474/chunklist.m3u8"
+    ],
+    "group": "General"
+  },
+  {
     "id": "da-vinci-asia-vietnam",
     "name": "DA VINCI ASIA VIETNAM",
     "logoUrl": "https://i.imgur.com/iBx7K1M.png",
@@ -160,6 +187,51 @@
       "https://livefta.malimarcdn.com/ftaedge00/khaomwungmai.sdp/playlist.m3u8"
     ],
     "group": "General"
+  },
+  {
+    "id": "dien-bien-tv406p",
+    "name": "DIEN BIEN TV406P",
+    "logoUrl": "https://i.imgur.com/u308o8q.png",
+    "streamUrls": [
+      "https://truyenhinh.vnptvas.vn/live.m3u8?c=vstv362&deviceId=&deviceType=&gcId=1532&location=NA&pkg=pkg11.hni&q=high&requestTime=1586309420781&time=1586395820&token=LX-ibJYRUq9pflRtYAxfYQ&type=tv&userId="
+    ],
+    "group": "General"
+  },
+  {
+    "id": "dong-nai1-480p-not247",
+    "name": "DONG NAI1 480P NOT247",
+    "logoUrl": "https://i.imgur.com/oQyioVa.png",
+    "streamUrls": [
+      "http://118.107.85.4:1935/live/smil:DNTV1.smil/chunklist.m3u8"
+    ],
+    "group": "General;News"
+  },
+  {
+    "id": "dong-nai2-480p-not247",
+    "name": "DONG NAI2 480P NOT247",
+    "logoUrl": "https://i.imgur.com/tNKPSkO.png",
+    "streamUrls": [
+      "http://118.107.85.4:1935/live/smil:DNTV2.smil/chunklist.m3u8"
+    ],
+    "group": "Entertainment;Sports"
+  },
+  {
+    "id": "dong-thap-tv1-720p",
+    "name": "DONG THAP TV1 720P",
+    "logoUrl": "https://i.ibb.co/XFX7yw0/logo2-1.png",
+    "streamUrls": [
+      "https://liveh34.vtvprime.vn/hls/DONGTHAPTV/index.m3u8"
+    ],
+    "group": "General"
+  },
+  {
+    "id": "dong-thap-tv2-540p",
+    "name": "DONG THAP TV2 540P",
+    "logoUrl": "https://i.imgur.com/yonKxgZ.png",
+    "streamUrls": [
+      "https://618b88f69e53b.streamlock.net/THDT2/thdttv2/chunklist.m3u8"
+    ],
+    "group": "Undefined"
   },
   {
     "id": "geb-tv-kbpx-ld5",
@@ -234,15 +306,6 @@
     "group": "Undefined"
   },
   {
-    "id": "ien-bien-tv406p",
-    "name": "IEN BIEN TV406P",
-    "logoUrl": "https://i.imgur.com/u308o8q.png",
-    "streamUrls": [
-      "https://truyenhinh.vnptvas.vn/live.m3u8?c=vstv362&deviceId=&deviceType=&gcId=1532&location=NA&pkg=pkg11.hni&q=high&requestTime=1586309420781&time=1586395820&token=LX-ibJYRUq9pflRtYAxfYQ&type=tv&userId="
-    ],
-    "group": "General"
-  },
-  {
     "id": "istv480p",
     "name": "ISTV480P",
     "logoUrl": "https://i.imgur.com/TGAKFcV.jpg",
@@ -252,8 +315,8 @@
     "group": "General"
   },
   {
-    "id": "lam-ong-tv480p",
-    "name": "LAM ONG TV480P",
+    "id": "lam-dong-tv480p",
+    "name": "LAM DONG TV480P",
     "logoUrl": "https://i.imgur.com/lSMoGlv.png",
     "streamUrls": [
       "http://118.107.85.5:1935/live/smil:LTV.smil/chunklist.m3u8"
@@ -295,42 +358,6 @@
       "https://livefta.malimarcdn.com/ftaedge00/ohmuanglao.stream/playlist.m3u8"
     ],
     "group": "General"
-  },
-  {
-    "id": "ong-nai1-480p-not247",
-    "name": "ONG NAI1 480P NOT247",
-    "logoUrl": "https://i.imgur.com/oQyioVa.png",
-    "streamUrls": [
-      "http://118.107.85.4:1935/live/smil:DNTV1.smil/chunklist.m3u8"
-    ],
-    "group": "General;News"
-  },
-  {
-    "id": "ong-nai2-480p-not247",
-    "name": "ONG NAI2 480P NOT247",
-    "logoUrl": "https://i.imgur.com/tNKPSkO.png",
-    "streamUrls": [
-      "http://118.107.85.4:1935/live/smil:DNTV2.smil/chunklist.m3u8"
-    ],
-    "group": "Entertainment;Sports"
-  },
-  {
-    "id": "ong-thap-tv1-720p",
-    "name": "ONG THAP TV1 720P",
-    "logoUrl": "https://i.ibb.co/XFX7yw0/logo2-1.png",
-    "streamUrls": [
-      "https://liveh34.vtvprime.vn/hls/DONGTHAPTV/index.m3u8"
-    ],
-    "group": "General"
-  },
-  {
-    "id": "ong-thap-tv2-540p",
-    "name": "ONG THAP TV2 540P",
-    "logoUrl": "https://i.imgur.com/yonKxgZ.png",
-    "streamUrls": [
-      "https://618b88f69e53b.streamlock.net/THDT2/thdttv2/chunklist.m3u8"
-    ],
-    "group": "Undefined"
   },
   {
     "id": "qpvn",
@@ -432,30 +459,12 @@
     "group": "Undefined"
   },
   {
-    "id": "vtv4",
-    "name": "VTV4",
-    "logoUrl": "https://i.imgur.com/WsLLmR2.png",
+    "id": "vtv6",
+    "name": "VTV6",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b0/VTV6_logo_2026_final.svg/960px-VTV6_logo_2026_final.svg.png",
     "streamUrls": [
-      "https://live.fptplay53.net/live/media/vtv4/live247-hls-avc/index.m3u8"
+      "https://live.fptplay53.net/live/media/vtv6/live247-hls-avc/index.m3u8"
     ],
-    "group": "Undefined"
-  },
-  {
-    "id": "vtv5",
-    "name": "VTV5",
-    "logoUrl": "https://i.imgur.com/Vnnna1C.png",
-    "streamUrls": [
-      "https://live-a.fptplay53.net/live/media/vtv5/live247-hls-avc/index.m3u8"
-    ],
-    "group": "Undefined"
-  },
-  {
-    "id": "vtv7",
-    "name": "VTV7",
-    "logoUrl": "https://i.imgur.com/ZwoP823.png",
-    "streamUrls": [
-      "https://live.fptplay53.net/live/media/vtv7/live247-hls-avc/index.m3u8"
-    ],
-    "group": "Undefined"
+    "group": "Sports"
   }
 ]

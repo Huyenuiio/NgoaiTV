@@ -11,8 +11,11 @@ export interface MergedChannel {
 export function normalizeChannelName(name: string): string {
   if (!name) return '';
   
+  // Replace Đ and đ manually
+  let normalized = name.replace(/Đ/g, 'D').replace(/đ/g, 'd');
+
   // 1. Remove accents/diacritics
-  let normalized = name.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+  normalized = normalized.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   
   // 2. Convert to uppercase
   normalized = normalized.toUpperCase();
@@ -47,7 +50,12 @@ export function normalizeChannelName(name: string): string {
 }
 
 // Priority channels to show at the top of the grid
-export const PRIORITY_CHANNELS = ['VTV1', 'VTV3', 'HTV7', 'THVL1', 'VTV2', 'VTV6', 'VTV9', 'HTV9', 'THVL2'];
+export const PRIORITY_CHANNELS = [
+  'VTV1', 'VTV2', 'VTV3', 'VTV4', 'VTV5', 'VTV7', 'VTV8', 'VTV9',
+  'HTV7', 'HTV9', 'HTV THE THAO', 'HTV KEY',
+  'THVL1', 'THVL2', 'THVL3', 'THVL4',
+  'VTC1', 'VTC2', 'VTC3', 'VTC7', 'VTC9', 'VTC14', 'VTC16'
+];
 
 export function sortChannels(channels: MergedChannel[]): MergedChannel[] {
   return [...channels].sort((a, b) => {

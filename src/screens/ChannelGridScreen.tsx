@@ -30,6 +30,31 @@ import verifiedChannelsLocal from '../../channels-verified.json';
 // Nếu để trống '', app sẽ tự động tải danh sách .m3u gốc và tự gộp trực tiếp trên máy.
 const VERIFIED_CHANNELS_URL = 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/channels-verified.json';
 
+const ChannelLogo = ({ uri }: { uri: string }) => {
+  const [hasError, setHasError] = useState(false);
+
+  useEffect(() => {
+    setHasError(false);
+  }, [uri]);
+
+  if (hasError || !uri) {
+    return (
+      <View style={styles.placeholderLogo}>
+        <Icon name="tv" size={48} color="#FFD700" />
+      </View>
+    );
+  }
+
+  return (
+    <Image
+      source={{ uri }}
+      style={styles.logo}
+      resizeMode="contain"
+      onError={() => setHasError(true)}
+    />
+  );
+};
+
 interface ChannelGridScreenProps {
   onSelectChannel: (channel: MergedChannel) => void;
 }
@@ -134,17 +159,7 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
         onLongPress={() => handleLongPress(item)}
       >
         <View style={styles.imageContainer}>
-          {logoUri ? (
-            <Image
-              source={{ uri: logoUri }}
-              style={styles.logo}
-              resizeMode="contain"
-            />
-          ) : (
-            <View style={styles.placeholderLogo}>
-              <Icon name="tv" size={48} color="#FFD700" />
-            </View>
-          )}
+          <ChannelLogo uri={logoUri} />
           {isFav && (
             <View style={styles.favoriteBadge}>
               <Text style={styles.favoriteBadgeText}>⭐</Text>

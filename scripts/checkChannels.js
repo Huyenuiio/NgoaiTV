@@ -1,14 +1,8 @@
 const fs = require('fs');
 const path = require('path');
 
-// M3U Playlist URLs (Bổ sung thêm các nguồn danh sách kênh của Việt Nam và cộng đồng)
-const M3U_URLS = [
-  'https://iptv-org.github.io/iptv/countries/vn.m3u',
-  'https://iptv-org.github.io/iptv/languages/vie.m3u',
-  'https://raw.githubusercontent.com/FptPlayBox/IPTV/main/fptplaybox.m3u',
-  'https://raw.githubusercontent.com/vthanhtv/iptv/master/iptv.m3u'
-];
-
+const CHANNELS_API_URL = 'https://iptv-org.github.io/api/channels.json';
+const STREAMS_API_URL = 'https://iptv-org.github.io/api/streams.json';
 const OUTPUT_FILE = path.join(__dirname, '../channels-verified.json');
 
 // Danh sách các kênh ưu tiên hiển thị ở hàng đầu (Đầy đủ VTV, HTV, THVL, VTC)
@@ -19,64 +13,17 @@ const PRIORITY_CHANNELS = [
   'VTC1', 'VTC2', 'VTC3', 'VTC7', 'VTC9', 'VTC14', 'VTC16'
 ];
 
-function parseM3U(m3uText) {
-  const lines = m3uText.split(/\r?\n/);
-  const channels = [];
-  let currentChannel = null;
-
-  for (let i = 0; i < lines.length; i++) {
-    const line = lines[i].trim();
-    if (!line) continue;
-
-    if (line.startsWith('#EXTINF:')) {
-      currentChannel = {};
-      
-      const idMatch = line.match(/tvg-id="([^"]*)"/i);
-      currentChannel.id = idMatch ? idMatch[1] : '';
-
-      const logoMatch = line.match(/tvg-logo="([^"]*)"/i);
-      currentChannel.logoUrl = logoMatch ? logoMatch[1] : '';
-
-      const groupMatch = line.match(/group-title="([^"]*)"/i);
-      currentChannel.group = groupMatch ? groupMatch[1] : '';
-
-      const commaIndex = line.lastIndexOf(',');
-      if (commaIndex !== -1) {
-        currentChannel.name = line.substring(commaIndex + 1).trim();
-      } else {
-        currentChannel.name = '';
-      }
-    } else if (line.startsWith('http://') || line.startsWith('https://')) {
-      if (currentChannel) {
-        currentChannel.streamUrl = line;
-        
-        const name = currentChannel.name || 'Kênh không tên';
-        const id = currentChannel.id || name.toLowerCase().replace(/[^a-z0-9]/g, '-') || `channel-${channels.length}`;
-        
-        channels.push({
-          id,
-          name,
-          logoUrl: currentChannel.logoUrl || '',
-          streamUrl: currentChannel.streamUrl || '',
-          group: currentChannel.group || 'Khác',
-        });
-        currentChannel = null;
-      }
-    }
-  }
-
-  return channels;
-}
-
 function normalizeChannelName(name) {
   if (!name) return '';
   
-  // Replace Đ and đ manually
+  // Thay thế Đ/đ
   let normalized = name.replace(/Đ/g, 'D').replace(/đ/g, 'd');
   
+  // Loại bỏ dấu tiếng Việt
   normalized = normalized.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   normalized = normalized.toUpperCase();
   
+  // Gom các kênh Vinh Long về chuẩn THVL
   if (normalized.includes('VINH LONG 1') || normalized.includes('THVL 1') || normalized.includes('THVL1')) {
     return 'THVL1';
   }
@@ -96,40 +43,6 @@ function normalizeChannelName(name) {
   normalized = normalized.replace(/([A-Z]+)\s+(\d+)/g, '$1$2');
   
   return normalized;
-}
-
-function mergeChannelSources(sources) {
-  const mergedMap = new Map();
-
-  for (const channels of sources) {
-    for (const ch of channels) {
-      const normalizedName = normalizeChannelName(ch.name);
-      if (!normalizedName) continue;
-
-      const key = normalizedName;
-
-      if (mergedMap.has(key)) {
-        const existing = mergedMap.get(key);
-        if (!existing.streamUrls.includes(ch.streamUrl)) {
-          existing.streamUrls.push(ch.streamUrl);
-        }
-        if (!existing.logoUrl && ch.logoUrl) {
-          existing.logoUrl = ch.logoUrl;
-        }
-      } else {
-        mergedMap.set(key, {
-          id: key.toLowerCase().replace(/\s+/g, '-'),
-          name: key,
-          logoUrl: ch.logoUrl || '',
-          streamUrls: [ch.streamUrl],
-          group: ch.group || 'Khác',
-        });
-      }
-    }
-  }
-
-  const mergedList = Array.from(mergedMap.values());
-  return mergedList;
 }
 
 async function testStreamUrl(url, timeoutMs = 4000) {
@@ -153,32 +66,97 @@ async function testStreamUrl(url, timeoutMs = 4000) {
 }
 
 async function run() {
-  console.log('Fetching source M3U playlists...');
-  const sources = [];
-  for (const url of M3U_URLS) {
-    try {
-      console.log(`Fetching ${url}...`);
-      const response = await fetch(url);
-      if (!response.ok) throw new Error(`Status ${response.status}`);
-      const text = await response.text();
-      const channels = parseM3U(text);
-      sources.push(channels);
-      console.log(`Parsed ${channels.length} channels.`);
-    } catch (e) {
-      console.error(`Failed to fetch ${url}:`, e.message);
-    }
-  }
-
-  if (sources.length === 0) {
-    console.error('No sources fetched. Exiting.');
+  console.log('Downloading raw iptv-org database (channels.json)...');
+  let channels = [];
+  try {
+    const response = await fetch(CHANNELS_API_URL);
+    if (!response.ok) throw new Error(`Status ${response.status}`);
+    channels = await response.json();
+    console.log(`Downloaded ${channels.length} channels.`);
+  } catch (e) {
+    console.error('Failed to download channels:', e.message);
     process.exit(1);
   }
 
-  console.log('Merging channel sources...');
-  const mergedChannels = mergeChannelSources(sources);
-  console.log(`Total merged unique channels: ${mergedChannels.length}`);
+  console.log('Downloading raw iptv-org database (streams.json)...');
+  let streams = [];
+  try {
+    const response = await fetch(STREAMS_API_URL);
+    if (!response.ok) throw new Error(`Status ${response.status}`);
+    streams = await response.json();
+    console.log(`Downloaded ${streams.length} stream links.`);
+  } catch (e) {
+    console.error('Failed to download streams:', e.message);
+    process.exit(1);
+  }
 
-  console.log('Verifying streams (this may take a few minutes)...');
+  // Lọc các kênh liên quan đến Việt Nam (quốc gia VN hoặc ngôn ngữ chứa vie)
+  console.log('Filtering Vietnamese channels...');
+  const vnChannelIds = new Set();
+  const channelMap = new Map();
+
+  for (const ch of channels) {
+    const isVN = ch.country === 'VN';
+    const isVie = Array.isArray(ch.languages) && ch.languages.includes('vie');
+
+    if (isVN || isVie) {
+      vnChannelIds.add(ch.id);
+      channelMap.set(ch.id, ch);
+    }
+  }
+  console.log(`Found ${channelMap.size} Vietnamese channels in iptv-org database.`);
+
+  // Lọc các luồng phát thuộc về các kênh này
+  console.log('Filtering streams for Vietnamese channels...');
+  const channelStreams = new Map();
+  const channelDetails = new Map();
+
+  for (const str of streams) {
+    if (vnChannelIds.has(str.channel)) {
+      const ch = channelMap.get(str.channel);
+      const normalized = normalizeChannelName(ch.name);
+      if (!normalized) continue;
+
+      if (!channelStreams.has(normalized)) {
+        channelStreams.set(normalized, []);
+      }
+      
+      const urls = channelStreams.get(normalized);
+      if (!urls.includes(str.url)) {
+        urls.push(str.url);
+      }
+
+      if (!channelDetails.has(normalized)) {
+        channelDetails.set(normalized, {
+          logoUrl: ch.logo || '',
+          group: ch.categories && ch.categories.length > 0 ? ch.categories[0] : 'Khác',
+          originalName: ch.name
+        });
+      } else {
+        const existing = channelDetails.get(normalized);
+        if (!existing.logoUrl && ch.logo) {
+          existing.logoUrl = ch.logo;
+        }
+      }
+    }
+  }
+
+  const mergedChannels = [];
+  for (const [name, urls] of channelStreams.entries()) {
+    const details = channelDetails.get(name);
+    mergedChannels.push({
+      id: name.toLowerCase().replace(/\s+/g, '-'),
+      name: name,
+      logoUrl: details.logoUrl,
+      streamUrls: urls,
+      group: details.group
+    });
+  }
+
+  console.log(`Total unique merged Vietnamese channels: ${mergedChannels.length}`);
+
+  // Kiểm tra kết nối luồng phát
+  console.log('Verifying all stream links (this might take a few minutes)...');
   const verifiedChannels = [];
   
   const CONCURRENCY = 15;
@@ -206,7 +184,7 @@ async function run() {
       if (workingUrls.length > 0) {
         verifiedChannels.push({
           ...channel,
-          streamUrls: [...workingUrls, ...deadUrls], // Working ones first
+          streamUrls: [...workingUrls, ...deadUrls]
         });
         console.log(`-> ${channel.name}: ${workingUrls.length} active stream(s)`);
       } else {
@@ -218,7 +196,7 @@ async function run() {
   const workers = Array(CONCURRENCY).fill(null).map(() => worker());
   await Promise.all(workers);
 
-  // Re-sort verified channels so priority ones are at the top
+  // Sắp xếp kênh ưu tiên hàng đầu
   const finalChannels = verifiedChannels.sort((a, b) => {
     const aIndex = PRIORITY_CHANNELS.indexOf(a.name);
     const bIndex = PRIORITY_CHANNELS.indexOf(b.name);
@@ -237,7 +215,7 @@ async function run() {
 
   console.log(`Writing verified channels to ${OUTPUT_FILE}...`);
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(finalChannels, null, 2), 'utf-8');
-  console.log(`Done! Verified ${finalChannels.length} channels out of ${mergedChannels.length}.`);
+  console.log(`Done! Verified ${finalChannels.length} channels out of ${mergedChannels.length} in raw database.`);
 }
 
 run();

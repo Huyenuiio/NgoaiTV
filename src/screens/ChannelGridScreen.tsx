@@ -10,7 +10,7 @@ import {
   Alert,
   Dimensions,
 } from 'react-native';
-import { MergedChannel, mergeChannelSources } from '../services/channelMerger';
+import { MergedChannel, mergeChannelSources, STABLE_LOGOS } from '../services/channelMerger';
 import { parseM3U } from '../services/m3uParser';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
@@ -124,6 +124,8 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
 
   const renderChannelItem = ({ item }: { item: MergedChannel }) => {
     const isFav = favorites.includes(item.id);
+    const logoUri = STABLE_LOGOS[item.name] || item.logoUrl;
+    
     return (
       <TouchableOpacity
         style={[styles.channelCard, isFav && styles.favoriteCard]}
@@ -132,9 +134,9 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
         onLongPress={() => handleLongPress(item)}
       >
         <View style={styles.imageContainer}>
-          {item.logoUrl ? (
+          {logoUri ? (
             <Image
-              source={{ uri: item.logoUrl }}
+              source={{ uri: logoUri }}
               style={styles.logo}
               resizeMode="contain"
             />

@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { StatusBar, StyleSheet, View } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StatusBar, StyleSheet, View, BackHandler } from 'react-native';
 import { SafeAreaProvider } from 'react-native-safe-area-context';
 import ChannelGridScreen from './src/screens/ChannelGridScreen';
 import PlayerScreen from './src/screens/PlayerScreen';
@@ -7,6 +7,23 @@ import { MergedChannel } from './src/services/channelMerger';
 
 function App() {
   const [selectedChannel, setSelectedChannel] = useState<MergedChannel | null>(null);
+
+  useEffect(() => {
+    const backAction = () => {
+      if (selectedChannel !== null) {
+        setSelectedChannel(null);
+        return true; // handled, do not exit app
+      }
+      return false; // let system handle (exits app)
+    };
+
+    const backHandler = BackHandler.addEventListener(
+      'hardwareBackPress',
+      backAction
+    );
+
+    return () => backHandler.remove();
+  }, [selectedChannel]);
 
   return (
     <SafeAreaProvider>

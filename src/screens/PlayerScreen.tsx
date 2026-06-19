@@ -6,7 +6,6 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   StatusBar,
-  TouchableWithoutFeedback,
 } from 'react-native';
 import Video from 'react-native-video';
 import { MergedChannel } from '../services/channelMerger';
@@ -31,8 +30,6 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
     setStreamIndex(0);
     setLoading(true);
     setError(false);
-    
-    // Show back button initially and start autohide timer
     resetControlsTimer();
 
     return () => {
@@ -49,7 +46,7 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
     setShowControls(true);
     controlsTimeoutRef.current = setTimeout(() => {
       setShowControls(false);
-    }, 4000); // Tự động ẩn nút sau 4 giây không hoạt động
+    }, 4000); // Tự động ẩn sau 4 giây
   };
 
   const handleScreenPress = () => {
@@ -59,17 +56,15 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
   const handleVideoError = (e: any) => {
     console.log(`Video player error for URL ${currentUrl}:`, e);
     
-    // Switch to next stream URL if available
     if (streamIndex < streamUrls.length - 1) {
       console.log(`Switching to backup stream ${streamIndex + 1}...`);
       setStreamIndex(prev => prev + 1);
       setLoading(true);
       resetControlsTimer();
     } else {
-      // All stream URLs failed
       setError(true);
       setLoading(false);
-      setShowControls(true); // Always show back button on error
+      setShowControls(true); // Luôn hiện nút quay lại khi có lỗi
     }
   };
 
@@ -95,7 +90,7 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
           onLoadStart={handleLoadStart}
           onReadyForDisplay={handleReadyForDisplay}
           onError={handleVideoError}
-          controls={false} // No native controls
+          controls={false}
           paused={false}
           playInBackground={false}
           playWhenInactive={false}
@@ -103,11 +98,13 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
         />
       )}
 
-      {/* Transparent overlay to detect screen taps for toggling controls */}
+      {/* Tap detector overlay - use TouchableOpacity with nearly invisible background color to force Android touch registration */}
       {!error && (
-        <TouchableWithoutFeedback onPress={handleScreenPress}>
-          <View style={StyleSheet.absoluteFillObject} />
-        </TouchableWithoutFeedback>
+        <TouchableOpacity
+          style={styles.tapDetector}
+          activeOpacity={1}
+          onPress={handleScreenPress}
+        />
       )}
 
       {/* Back Button (large hit area, high contrast, auto-hides) */}
@@ -158,6 +155,11 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000000',
   },
+  tapDetector: {
+    ...StyleSheet.absoluteFillObject,
+    backgroundColor: 'rgba(0, 0, 0, 0.02)', // nearly invisible background color to capture touch events on Android
+    zIndex: 1,
+  },
   backButton: {
     position: 'absolute',
     top: 24,
@@ -169,7 +171,7 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: '#FFFFFF',
     elevation: 8,
-    zIndex: 10,
+    zIndex: 10, // Higher than tapDetector to ensure it is clickable
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,

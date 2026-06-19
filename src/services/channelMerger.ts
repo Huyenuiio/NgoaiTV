@@ -57,6 +57,35 @@ export const PRIORITY_CHANNELS = [
   'VTC1', 'VTC2', 'VTC3', 'VTC7', 'VTC9', 'VTC14', 'VTC16'
 ];
 
+// Stable Wikimedia Commons logo URLs (Imgur is blocked in Vietnam, causing original logos to fail to load)
+export const STABLE_LOGOS: Record<string, string> = {
+  'VTV1': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/VTV1_logo_2013.png/200px-VTV1_logo_2013.png',
+  'VTV2': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/VTV2_logo_2013.png/200px-VTV2_logo_2013.png',
+  'VTV3': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/VTV3_logo_2013.png/200px-VTV3_logo_2013.png',
+  'VTV4': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/VTV4_logo_2013.png/200px-VTV4_logo_2013.png',
+  'VTV5': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/VTV5_logo_2013.png/200px-VTV5_logo_2013.png',
+  'VTV6': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/VTV6_logo_2013.png/200px-VTV6_logo_2013.png',
+  'VTV7': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/VTV7_logo_2016.png/200px-VTV7_logo_2016.png',
+  'VTV8': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/25/VTV8_logo_2016.png/200px-VTV8_logo_2016.png',
+  'VTV9': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/VTV9_logo_2016.png/200px-VTV9_logo_2016.png',
+  'VTV10': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Logo_VTV.svg/200px-Logo_VTV.svg.png',
+  'HTV7': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Logo_HTV7.svg/200px-Logo_HTV7.svg.png',
+  'HTV9': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Logo_HTV9.svg/200px-Logo_HTV9.svg.png',
+  'HTV THE THAO': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/HTV_Sports_Logo.png/200px-HTV_Sports_Logo.png',
+  'HTV KEY': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/HTV_Key_Logo.png/200px-HTV_Key_Logo.png',
+  'THVL1': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/b2/Logo_THVL1.svg/200px-Logo_THVL1.svg.png',
+  'THVL2': 'https://upload.wikimedia.org/wikipedia/commons/thumb/f/fd/Logo_THVL2.svg/200px-Logo_THVL2.svg.png',
+  'ANTV': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Logo_ANTV.svg/200px-Logo_ANTV.svg.png',
+  'QPVN': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d6/Logo_QPVN.png/200px-Logo_QPVN.png',
+  'VTC1': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/VTC1_logo_2018.png/200px-VTC1_logo_2018.png',
+  'VTC2': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/VTC2_logo_2018.png/200px-VTC2_logo_2018.png',
+  'VTC3': 'https://upload.wikimedia.org/wikipedia/commons/thumb/a/ad/VTC3_logo_2018.png/200px-VTC3_logo_2018.png',
+  'VTC7': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/2a/VTC7_logo_2018.png/200px-VTC7_logo_2018.png',
+  'VTC9': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/VTC9_logo_2018.png/200px-VTC9_logo_2018.png',
+  'VTC14': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/VTC14_logo_2018.png/200px-VTC14_logo_2018.png',
+  'VTC16': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/VTC16_logo_2018.png/200px-VTC16_logo_2018.png',
+};
+
 export function sortChannels(channels: MergedChannel[]): MergedChannel[] {
   return [...channels].sort((a, b) => {
     const aIndex = PRIORITY_CHANNELS.indexOf(a.name);
@@ -96,13 +125,13 @@ export function mergeChannelSources(sources: Channel[][]): MergedChannel[] {
         
         // Keep first valid logo URL
         if (!existing.logoUrl && ch.logoUrl) {
-          existing.logoUrl = ch.logoUrl;
+          existing.logoUrl = STABLE_LOGOS[key] || ch.logoUrl;
         }
       } else {
         mergedMap.set(key, {
           id: key.toLowerCase().replace(/\s+/g, '-'),
           name: key, // Use normalized clean name as standard name
-          logoUrl: ch.logoUrl || '',
+          logoUrl: STABLE_LOGOS[key] || ch.logoUrl || '',
           streamUrls: [ch.streamUrl],
           group: ch.group || 'Khác',
         });

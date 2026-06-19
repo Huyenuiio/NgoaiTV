@@ -53,7 +53,7 @@ describe('channelMerger', () => {
       
       const vtv1 = merged.find(c => c.name === 'VTV1');
       expect(vtv1).toBeDefined();
-      expect(vtv1?.logoUrl).toBe('logo-vtv1.png');
+      expect(vtv1?.logoUrl).toBe('https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/VTV1_logo_2013.png/200px-VTV1_logo_2013.png');
       expect(vtv1?.streamUrls).toEqual([
         'http://link1.com/vtv1.m3u8',
         'http://link2.com/vtv1-backup.m3u8',

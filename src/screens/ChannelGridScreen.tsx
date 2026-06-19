@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { MergedChannel, mergeChannelSources } from '../services/channelMerger';
 import { parseM3U } from '../services/m3uParser';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
   getChannelsCache,
   saveChannelsCache,
@@ -139,7 +140,7 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
             />
           ) : (
             <View style={styles.placeholderLogo}>
-              <Text style={styles.placeholderLogoText}>📺</Text>
+              <Icon name="tv" size={48} color="#FFD700" />
             </View>
           )}
           {isFav && (

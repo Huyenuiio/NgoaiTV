@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import {
   View,
   Text,
@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   StatusBar,
+  TouchableWithoutFeedback,
 } from 'react-native';
 import Video from 'react-native-video';
 import { MergedChannel } from '../services/channelMerger';
@@ -19,15 +20,41 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
   const [streamIndex, setStreamIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
+  const [showControls, setShowControls] = useState(true);
 
   const streamUrls = channel.streamUrls || [];
   const currentUrl = streamUrls[streamIndex];
+  
+  const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
 
   useEffect(() => {
     setStreamIndex(0);
     setLoading(true);
     setError(false);
+    
+    // Show back button initially and start autohide timer
+    resetControlsTimer();
+
+    return () => {
+      if (controlsTimeoutRef.current) {
+        clearTimeout(controlsTimeoutRef.current);
+      }
+    };
   }, [channel]);
+
+  const resetControlsTimer = () => {
+    if (controlsTimeoutRef.current) {
+      clearTimeout(controlsTimeoutRef.current);
+    }
+    setShowControls(true);
+    controlsTimeoutRef.current = setTimeout(() => {
+      setShowControls(false);
+    }, 4000); // Tự động ẩn nút sau 4 giây không hoạt động
+  };
+
+  const handleScreenPress = () => {
+    resetControlsTimer();
+  };
 
   const handleVideoError = (e: any) => {
     console.log(`Video player error for URL ${currentUrl}:`, e);
@@ -37,10 +64,12 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
       console.log(`Switching to backup stream ${streamIndex + 1}...`);
       setStreamIndex(prev => prev + 1);
       setLoading(true);
+      resetControlsTimer();
     } else {
       // All stream URLs failed
       setError(true);
       setLoading(false);
+      setShowControls(true); // Always show back button on error
     }
   };
 
@@ -66,7 +95,7 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
           onLoadStart={handleLoadStart}
           onReadyForDisplay={handleReadyForDisplay}
           onError={handleVideoError}
-          controls={false} // No player controls (keeps UI clean and simple for seniors)
+          controls={false} // No native controls
           paused={false}
           playInBackground={false}
           playWhenInactive={false}
@@ -74,18 +103,27 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
         />
       )}
 
-      {/* Back Button (large hit area, high contrast) */}
-      <TouchableOpacity
-        style={styles.backButton}
-        activeOpacity={0.7}
-        onPress={onBack}
-      >
-        <Text style={styles.backButtonText}>← Quay lại</Text>
-      </TouchableOpacity>
+      {/* Transparent overlay to detect screen taps for toggling controls */}
+      {!error && (
+        <TouchableWithoutFeedback onPress={handleScreenPress}>
+          <View style={StyleSheet.absoluteFillObject} />
+        </TouchableWithoutFeedback>
+      )}
+
+      {/* Back Button (large hit area, high contrast, auto-hides) */}
+      {showControls && (
+        <TouchableOpacity
+          style={styles.backButton}
+          activeOpacity={0.7}
+          onPress={onBack}
+        >
+          <Text style={styles.backButtonText}>← Quay lại</Text>
+        </TouchableOpacity>
+      )}
 
       {/* Loading Overlay */}
       {loading && !error && (
-        <View style={styles.overlayContainer}>
+        <View style={styles.overlayContainer} pointerEvents="none">
           <ActivityIndicator size="large" color="#FFD700" />
           <Text style={styles.overlayText}>Đang kết nối kênh {channel.name}...</Text>
           {streamUrls.length > 1 && (
@@ -124,7 +162,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     top: 24,
     left: 24,
-    backgroundColor: 'rgba(0, 0, 0, 0.65)',
+    backgroundColor: 'rgba(0, 0, 0, 0.7)',
     paddingVertical: 14,
     paddingHorizontal: 22,
     borderRadius: 30,

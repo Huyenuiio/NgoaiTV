@@ -34,8 +34,8 @@ export function normalizeChannelName(name: string): string {
     return 'THVL4';
   }
 
-  // 4. Remove terms like HD, SD, FHD, 4K, 1080P
-  normalized = normalized.replace(/\b(HD|SD|FHD|4K|1080P)\b/g, '');
+  // 4. Remove terms like HD, SD, FHD, 4K, 1080P, LIVE, GEOBLOCKED, etc.
+  normalized = normalized.replace(/\b(HD|SD|FHD|4K|1080P|GEOBLOCKED|NOT247|LIVE|720P|540P|480P|406P)\b/g, '');
   
   // 5. Keep only letters and numbers and spaces
   normalized = normalized.replace(/[^A-Z0-9\s]/g, '');

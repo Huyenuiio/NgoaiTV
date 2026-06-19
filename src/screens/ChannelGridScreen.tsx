@@ -198,11 +198,6 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
 
   return (
     <View style={styles.container}>
-      <View style={styles.header}>
-        <Text style={styles.headerTitle}>Ngoại TV</Text>
-        <Text style={styles.headerSubtitle}>Ấn để xem • Giữ lâu để lưu yêu thích ⭐</Text>
-      </View>
-
       <FlatList
         data={listData}
         keyExtractor={(item, index) => index.toString()}
@@ -279,6 +274,7 @@ const styles = StyleSheet.create({
   },
   listContent: {
     padding: 16,
+    paddingTop: 32, // Padding to clear the status bar safely
   },
   sectionHeader: {
     width: '100%',

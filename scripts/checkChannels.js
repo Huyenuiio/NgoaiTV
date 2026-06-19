@@ -37,7 +37,7 @@ function normalizeChannelName(name) {
     return 'THVL4';
   }
 
-  normalized = normalized.replace(/\b(HD|SD|FHD|4K|1080P)\b/g, '');
+  normalized = normalized.replace(/\b(HD|SD|FHD|4K|1080P|GEOBLOCKED|NOT247|LIVE|720P|540P|480P|406P)\b/g, '');
   normalized = normalized.replace(/[^A-Z0-9\s]/g, '');
   normalized = normalized.replace(/\s+/g, ' ').trim();
   normalized = normalized.replace(/([A-Z]+)\s+(\d+)/g, '$1$2');

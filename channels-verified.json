@@ -306,6 +306,15 @@
     "group": "general"
   },
   {
+    "id": "lao-cai-tv",
+    "name": "LAO CAI TV",
+    "logoUrl": "",
+    "streamUrls": [
+      "https://live.baolaocai.vn/channel2/stream.m3u8"
+    ],
+    "group": "general"
+  },
+  {
     "id": "lao-sv-tv",
     "name": "LAO SV TV",
     "logoUrl": "",

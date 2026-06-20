@@ -43,9 +43,24 @@ const ChannelLogo = ({ uri }: { uri: string }) => {
     );
   }
 
-  // Use DuckDuckGo image proxy to bypass Wikipedia OkHttp blocking and Imgur block in Vietnam
+  // Load raw.githubusercontent.com images directly (highly reliable, no need for proxy)
+  if (uri.includes('raw.githubusercontent.com/Huyenuiio/NgoaiTV')) {
+    return (
+      <Image
+        source={{ uri }}
+        style={styles.logo}
+        resizeMode="contain"
+        onError={(e) => {
+          console.warn(`Error loading local logo directly: ${uri}`, e.nativeEvent.error);
+          setHasError(true);
+        }}
+      />
+    );
+  }
+
+  // Use wsrv.nl image proxy to bypass Wikimedia Commons OkHttp blocks and use Cloudflare CDN caching
   const proxiedUri = uri.startsWith('http')
-    ? `https://proxy.duckduckgo.com/iu/?u=${encodeURIComponent(uri)}`
+    ? `https://wsrv.nl/?url=${encodeURIComponent(uri)}`
     : uri;
 
   return (
@@ -54,7 +69,7 @@ const ChannelLogo = ({ uri }: { uri: string }) => {
       style={styles.logo}
       resizeMode="contain"
       onError={(e) => {
-        console.warn(`Error loading logo: ${uri}`, e.nativeEvent.error);
+        console.warn(`Error loading proxied logo: ${uri}`, e.nativeEvent.error);
         setHasError(true);
       }}
     />

@@ -1,4 +1,4 @@
-import { getChannelsCache, saveChannelsCache, getFavoriteChannels, toggleFavoriteChannel } from '../src/storage/asyncStorage';
+import { getChannelsCache, toggleFavoriteChannel } from '../src/storage/asyncStorage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 jest.mock('@react-native-async-storage/async-storage', () => ({

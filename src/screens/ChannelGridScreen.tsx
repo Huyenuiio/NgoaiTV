@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import {
   View,
   Text,
@@ -7,7 +7,6 @@ import {
   TouchableOpacity,
   Image,
   ActivityIndicator,
-  Alert,
   Dimensions,
 } from 'react-native';
 import { MergedChannel, mergeChannelSources, STABLE_LOGOS } from '../services/channelMerger';
@@ -19,7 +18,6 @@ import {
   getFavoriteChannels,
   toggleFavoriteChannel,
   saveLastUpdated,
-  getLastUpdated,
 } from '../storage/asyncStorage';
 
 // We fetch verified channels from local file first, then try to fetch fresh from online
@@ -45,12 +43,20 @@ const ChannelLogo = ({ uri }: { uri: string }) => {
     );
   }
 
+  // Use DuckDuckGo image proxy to bypass Wikipedia OkHttp blocking and Imgur block in Vietnam
+  const proxiedUri = uri.startsWith('http')
+    ? `https://proxy.duckduckgo.com/iu/?u=${encodeURIComponent(uri)}`
+    : uri;
+
   return (
     <Image
-      source={{ uri }}
+      source={{ uri: proxiedUri }}
       style={styles.logo}
       resizeMode="contain"
-      onError={() => setHasError(true)}
+      onError={(e) => {
+        console.warn(`Error loading logo: ${uri}`, e.nativeEvent.error);
+        setHasError(true);
+      }}
     />
   );
 };
@@ -65,39 +71,7 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
 
-  useEffect(() => {
-    loadInitialData();
-  }, []);
-
-  const loadInitialData = async () => {
-    try {
-      setLoading(true);
-      // Load favorites
-      const favList = await getFavoriteChannels();
-      setFavorites(favList);
-
-      // Load cached channels
-      const cached = await getChannelsCache();
-      if (cached && cached.length > 0) {
-        setChannels(cached);
-        setLoading(false);
-        // Fetch fresh channels in background
-        fetchFreshChannels(false);
-      } else {
-        // No cache, use local JSON import first to load instantly
-        setChannels(verifiedChannelsLocal as MergedChannel[]);
-        setLoading(false);
-        // Fetch fresh channels online
-        fetchFreshChannels(true);
-      }
-    } catch (error) {
-      console.error('Error loading initial data:', error);
-      setChannels(verifiedChannelsLocal as MergedChannel[]);
-      setLoading(false);
-    }
-  };
-
-  const fetchFreshChannels = async (showLoadingState: boolean) => {
+  const fetchFreshChannels = useCallback(async (showLoadingState: boolean) => {
     if (showLoadingState) setLoading(true);
     try {
       // 1. Nếu có cấu hình URL GitHub Raw chứa file json sạch đã kiểm tra từ Actions
@@ -126,12 +100,44 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
           await saveLastUpdated(Date.now());
         }
       }
-    } catch (e) {
+    } catch {
       console.log('Background fetch failed (offline or remote error), using cache');
     } finally {
       if (showLoadingState) setLoading(false);
     }
-  };
+  }, []);
+
+  const loadInitialData = useCallback(async () => {
+    try {
+      setLoading(true);
+      // Load favorites
+      const favList = await getFavoriteChannels();
+      setFavorites(favList);
+
+      // Load cached channels
+      const cached = await getChannelsCache();
+      if (cached && cached.length > 0) {
+        setChannels(cached);
+        setLoading(false);
+        // Fetch fresh channels in background
+        fetchFreshChannels(false);
+      } else {
+        // No cache, use local JSON import first to load instantly
+        setChannels(verifiedChannelsLocal as MergedChannel[]);
+        setLoading(false);
+        // Fetch fresh channels online
+        fetchFreshChannels(true);
+      }
+    } catch (error) {
+      console.error('Error loading initial data:', error);
+      setChannels(verifiedChannelsLocal as MergedChannel[]);
+      setLoading(false);
+    }
+  }, [fetchFreshChannels]);
+
+  useEffect(() => {
+    loadInitialData();
+  }, [loadInitialData]);
 
   const handleRefresh = async () => {
     setRefreshing(true);

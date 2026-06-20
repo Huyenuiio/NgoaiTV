@@ -26,7 +26,7 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
   const streamUrls = channel.streamUrls || [];
   const currentUrl = streamUrls[streamIndex];
   
-  const controlsTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     setStreamIndex(0);
@@ -110,7 +110,8 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
             playInBackground={false}
             playWhenInactive={false}
             ignoreSilentSwitch="ignore"
-            selectedTextTrack={{ type: 'disabled' }}
+            selectedTextTrack={{ type: 'disabled' as any }}
+            pointerEvents="none"
           />
         )}
 
@@ -186,7 +187,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   overlayContainer: {
-    ...StyleSheet.absoluteFillObject,
+    ...StyleSheet.absoluteFill,
     backgroundColor: 'rgba(0, 0, 0, 0.85)',
     justifyContent: 'center',
     alignItems: 'center',

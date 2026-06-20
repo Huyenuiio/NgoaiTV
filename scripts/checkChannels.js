@@ -14,6 +14,7 @@ const PRIORITY_CHANNELS = [
 ];
 
 // Bản đồ logo ổn định từ Wikimedia Commons để tránh bị chặn Imgur tại Việt Nam
+// Bản đồ logo ổn định từ Wikimedia Commons để tránh bị chặn Imgur tại Việt Nam
 const STABLE_LOGOS = {
   'VTV1': 'https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/VTV1_logo_2013_final.svg/250px-VTV1_logo_2013_final.svg.png',
   'VTV2': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/VTV2_logo_2013.png/250px-VTV2_logo_2013.png',
@@ -28,6 +29,7 @@ const STABLE_LOGOS = {
   'HTV7': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Logo_HTV7.svg/250px-Logo_HTV7.svg.png',
   'HTV9': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Logo_HTV9.svg/250px-Logo_HTV9.svg.png',
   'HTV THE THAO': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/HTV_Sports_Logo.png/250px-HTV_Sports_Logo.png',
+  'HTV SPORTS': 'https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/HTV_Sports_Logo.png/250px-HTV_Sports_Logo.png',
   'HTV KEY': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/HTV_Key_Logo.png/250px-HTV_Key_Logo.png',
   'THVL1': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Logo_THVL1_HD.png/250px-Logo_THVL1_HD.png',
   'THVL2': 'https://upload.wikimedia.org/wikipedia/commons/thumb/3/34/Logo_THVL2_HD.png/250px-Logo_THVL2_HD.png',
@@ -40,6 +42,47 @@ const STABLE_LOGOS = {
   'VTC9': 'https://upload.wikimedia.org/wikipedia/commons/thumb/1/1f/VTC9_logo_2018.png/250px-VTC9_logo_2018.png',
   'VTC14': 'https://upload.wikimedia.org/wikipedia/commons/thumb/b/be/VTC14_logo_2018.png/250px-VTC14_logo_2018.png',
   'VTC16': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/VTC16_logo_2018.png/250px-VTC16_logo_2018.png',
+
+  // Kênh địa phương / Kênh khác
+  'AN GIANG TV1': 'https://i.imgur.com/mgp6RAU.png',
+  'AN GIANG TV2': 'https://i.imgur.com/efrauLr.png',
+  'AN GIANG TV3': 'https://i.imgur.com/gZUV4z8.png',
+  'AN NINH TV': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Logo_ANTV.svg/250px-Logo_ANTV.svg.png',
+  'CA MAU TV': 'https://upload.wikimedia.org/wikipedia/commons/8/88/Ctvcamau-logo2026.png',
+  'CAN THO TV': 'https://i.ibb.co/MDhNH26J/cantho1-2025.png',
+  'CAN THO TV1': 'https://i.ibb.co/MDhNH26J/cantho1-2025.png',
+  'CAN THO TV2': 'https://i.ibb.co/JjVvkMsf/cantho2-2025.png',
+  'CAN THO TV3': 'https://i.ibb.co/d4G2PD9s/cantho3-2025.png',
+  'CAO BANG TV': 'https://i.imgur.com/dGonewm.png',
+  'DA NANG TV1': 'https://i.imgur.com/EOMuO1z.png',
+  'DAK LAK TV': 'https://upload.wikimedia.org/wikipedia/commons/9/91/Dai_PT-TH_Dak_Lak.png',
+  'DIEN BIEN TV': 'https://i.imgur.com/u308o8q.png',
+  'DONG NAI 1': 'https://i.imgur.com/oQyioVa.png',
+  'DONG NAI 2': 'https://i.imgur.com/tNKPSkO.png',
+  'DONG NAI TV1': 'https://i.imgur.com/oQyioVa.png',
+  'DONG NAI TV2': 'https://i.imgur.com/tNKPSkO.png',
+  'DONG THAP TV': 'https://i.ibb.co/XFX7yw0/logo2-1.png',
+  'DONG THAP TV1': 'https://i.ibb.co/XFX7yw0/logo2-1.png',
+  'DONG THAP TV2': 'https://i.imgur.com/yonKxgZ.png',
+  'HA TINH TV': 'https://i.imgur.com/4yIgKKx.png',
+  'HANOITV1': 'https://i.imgur.com/Je3K25E.png',
+  'HANOITV2': 'https://i.imgur.com/szivqh2.png',
+  'LAM DONG TV': 'https://i.imgur.com/lSMoGlv.png',
+  'LAO SV TV': 'https://i.imgur.com/ZIXtazI.png',
+  'NGHE AN TV': 'https://upload.wikimedia.org/wikipedia/commons/5/54/Logo_NTV_Ngh%E1%BB%87_An_HD_2018.png',
+  'SCTV2': 'https://i.imgur.com/8i5DXIg.png',
+  'SCTV6': 'https://i.imgur.com/2oOVS42.png',
+  'TAY NINH TV': 'https://tayninhtv.vn/static/images/logo.png',
+  'TEA TV': 'https://i.imgur.com/WorbnyD.jpg',
+  'THAI NGUYEN TV': 'https://thainguyentv.vn/modules/frontend/themes/ptthtn/images/logo.png',
+  'THUA THIEN HUE TV': 'https://upload.wikimedia.org/wikipedia/commons/e/e9/LogoHueTV_2025.png',
+  'TIEN GIANG TV': 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Logo_THTG_HD.png',
+  'TRA VINH TV': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Logo_%C4%90%C3%A0i_Ph%C3%A1t_thanh_%26_Truy%E1%BB%81n_h%C3%ACnh_Tr%C3%A0_Vinh_-_THTV.svg/250px-Logo_%C4%90%C3%A0i_Ph%C3%A1t_thanh_%26_Truy%E1%BB%81n_h%C3%ACnh_Tr%C3%A0_Vinh_-_THTV.svg.png',
+  'UNIQUELY THAI': 'https://i.imgur.com/cTSDB8O.png',
+  'VIETNAM TODAY': 'https://i.imgur.com/xW9rY7s.png',
+  'VINH LONG TV1': 'https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Logo_THVL1_HD.png/250px-Logo_THVL1_HD.png',
+  'VTV5 TAY NAM BO': 'https://i.imgur.com/xiuHjEQ.png',
+  'VTV5 TAY NGUYEN': 'https://i.imgur.com/Hlcnqqt.png',
 };
 
 function normalizeChannelName(name) {
@@ -51,6 +94,10 @@ function normalizeChannelName(name) {
   // Loại bỏ dấu tiếng Việt
   normalized = normalized.normalize('NFD').replace(/[\u0300-\u036f]/g, '');
   normalized = normalized.toUpperCase();
+  
+  // Loại bỏ các ký tự đặc biệt (như dấu ngoặc, gạch ngang, chéo) để xử lý từ khóa sạch
+  normalized = normalized.replace(/-/g, '');
+  normalized = normalized.replace(/[^A-Z0-9\s]/g, ' ');
   
   // Gom các kênh Vinh Long về chuẩn THVL
   if (normalized.includes('VINH LONG 1') || normalized.includes('THVL 1') || normalized.includes('THVL1')) {
@@ -67,7 +114,6 @@ function normalizeChannelName(name) {
   }
 
   normalized = normalized.replace(/\b(HD|SD|FHD|4K|1080P|GEOBLOCKED|NOT247|LIVE|720P|540P|480P|406P)\b/g, '');
-  normalized = normalized.replace(/[^A-Z0-9\s]/g, '');
   normalized = normalized.replace(/\s+/g, ' ').trim();
   normalized = normalized.replace(/([A-Z]+)\s+(\d+)/g, '$1$2');
   
@@ -119,6 +165,31 @@ async function run() {
     process.exit(1);
   }
 
+  // Tải danh sách vn.m3u để trích xuất logo kênh địa phương/các kênh cập nhật
+  console.log('Downloading vn.m3u to extract up-to-date logos...');
+  const m3uLogoMap = new Map();
+  try {
+    const m3uRes = await fetch('https://iptv-org.github.io/iptv/countries/vn.m3u');
+    if (m3uRes.ok) {
+      const m3uText = await m3uRes.text();
+      const m3uRegex = /#EXTINF:-1[^,]*tvg-logo="([^"]*)"[^,]*,(.*)/g;
+      let m3uMatch;
+      while ((m3uMatch = m3uRegex.exec(m3uText)) !== null) {
+        const logo = m3uMatch[1];
+        const rawName = m3uMatch[2].trim();
+        if (logo && rawName) {
+          const normalized = normalizeChannelName(rawName);
+          if (normalized) {
+            m3uLogoMap.set(normalized, logo);
+          }
+        }
+      }
+      console.log(`Extracted ${m3uLogoMap.size} logos from vn.m3u.`);
+    }
+  } catch (e) {
+    console.warn('Failed to fetch/parse vn.m3u for logos, skipping:', e.message);
+  }
+
   // Lọc các kênh liên quan đến Việt Nam (quốc gia VN hoặc ngôn ngữ chứa vie)
   console.log('Filtering Vietnamese channels...');
   const vnChannelIds = new Set();
@@ -157,14 +228,14 @@ async function run() {
 
       if (!channelDetails.has(normalized)) {
         channelDetails.set(normalized, {
-          logoUrl: STABLE_LOGOS[normalized] || ch.logo || '',
+          logoUrl: STABLE_LOGOS[normalized] || m3uLogoMap.get(normalized) || ch.logo || '',
           group: ch.categories && ch.categories.length > 0 ? ch.categories[0] : 'Khác',
           originalName: ch.name
         });
       } else {
         const existing = channelDetails.get(normalized);
-        if (!existing.logoUrl && ch.logo) {
-          existing.logoUrl = STABLE_LOGOS[normalized] || ch.logo;
+        if (!existing.logoUrl) {
+          existing.logoUrl = STABLE_LOGOS[normalized] || m3uLogoMap.get(normalized) || ch.logo || '';
         }
       }
     }

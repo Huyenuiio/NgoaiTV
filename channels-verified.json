@@ -4,8 +4,8 @@
     "name": "VTV1",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/66/VTV1_logo_2013_final.svg/250px-VTV1_logo_2013_final.svg.png",
     "streamUrls": [
-      "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv1-manifest.m3u8",
       "https://live.fptplay53.net/fnxch2/vtv1hd_abr.smil/chunklist.m3u8",
+      "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv1-manifest.m3u8",
       "https://live.fptplay53.net/live/media/vtv1/live247-hls-avc/index.m3u8",
       "https://live-a.fptplay53.net/live/media/vtv1/live247-hls-avc/index.m3u8",
       "https://vips-livecdn.fptplay.net/live/media/vtv1/live247-hls-avc/index.m3u8"
@@ -17,8 +17,8 @@
     "name": "VTV2",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/11/VTV2_logo_2013.png/250px-VTV2_logo_2013.png",
     "streamUrls": [
-      "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv2-manifest.m3u8",
       "https://live.fptplay53.net/fnxch2/vtv2hd_abr.smil/chunklist.m3u8",
+      "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv2-manifest.m3u8",
       "https://live.fptplay53.net/live/media/vtv2/live247-hls-avc/index.m3u8",
       "https://live-a.fptplay53.net/live/media/vtv2/live247-hls-avc/index.m3u8",
       "https://vips-livecdn.fptplay.net/live/media/vtv2/live247-hls-avc/index.m3u8"
@@ -30,8 +30,8 @@
     "name": "VTV3",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/VTV3_logo_2013.png/250px-VTV3_logo_2013.png",
     "streamUrls": [
-      "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv3-manifest.m3u8",
       "https://live.fptplay53.net/fnxch2/vtv3hd_abr.smil/chunklist.m3u8",
+      "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv3-manifest.m3u8",
       "https://live.fptplay53.net/live/media/vtv3/live247-hls-avc/index.m3u8",
       "https://live-a.fptplay53.net/live/media/vtv3/live247-hls-avc/index.m3u8",
       "https://vips-livecdn.fptplay.net/live/media/vtv3/live247-hls-avc/index.m3u8"
@@ -43,8 +43,8 @@
     "name": "VTV4",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/VTV4_logo_2013.png/250px-VTV4_logo_2013.png",
     "streamUrls": [
-      "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv4-manifest.m3u8",
       "https://live.fptplay53.net/fnxch2/vtv4hd_abr.smil/chunklist.m3u8",
+      "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv4-manifest.m3u8",
       "https://live.fptplay53.net/live/media/vtv4/live247-hls-avc/index.m3u8",
       "https://live-a.fptplay53.net/live/media/vtv4/live247-hls-avc/index.m3u8",
       "https://vips-livecdn.fptplay.net/live/media/vtv4/live247-hls-avc/index.m3u8"
@@ -56,8 +56,8 @@
     "name": "VTV5",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/VTV5_logo_2013.png/250px-VTV5_logo_2013.png",
     "streamUrls": [
-      "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv5-manifest.m3u8",
       "https://live.fptplay53.net/epzch2/vtv5hd_abr.smil/chunklist.m3u8",
+      "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv5-manifest.m3u8",
       "https://live.fptplay53.net/live/media/vtv5/live247-hls-avc/index.m3u8",
       "https://live-a.fptplay53.net/live/media/vtv5/live247-hls-avc/index.m3u8",
       "https://vips-livecdn.fptplay.net/live/media/vtv5/live247-hls-avc/index.m3u8"
@@ -69,8 +69,8 @@
     "name": "VTV7",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/VTV7_logo_2016.png/250px-VTV7_logo_2016.png",
     "streamUrls": [
-      "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv7-manifest.m3u8",
       "https://live.fptplay53.net/fnxhd1/vtv7hd_vhls.smil/chunklist.m3u8",
+      "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv7-manifest.m3u8",
       "https://live.fptplay53.net/live/media/vtv7/live247-hls-avc/index.m3u8",
       "https://live-a.fptplay53.net/live/media/vtv7/live247-hls-avc/index.m3u8",
       "https://vips-livecdn.fptplay.net/live/media/vtv7/live247-hls-avc/index.m3u8"
@@ -96,17 +96,35 @@
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/VTV9_logo_2016.png/250px-VTV9_logo_2016.png",
     "streamUrls": [
       "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv9-manifest.m3u8",
-      "https://live.fptplay53.net/fnxhd1/vtv9_vhls.smil/chunklist.m3u8",
       "https://live.fptplay53.net/live/media/vtv9/live247-hls-avc/index.m3u8",
       "https://live-a.fptplay53.net/live/media/vtv9/live247-hls-avc/index.m3u8",
-      "https://vips-livecdn.fptplay.net/live/media/vtv9/live247-hls-avc/index.m3u8"
+      "https://vips-livecdn.fptplay.net/live/media/vtv9/live247-hls-avc/index.m3u8",
+      "https://live.fptplay53.net/fnxhd1/vtv9_vhls.smil/chunklist.m3u8"
     ],
     "group": "Khác"
   },
   {
+    "id": "htv9",
+    "name": "HTV9",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Logo_HTV9.svg/250px-Logo_HTV9.svg.png",
+    "streamUrls": [
+      "https://live.fptplay53.net/epzhd1/htv9hd_vhls.smil/chunklist.m3u8"
+    ],
+    "group": "news"
+  },
+  {
+    "id": "htv-key",
+    "name": "HTV KEY",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/HTV_Key_Logo.png/250px-HTV_Key_Logo.png",
+    "streamUrls": [
+      "https://liveh12.vtvprime.vn/hls/HTVKey/index.m3u8"
+    ],
+    "group": "education"
+  },
+  {
     "id": "an-giang-tv1",
     "name": "AN GIANG TV1",
-    "logoUrl": "",
+    "logoUrl": "https://i.imgur.com/mgp6RAU.png",
     "streamUrls": [
       "https://tv.angiangtv.vn/live/kgtv/kgtv.m3u8"
     ],
@@ -115,7 +133,7 @@
   {
     "id": "an-giang-tv2",
     "name": "AN GIANG TV2",
-    "logoUrl": "",
+    "logoUrl": "https://i.imgur.com/efrauLr.png",
     "streamUrls": [
       "https://tv.angiangtv.vn/live/kgtv2/kgtv2.m3u8"
     ],
@@ -124,16 +142,26 @@
   {
     "id": "an-giang-tv3",
     "name": "AN GIANG TV3",
-    "logoUrl": "",
+    "logoUrl": "https://i.imgur.com/gZUV4z8.png",
     "streamUrls": [
       "https://tv.angiangtv.vn/live/kgtv1/kgtv1.m3u8"
     ],
     "group": "entertainment"
   },
   {
+    "id": "an-ninh-tv",
+    "name": "AN NINH TV",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Logo_ANTV.svg/250px-Logo_ANTV.svg.png",
+    "streamUrls": [
+      "https://live.fptplay53.net/fnxhd2/anninhtv_vhls.smil/chunklist.m3u8",
+      "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8"
+    ],
+    "group": "Khác"
+  },
+  {
     "id": "ca-mau-tv",
     "name": "CA MAU TV",
-    "logoUrl": "",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/8/88/Ctvcamau-logo2026.png",
     "streamUrls": [
       "https://tv.ctvcamau.vn/live/tv/tv.m3u8"
     ],
@@ -142,7 +170,7 @@
   {
     "id": "can-tho-tv",
     "name": "CAN THO TV",
-    "logoUrl": "",
+    "logoUrl": "https://i.ibb.co/MDhNH26J/cantho1-2025.png",
     "streamUrls": [
       "https://live.canthotv.vn/live/tv/chunklist.m3u8"
     ],
@@ -151,7 +179,7 @@
   {
     "id": "can-tho-tv3",
     "name": "CAN THO TV3",
-    "logoUrl": "",
+    "logoUrl": "https://i.ibb.co/d4G2PD9s/cantho3-2025.png",
     "streamUrls": [
       "https://live.canthotv.vn/cs3/tv/chunklist.m3u8"
     ],
@@ -160,25 +188,52 @@
   {
     "id": "cao-bang-tv",
     "name": "CAO BANG TV",
-    "logoUrl": "",
+    "logoUrl": "https://i.imgur.com/dGonewm.png",
     "streamUrls": [
       "https://stream.thingnet.vn/live/smil:CRTV.smil/chunklist.m3u8"
     ],
     "group": "general"
   },
   {
+    "id": "da-nang-tv1",
+    "name": "DA NANG TV1",
+    "logoUrl": "https://i.imgur.com/EOMuO1z.png",
+    "streamUrls": [
+      "https://live.mediatech.vn/live/285b59a111d76974225a8e3004bfc31a509/chunklist.m3u8"
+    ],
+    "group": "general"
+  },
+  {
+    "id": "da-nang-tv2",
+    "name": "DA NANG TV2",
+    "logoUrl": "",
+    "streamUrls": [
+      "https://live.mediatech.vn/live/2859145290d0d7947ef88b6240123b62474/chunklist.m3u8"
+    ],
+    "group": "general"
+  },
+  {
     "id": "dak-lak-tv",
     "name": "DAK LAK TV",
-    "logoUrl": "",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/9/91/Dai_PT-TH_Dak_Lak.png",
     "streamUrls": [
       "https://cdn.drt.vn/live/285a27750861b964c27af22091662a74f2f/chunklist.m3u8"
     ],
     "group": "Khác"
   },
   {
+    "id": "dien-bien-tv",
+    "name": "DIEN BIEN TV",
+    "logoUrl": "https://i.imgur.com/u308o8q.png",
+    "streamUrls": [
+      "https://truyenhinh.vnptvas.vn/live.m3u8?c=vstv362&deviceId=&deviceType=&gcId=1532&location=NA&pkg=pkg11.hni&q=high&requestTime=1586309420781&time=1586395820&token=LX-ibJYRUq9pflRtYAxfYQ&type=tv&userId="
+    ],
+    "group": "general"
+  },
+  {
     "id": "dong-nai-tv1",
     "name": "DONG NAI TV1",
-    "logoUrl": "",
+    "logoUrl": "https://i.imgur.com/oQyioVa.png",
     "streamUrls": [
       "http://118.107.85.4:1935/live/smil:DNTV1.smil/chunklist.m3u8"
     ],
@@ -187,37 +242,103 @@
   {
     "id": "dong-nai-tv2",
     "name": "DONG NAI TV2",
-    "logoUrl": "",
+    "logoUrl": "https://i.imgur.com/tNKPSkO.png",
     "streamUrls": [
       "http://118.107.85.4:1935/live/smil:DNTV2.smil/chunklist.m3u8"
     ],
     "group": "sports"
   },
   {
+    "id": "dong-thap-tv",
+    "name": "DONG THAP TV",
+    "logoUrl": "https://i.ibb.co/XFX7yw0/logo2-1.png",
+    "streamUrls": [
+      "https://liveh34.vtvprime.vn/hls/DONGTHAPTV/index.m3u8",
+      "https://megasystems-6c680321cd.gw-dthcdn.com/thdt1/thdt1.m3u8"
+    ],
+    "group": "general"
+  },
+  {
+    "id": "ha-tinh-tv",
+    "name": "HA TINH TV",
+    "logoUrl": "https://i.imgur.com/4yIgKKx.png",
+    "streamUrls": [
+      "https://wse.hatinhtv.net/live/httv1/chunklist.m3u8"
+    ],
+    "group": "general"
+  },
+  {
+    "id": "hanoitv1",
+    "name": "HANOITV1",
+    "logoUrl": "https://i.imgur.com/Je3K25E.png",
+    "streamUrls": [
+      "https://cloudstreamhntv.tek4tv.vn/capture/smil:HN1.smil/chunklist.m3u8",
+      "https://liveh34.vtvprime.vn/hls/HANOI1TV/index.m3u8"
+    ],
+    "group": "general"
+  },
+  {
+    "id": "hanoitv2",
+    "name": "HANOITV2",
+    "logoUrl": "https://i.imgur.com/szivqh2.png",
+    "streamUrls": [
+      "https://cloudstreamhntv.tek4tv.vn/live/smil:HN2.smil/playlist.m3u8",
+      "https://liveh34.vtvprime.vn/hls/HANOI2TV/index.m3u8"
+    ],
+    "group": "general"
+  },
+  {
+    "id": "htv-sports",
+    "name": "HTV SPORTS",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/HTV_Sports_Logo.png/250px-HTV_Sports_Logo.png",
+    "streamUrls": [
+      "https://live.fptplay53.net/epzhd1/htvcthethao_vhls.smil/chunklist.m3u8"
+    ],
+    "group": "sports"
+  },
+  {
     "id": "lam-dong-tv",
     "name": "LAM DONG TV",
-    "logoUrl": "",
+    "logoUrl": "https://i.imgur.com/lSMoGlv.png",
     "streamUrls": [
       "http://118.107.85.5:1935/live/smil:LTV.smil/chunklist.m3u8"
     ],
     "group": "general"
   },
   {
+    "id": "lao-cai-tv",
+    "name": "LAO CAI TV",
+    "logoUrl": "",
+    "streamUrls": [
+      "https://live.baolaocai.vn/channel2/stream.m3u8"
+    ],
+    "group": "general"
+  },
+  {
     "id": "lao-sv-tv",
     "name": "LAO SV TV",
-    "logoUrl": "",
+    "logoUrl": "https://i.imgur.com/ZIXtazI.png",
     "streamUrls": [
       "https://livefta.malimarcdn.com/ftaedge00/laosvtv.stream/playlist.m3u8"
     ],
     "group": "shop"
   },
   {
+    "id": "nghe-an-tv",
+    "name": "NGHE AN TV",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/5/54/Logo_NTV_Ngh%E1%BB%87_An_HD_2018.png",
+    "streamUrls": [
+      "https://live.mediatech.vn/live/2859591eef2e92249b682db021f4247c364/chunklist.m3u8"
+    ],
+    "group": "general"
+  },
+  {
     "id": "qpvn",
     "name": "QPVN",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/af/QPVN_channel_logo.png",
     "streamUrls": [
-      "https://qpvn.vn/live/qpvn/master.m3u8",
-      "https://liveh12.vtvprime.vn/hls/QPTV/index.m3u8"
+      "https://liveh12.vtvprime.vn/hls/QPTV/index.m3u8",
+      "https://qpvn.vn/live/qpvn/master.m3u8"
     ],
     "group": "Khác"
   },
@@ -231,9 +352,28 @@
     "group": "Khác"
   },
   {
+    "id": "sctv2",
+    "name": "SCTV2",
+    "logoUrl": "https://i.imgur.com/8i5DXIg.png",
+    "streamUrls": [
+      "https://liveh12.vtvprime.vn/hls/SCTV2/index.m3u8"
+    ],
+    "group": "Khác"
+  },
+  {
+    "id": "sctv6",
+    "name": "SCTV6",
+    "logoUrl": "https://i.imgur.com/2oOVS42.png",
+    "streamUrls": [
+      "https://live.fptplay53.net/epzhd2/film360_vhls.smil/chunklist.m3u8",
+      "https://liveh34.vtvprime.vn/hls/SCTV6/03.m3u8"
+    ],
+    "group": "Khác"
+  },
+  {
     "id": "tay-ninh-tv",
     "name": "TAY NINH TV",
-    "logoUrl": "",
+    "logoUrl": "https://tayninhtv.vn/static/images/logo.png",
     "streamUrls": [
       "https://live-hq.evgcdn.net/live/2851dc2c9af68834814a89e61db0faee561/chunklist.m3u8"
     ],
@@ -242,7 +382,7 @@
   {
     "id": "tea-tv",
     "name": "TEA TV",
-    "logoUrl": "",
+    "logoUrl": "https://i.imgur.com/WorbnyD.jpg",
     "streamUrls": [
       "https://livefta.malimarcdn.com/ftaedge00/teatv.sdp/playlist.m3u8"
     ],
@@ -251,25 +391,43 @@
   {
     "id": "thai-nguyen-tv",
     "name": "THAI NGUYEN TV",
-    "logoUrl": "",
+    "logoUrl": "https://thainguyentv.vn/modules/frontend/themes/ptthtn/images/logo.png",
     "streamUrls": [
       "https://streaming.thainguyentv.vn/hls/livestream.m3u8"
     ],
     "group": "general"
   },
   {
+    "id": "thua-thien-hue-tv",
+    "name": "THUA THIEN HUE TV",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/e/e9/LogoHueTV_2025.png",
+    "streamUrls": [
+      "https://live.fptplay53.net/epzsd1/hue_hls.smil/chunklist.m3u8"
+    ],
+    "group": "Khác"
+  },
+  {
     "id": "tien-giang-tv",
     "name": "TIEN GIANG TV",
-    "logoUrl": "",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Logo_THTG_HD.png",
     "streamUrls": [
       "https://618b88f69e53b.streamlock.net/THDT2/thdttv2/chunklist.m3u8"
     ],
     "group": "Khác"
   },
   {
+    "id": "tra-vinh-tv",
+    "name": "TRA VINH TV",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Logo_%C4%90%C3%A0i_Ph%C3%A1t_thanh_%26_Truy%E1%BB%81n_h%C3%ACnh_Tr%C3%A0_Vinh_-_THTV.svg/250px-Logo_%C4%90%C3%A0i_Ph%C3%A1t_thanh_%26_Truy%E1%BB%81n_h%C3%ACnh_Tr%C3%A0_Vinh_-_THTV.svg.png",
+    "streamUrls": [
+      "https://live.fptplay53.net/epzsd1/vinhlong5_vhls.smil/chunklist.m3u8"
+    ],
+    "group": "culture"
+  },
+  {
     "id": "uniquely-thai",
     "name": "UNIQUELY THAI",
-    "logoUrl": "",
+    "logoUrl": "https://i.imgur.com/cTSDB8O.png",
     "streamUrls": [
       "https://livefta.malimarcdn.com/ftaedge00/uniquely.sdp/playlist.m3u8"
     ],
@@ -278,13 +436,22 @@
   {
     "id": "vietnam-today",
     "name": "VIETNAM TODAY",
-    "logoUrl": "",
+    "logoUrl": "https://i.imgur.com/xW9rY7s.png",
     "streamUrls": [
       "https://amagi-live.ondemandkorea.com/amgplt0456.m3u8",
       "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vietnamtoday-720p.m3u8",
       "https://vips-livecdn.fptplay.net/live/media/vietnamtoday/live-hls-avc/index.m3u8"
     ],
     "group": "Khác"
+  },
+  {
+    "id": "vinh-long-tv1",
+    "name": "VINH LONG TV1",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/24/Logo_THVL1_HD.png/250px-Logo_THVL1_HD.png",
+    "streamUrls": [
+      "https://live.fptplay53.net/epzch2/vinhlong1_abr.smil/chunklist.m3u8"
+    ],
+    "group": "news"
   },
   {
     "id": "vtv10",
@@ -302,22 +469,22 @@
   {
     "id": "vtv5-tay-nam-bo",
     "name": "VTV5 TAY NAM BO",
-    "logoUrl": "",
+    "logoUrl": "https://i.imgur.com/xiuHjEQ.png",
     "streamUrls": [
       "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv5tnb-manifest.m3u8",
-      "https://liveh12.vtvprime.vn/hls/VTV5_TNB/index.m3u8",
-      "https://live-a.fptplay53.net/live/media/vtv5tnb/live-hls-avc/index.m3u8"
+      "https://live-a.fptplay53.net/live/media/vtv5tnb/live-hls-avc/index.m3u8",
+      "https://liveh12.vtvprime.vn/hls/VTV5_TNB/index.m3u8"
     ],
     "group": "Khác"
   },
   {
     "id": "vtv5-tay-nguyen",
     "name": "VTV5 TAY NGUYEN",
-    "logoUrl": "",
+    "logoUrl": "https://i.imgur.com/Hlcnqqt.png",
     "streamUrls": [
       "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv5tn-manifest.m3u8",
-      "https://liveh12.vtvprime.vn/hls/VTV5_TN/index.m3u8",
-      "https://vips-livecdn.fptplay.net/live/media/vtv5tn/live-hls-avc/index.m3u8"
+      "https://vips-livecdn.fptplay.net/live/media/vtv5tn/live-hls-avc/index.m3u8",
+      "https://liveh12.vtvprime.vn/hls/VTV5_TN/index.m3u8"
     ],
     "group": "Khác"
   },
@@ -326,8 +493,8 @@
     "name": "VTV6",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1b/VTV6_logo_2013.png/250px-VTV6_logo_2013.png",
     "streamUrls": [
-      "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv6tt-manifest.m3u8",
       "https://live.fptplay53.net/fnxhd1/vtv6hd_vhls.smil/chunklist.m3u8",
+      "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv6tt-manifest.m3u8",
       "https://live.fptplay53.net/live/media/vtv6/live247-hls-avc/index.m3u8",
       "https://live-a.fptplay53.net/live/media/vtv6/live247-hls-avc/index.m3u8",
       "https://vips-livecdn.fptplay.net/live/media/vtv6/live247-hls-avc/index.m3u8"

@@ -21,7 +21,7 @@ export async function testStreamUrl(url: string, timeoutMs: number = 5000): Prom
     
     clearTimeout(timeoutId);
     return response.ok; // status is 200-299
-  } catch (error) {
+  } catch {
     clearTimeout(timeoutId);
     return false;
   }

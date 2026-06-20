@@ -30,7 +30,7 @@ export async function getLastUpdated(): Promise<number | null> {
   try {
     const val = await AsyncStorage.getItem(LAST_UPDATED_KEY);
     return val ? parseInt(val, 10) : null;
-  } catch (error) {
+  } catch {
     return null;
   }
 }

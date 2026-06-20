@@ -64,7 +64,14 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
   };
 
   const handleScreenPress = () => {
-    resetControlsTimer();
+    if (showControls) {
+      setShowControls(false);
+      if (controlsTimeoutRef.current) {
+        clearTimeout(controlsTimeoutRef.current);
+      }
+    } else {
+      resetControlsTimer();
+    }
   };
 
   const handleVideoError = (e: any) => {
@@ -92,70 +99,75 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
   };
 
   return (
-    <TouchableWithoutFeedback onPress={handleScreenPress}>
-      <View style={styles.container}>
-        <StatusBar hidden />
+    <View style={styles.container}>
+      <StatusBar hidden />
 
-        {/* Video Player */}
-        {currentUrl && !error && (
-          <Video
-            source={{ uri: currentUrl }}
-            style={StyleSheet.absoluteFill}
-            resizeMode="contain"
-            onLoadStart={handleLoadStart}
-            onReadyForDisplay={handleReadyForDisplay}
-            onError={handleVideoError}
-            controls={false}
-            paused={false}
-            playInBackground={false}
-            playWhenInactive={false}
-            ignoreSilentSwitch="ignore"
-            selectedTextTrack={{ type: 'disabled' as any }}
-            pointerEvents="none"
-          />
-        )}
+      {/* Video Player */}
+      {currentUrl && !error && (
+        <Video
+          source={{ uri: currentUrl }}
+          style={StyleSheet.absoluteFill}
+          resizeMode="contain"
+          onLoadStart={handleLoadStart}
+          onReadyForDisplay={handleReadyForDisplay}
+          onError={handleVideoError}
+          controls={false}
+          paused={false}
+          playInBackground={false}
+          playWhenInactive={false}
+          ignoreSilentSwitch="ignore"
+          selectedTextTrack={{ type: 'disabled' as any }}
+          pointerEvents="none"
+        />
+      )}
 
-        {/* Back Button (large hit area, high contrast, auto-hides) */}
-        {showControls && (
+      {/* Transparent absolute overlay to intercept screen taps and toggle control visibility */}
+      {!error && (
+        <TouchableWithoutFeedback onPress={handleScreenPress}>
+          <View style={StyleSheet.absoluteFillObject} />
+        </TouchableWithoutFeedback>
+      )}
+
+      {/* Back Button (large hit area, high contrast, auto-hides) */}
+      {showControls && (
+        <TouchableOpacity
+          style={styles.backButton}
+          activeOpacity={0.7}
+          onPress={onBack}
+        >
+          <Text style={styles.backButtonText}>← Quay lại</Text>
+        </TouchableOpacity>
+      )}
+
+      {/* Loading Overlay */}
+      {loading && !error && (
+        <View style={styles.overlayContainer} pointerEvents="none">
+          <ActivityIndicator size="large" color="#FFD700" />
+          <Text style={styles.overlayText}>Đang kết nối kênh {channel.name}...</Text>
+          {streamUrls.length > 1 && (
+            <Text style={styles.backupText}>
+              Đang thử nguồn {streamIndex + 1}/{streamUrls.length}
+            </Text>
+          )}
+        </View>
+      )}
+
+      {/* Error Overlay */}
+      {error && (
+        <View style={[styles.overlayContainer, styles.errorBg]}>
+          <Text style={styles.errorIcon}>⚠️</Text>
+          <Text style={styles.errorText}>Kênh này đang bận,</Text>
+          <Text style={styles.errorText}>mời chọn kênh khác!</Text>
           <TouchableOpacity
-            style={styles.backButton}
+            style={styles.errorBackButton}
             activeOpacity={0.7}
             onPress={onBack}
           >
-            <Text style={styles.backButtonText}>← Quay lại</Text>
+            <Text style={styles.errorBackButtonText}>Quay lại danh sách</Text>
           </TouchableOpacity>
-        )}
-
-        {/* Loading Overlay */}
-        {loading && !error && (
-          <View style={styles.overlayContainer} pointerEvents="none">
-            <ActivityIndicator size="large" color="#FFD700" />
-            <Text style={styles.overlayText}>Đang kết nối kênh {channel.name}...</Text>
-            {streamUrls.length > 1 && (
-              <Text style={styles.backupText}>
-                Đang thử nguồn {streamIndex + 1}/{streamUrls.length}
-              </Text>
-            )}
-          </View>
-        )}
-
-        {/* Error Overlay */}
-        {error && (
-          <View style={[styles.overlayContainer, styles.errorBg]}>
-            <Text style={styles.errorIcon}>⚠️</Text>
-            <Text style={styles.errorText}>Kênh này đang bận,</Text>
-            <Text style={styles.errorText}>mời chọn kênh khác!</Text>
-            <TouchableOpacity
-              style={styles.errorBackButton}
-              activeOpacity={0.7}
-              onPress={onBack}
-            >
-              <Text style={styles.errorBackButtonText}>Quay lại danh sách</Text>
-            </TouchableOpacity>
-          </View>
-        )}
-      </View>
-    </TouchableWithoutFeedback>
+        </View>
+      )}
+    </View>
   );
 }
 

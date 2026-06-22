@@ -126,6 +126,7 @@
     "name": "THVL1",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/thvl1.png",
     "streamUrls": [
+      "https://live.fptplay53.net/live/media/vinhlong1/live247-hls-avc/index.m3u8",
       "https://live.fptplay53.net/epzch2/vinhlong1_abr.smil/chunklist.m3u8"
     ],
     "group": "news"
@@ -135,7 +136,8 @@
     "name": "THVL2",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/thvl2.png",
     "streamUrls": [
-      "https://live.fptplay53.net/epzhd2/vinhlong2_vhls.smil/chunklist.m3u8"
+      "https://live.fptplay53.net/epzhd2/vinhlong2_vhls.smil/chunklist.m3u8",
+      "https://live.fptplay53.net/live/media/vinhlong2/live247-hls-avc/index.m3u8"
     ],
     "group": "general"
   },
@@ -144,7 +146,8 @@
     "name": "THVL3",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/thvl3.png",
     "streamUrls": [
-      "https://live.fptplay53.net/epzch2/vinhlong3_abr.smil/chunklist.m3u8"
+      "https://live.fptplay53.net/epzch2/vinhlong3_abr.smil/chunklist.m3u8",
+      "https://live.fptplay53.net/live/media/vinhlong3/live247-hls-avc/index.m3u8"
     ],
     "group": "entertainment"
   },
@@ -187,7 +190,7 @@
   {
     "id": "an-ninh-tv",
     "name": "AN NINH TV",
-    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Logo_ANTV.svg/250px-Logo_ANTV.svg.png",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Logoantv.png",
     "streamUrls": [
       "https://live.fptplay53.net/fnxhd2/anninhtv_vhls.smil/chunklist.m3u8",
       "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8"
@@ -244,8 +247,8 @@
     "name": "CTV",
     "logoUrl": "",
     "streamUrls": [
-      "https://live.ctvbolivia.com/hls/ctv.m3u8",
-      "https://streaming.ctvbolivia.com/hlsweb/ctv.m3u8"
+      "https://streaming.ctvbolivia.com/hlsweb/ctv.m3u8",
+      "https://live.ctvbolivia.com/hls/ctv.m3u8"
     ],
     "group": "general"
   },
@@ -423,6 +426,15 @@
       "https://live.mediatech.vn/live/2859591eef2e92249b682db021f4247c364/chunklist.m3u8"
     ],
     "group": "general"
+  },
+  {
+    "id": "ptv",
+    "name": "PTV",
+    "logoUrl": "",
+    "streamUrls": [
+      "https://giatv.bozztv.com/giatv/giatv-PTVonLINE/PTVonLINE/playlist.m3u8"
+    ],
+    "group": "Khác"
   },
   {
     "id": "qpvn",

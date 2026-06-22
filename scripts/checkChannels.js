@@ -34,7 +34,7 @@ const STABLE_LOGOS = {
   'THVL2': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/thvl2.png',
   'THVL3': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/thvl3.png',
   'THVL4': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/thvl4.png',
-  'ANTV': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Logo_ANTV.svg/250px-Logo_ANTV.svg.png',
+  'ANTV': 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Logoantv.png',
   'QPVN': 'https://upload.wikimedia.org/wikipedia/commons/a/af/QPVN_channel_logo.png',
   'VTC1': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/VTC1_logo_2018.png/250px-VTC1_logo_2018.png',
   'VTC2': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/VTC2_logo_2018.png/250px-VTC2_logo_2018.png',
@@ -48,7 +48,7 @@ const STABLE_LOGOS = {
   'AN GIANG TV1': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/an_giang_tv1.png',
   'AN GIANG TV2': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/an_giang_tv2.png',
   'AN GIANG TV3': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/an_giang_tv3.png',
-  'AN NINH TV': 'https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Logo_ANTV.svg/250px-Logo_ANTV.svg.png',
+  'AN NINH TV': 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Logoantv.png',
   'CA MAU TV': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/ca_mau_tv.png',
   'CAN THO TV': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/can_tho_tv.png',
   'CAN THO TV1': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/can_tho_tv1.png',
@@ -240,18 +240,21 @@ async function run() {
   const thvlHardcoded = {
     'THVL1': {
       urls: [
+        'https://live.fptplay53.net/live/media/vinhlong1/live247-hls-avc/index.m3u8',
         'https://live.fptplay53.net/epzch2/vinhlong1_abr.smil/chunklist.m3u8'
       ],
       group: 'general'
     },
     'THVL2': {
       urls: [
+        'https://live.fptplay53.net/live/media/vinhlong2/live247-hls-avc/index.m3u8',
         'https://live.fptplay53.net/epzhd2/vinhlong2_vhls.smil/chunklist.m3u8'
       ],
       group: 'general'
     },
     'THVL3': {
       urls: [
+        'https://live.fptplay53.net/live/media/vinhlong3/live247-hls-avc/index.m3u8',
         'https://live.fptplay53.net/epzch2/vinhlong3_abr.smil/chunklist.m3u8'
       ],
       group: 'entertainment'

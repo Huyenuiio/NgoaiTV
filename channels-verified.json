@@ -106,7 +106,7 @@
   {
     "id": "htv9",
     "name": "HTV9",
-    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/36/Logo_HTV9.svg/250px-Logo_HTV9.svg.png",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fe/HTV9.png",
     "streamUrls": [
       "https://live.fptplay53.net/epzhd1/htv9hd_vhls.smil/chunklist.m3u8"
     ],
@@ -115,7 +115,7 @@
   {
     "id": "htv-key",
     "name": "HTV KEY",
-    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/db/HTV_Key_Logo.png/250px-HTV_Key_Logo.png",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_HTV_Key.png",
     "streamUrls": [
       "https://liveh12.vtvprime.vn/hls/HTVKey/index.m3u8"
     ],
@@ -247,8 +247,8 @@
     "name": "CTV",
     "logoUrl": "",
     "streamUrls": [
-      "https://streaming.ctvbolivia.com/hlsweb/ctv.m3u8",
-      "https://live.ctvbolivia.com/hls/ctv.m3u8"
+      "https://live.ctvbolivia.com/hls/ctv.m3u8",
+      "https://streaming.ctvbolivia.com/hlsweb/ctv.m3u8"
     ],
     "group": "general"
   },
@@ -357,7 +357,7 @@
   {
     "id": "htv-sports",
     "name": "HTV SPORTS",
-    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/HTV_Sports_Logo.png/250px-HTV_Sports_Logo.png",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/vi/3/3f/HTV_THETHAO_2014.png",
     "streamUrls": [
       "https://live.fptplay53.net/epzhd1/htvcthethao_vhls.smil/chunklist.m3u8"
     ],

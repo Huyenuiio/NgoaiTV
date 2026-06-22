@@ -95,9 +95,16 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
         if (response.ok) {
           const data = await response.json();
           if (Array.isArray(data) && data.length > 0) {
-            setChannels(data);
-            await saveChannelsCache(data);
-            await saveLastUpdated(Date.now());
+            setChannels(prev => {
+              // Bảo vệ: Chỉ ghi đè nếu danh sách tải về không bị thiếu hụt quá nhiều kênh so với hiện tại
+              if (prev.length === 0 || data.length >= prev.length * 0.7) {
+                saveChannelsCache(data);
+                saveLastUpdated(Date.now());
+                return data;
+              }
+              console.warn('Danh sách kênh online tải về bị thiếu kênh, giữ lại danh sách hiện tại');
+              return prev;
+            });
             return;
           }
         }

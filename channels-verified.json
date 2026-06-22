@@ -113,9 +113,9 @@
     "group": "news"
   },
   {
-    "id": "htv-key",
-    "name": "HTV KEY",
-    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_HTV_Key.png",
+    "id": "htv4",
+    "name": "HTV4",
+    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/htv4.png",
     "streamUrls": [
       "https://liveh12.vtvprime.vn/hls/HTVKey/index.m3u8"
     ],
@@ -172,7 +172,7 @@
   {
     "id": "an-ninh-tv",
     "name": "AN NINH TV",
-    "logoUrl": "https://i.imgur.com/5qQzerW.png",
+    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/an_ninh_tv.png",
     "streamUrls": [
       "https://live.fptplay53.net/fnxhd2/anninhtv_vhls.smil/chunklist.m3u8",
       "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8"
@@ -339,7 +339,7 @@
   {
     "id": "htv-sports",
     "name": "HTV SPORTS",
-    "logoUrl": "https://upload.wikimedia.org/wikipedia/vi/3/3f/HTV_THETHAO_2014.png",
+    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/htv_sports.png",
     "streamUrls": [
       "https://live.fptplay53.net/epzhd1/htvcthethao_vhls.smil/chunklist.m3u8"
     ],
@@ -421,7 +421,7 @@
   {
     "id": "qpvn",
     "name": "QPVN",
-    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/af/QPVN_channel_logo.png",
+    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/qpvn.png",
     "streamUrls": [
       "https://liveh12.vtvprime.vn/hls/QPTV/index.m3u8",
       "https://qpvn.vn/live/qpvn/master.m3u8"
@@ -528,16 +528,6 @@
       "https://live.fptplay53.net/epzsd1/vinhlong5_vhls.smil/chunklist.m3u8"
     ],
     "group": "culture"
-  },
-  {
-    "id": "uniquely-thai",
-    "name": "UNIQUELY THAI",
-    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/uniquely_thai.png",
-    "streamUrls": [
-      "https://livefta.malimarcdn.com/ftaedge00/uniquely.sdp/playlist.m3u8"
-    ],
-    "group": "shop"
-  },
   {
     "id": "vietnam-today",
     "name": "VIETNAM TODAY",

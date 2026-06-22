@@ -136,7 +136,7 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
       {/* Transparent absolute overlay to intercept screen taps and toggle control visibility */}
       {!error && (
         <TouchableWithoutFeedback onPress={handleScreenPress}>
-          <View style={StyleSheet.absoluteFillObject} />
+          <View style={StyleSheet.absoluteFill} />
         </TouchableWithoutFeedback>
       )}
 

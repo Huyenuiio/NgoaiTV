@@ -8,8 +8,8 @@ const OUTPUT_FILE = path.join(__dirname, '../channels-verified.json');
 // Danh sách các kênh ưu tiên hiển thị ở hàng đầu (Đầy đủ VTV, HTV, THVL, VTC)
 const PRIORITY_CHANNELS = [
   'VTV1', 'VTV2', 'VTV3', 'VTV4', 'VTV5', 'VTV7', 'VTV8', 'VTV9',
-  'HTV7', 'HTV9', 'HTV THE THAO', 'HTV KEY',
-  'THVL1', 'THVL2', 'THVL3', 'THVL4',
+  'HTV7', 'HTV9', 'HTV THE THAO', 'HTV4',
+  'THVL1', 'THVL2',
   'VTC1', 'VTC2', 'VTC3', 'VTC7', 'VTC9', 'VTC14', 'VTC16'
 ];
 
@@ -33,8 +33,6 @@ const STABLE_LOGOS = {
   'HTV4': 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_HTV_Key.png',
   'THVL1': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/thvl1.png',
   'THVL2': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/thvl2.png',
-  'THVL3': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/thvl3.png',
-  'THVL4': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/thvl4.png',
   'ANTV': 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Logoantv.png',
   'QPVN': 'https://upload.wikimedia.org/wikipedia/commons/a/af/QPVN_channel_logo.png',
   'VTC1': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/VTC1_logo_2018.png/250px-VTC1_logo_2018.png',
@@ -104,8 +102,6 @@ function normalizeChannelName(name) {
   if (normalized.includes('VINH LONG') || normalized.includes('THVL')) {
     if (normalized.includes('1')) return 'THVL1';
     if (normalized.includes('2')) return 'THVL2';
-    if (normalized.includes('3')) return 'THVL3';
-    if (normalized.includes('4')) return 'THVL4';
   }
 
   normalized = normalized.replace(/\b(HD|SD|FHD|4K|1080P|GEOBLOCKED|NOT247|LIVE|720P|540P|480P|406P)\b/g, '');
@@ -251,19 +247,6 @@ async function run() {
         'https://live.fptplay53.net/epzhd2/vinhlong2_vhls.smil/chunklist.m3u8'
       ],
       group: 'general'
-    },
-    'THVL3': {
-      urls: [
-        'https://live.fptplay53.net/live/media/vinhlong3/live247-hls-avc/index.m3u8',
-        'https://live.fptplay53.net/epzch2/vinhlong3_abr.smil/chunklist.m3u8'
-      ],
-      group: 'entertainment'
-    },
-    'THVL4': {
-      urls: [
-        'https://live.fptplay53.net/epzhd2/vinhlong4_vhls.smil/chunklist.m3u8'
-      ],
-      group: 'entertainment'
     }
   };
 
@@ -312,7 +295,7 @@ async function run() {
     'VTV6', 'VTV1 HD', 'VTV3 HD', 'VTV2 HD', 'TV360+1', 'TV360+2', 'ANTV', 'QPVN', 'VTV5 HD', 'Vietnam Today',
     'VTV1 HD', 'VTV2 HD', 'VTV3 HD', 'VTV4 HD', 'VTV5 HD', 'VTV5 Tây Nguyên HD', 'VTV5 Tây Nam Bộ HD', 'VTV6', 'VTV7 HD', 'VTV8 HD', 'VTV9 HD', 'VTV10', 'Vietnam Today',
     'TV360+1', 'TV360+2', 'TV360+3', 'TV360+4', 'TV360+5', 'TV360+6', 'TV360+7', 'TV360+8', 'TV360+9', 'TV360+10', 'TV360+11', 'TV360+12', 'TV360+13', 'TV360+14', 'TV360+15', 'TV360 Promo',
-    'THVL1 HD', 'THVL2 HD', 'THVL3 HD', 'THVL4 HD', 'THVL5 HD',
+    'THVL1 HD', 'THVL2 HD',
     'HTV1', 'HTV2', 'HTV3', 'HTV4', 'HTV7 HD', 'HTV9 HD', 'HTV Thể thao', 'HTV Gia Đình', 'HTV Phụ Nữ', 'HTV Thuần Việt', 'HTV Phim', 'HTV Music', 'HTC (C+)', 'Du lịch & Cuộc sống', 'HTV5 Bchannel',
     'FM90', 'FM96', 'VOH AM610Khz', 'VOH FM99.9Mhz', 'VOH FM87.7Mhz', 'VOH FM95.6Mhz', 'VOH Radio',
     'SCTV6', 'SCTV2',

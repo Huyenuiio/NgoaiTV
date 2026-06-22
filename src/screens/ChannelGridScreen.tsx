@@ -312,7 +312,7 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
     <View style={styles.container}>
       {/* App Header */}
       <View style={[styles.header, { paddingTop: insets.top || 16 }]}>
-        <Text style={styles.headerTitle}>ElderTV</Text>
+        <Text style={styles.headerTitle}>Grandmother TV</Text>
         <Text style={styles.headerSubtitle}>Tivi Thông Minh Cho Người Cao Tuổi</Text>
       </View>
 

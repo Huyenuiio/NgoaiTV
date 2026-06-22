@@ -299,6 +299,7 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
       : `📺 ${selectedCategory.toUpperCase()}`;
 
   if (selectedCategory === 'Yêu thích') {
+    listData.push({ type: 'header', title: '⭐ KÊNH YÊU THÍCH' });
     favoriteRows.forEach(row => listData.push({ type: 'row', channels: row }));
   } else {
     if (otherRows.length > 0) {

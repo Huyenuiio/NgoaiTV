@@ -5,8 +5,8 @@ const CHANNELS_CACHE_KEY = 'channels_cache';
 const LAST_UPDATED_KEY = 'last_updated';
 const FAVORITES_KEY = 'favorite_channels';
 
-// Preset default favorites (Phase 6 requirement: VTV1, VTV3, HTV7)
-const DEFAULT_FAVORITES = ['vtv1', 'vtv3', 'htv7'];
+// Preset default favorites — IDs must match channels-verified.json
+const DEFAULT_FAVORITES = ['vtv1', 'vtv3', 'htv9'];
 
 export async function getChannelsCache(): Promise<MergedChannel[] | null> {
   try {

@@ -24,8 +24,6 @@ export function normalizeChannelName(name: string): string {
   if (normalized.includes('VINH LONG') || normalized.includes('THVL')) {
     if (normalized.includes('1')) return 'THVL1';
     if (normalized.includes('2')) return 'THVL2';
-    if (normalized.includes('3')) return 'THVL3';
-    if (normalized.includes('4')) return 'THVL4';
   }
 
   // 4. Remove terms like HD, SD, FHD, 4K, 1080P, LIVE, GEOBLOCKED, etc.
@@ -47,7 +45,7 @@ export function normalizeChannelName(name: string): string {
 export const PRIORITY_CHANNELS = [
   'VTV1', 'VTV2', 'VTV3', 'VTV4', 'VTV5', 'VTV7', 'VTV8', 'VTV9',
   'HTV7', 'HTV9', 'HTV THE THAO', 'HTV KEY',
-  'THVL1', 'THVL2', 'THVL3', 'THVL4',
+  'THVL1', 'THVL2',
   'VTC1', 'VTC2', 'VTC3', 'VTC7', 'VTC9', 'VTC14', 'VTC16'
 ];
 
@@ -64,16 +62,15 @@ export const STABLE_LOGOS: Record<string, string> = {
   'VTV9': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vtv9.png',
   'VTV10': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vtv10.png',
   'HTV7': 'https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Logo_HTV7.svg/250px-Logo_HTV7.svg.png',
-  'HTV9': 'https://upload.wikimedia.org/wikipedia/commons/f/fe/HTV9.png',
+  'HTV9': 'https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/b/bf/HTV9_logo.webp&output=png',
   'HTV THE THAO': 'https://upload.wikimedia.org/wikipedia/vi/3/3f/HTV_THETHAO_2014.png',
   'HTV SPORTS': 'https://upload.wikimedia.org/wikipedia/vi/3/3f/HTV_THETHAO_2014.png',
   'HTV KEY': 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_HTV_Key.png',
   'HTV4': 'https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_HTV_Key.png',
   'THVL1': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/thvl1.png',
   'THVL2': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/thvl2.png',
-  'THVL3': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/thvl3.png',
-  'THVL4': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/thvl4.png',
-  'ANTV': 'https://upload.wikimedia.org/wikipedia/commons/a/a8/Logoantv.png',
+  'ANTV': 'https://i.imgur.com/5qQzerW.png',
+  'AN NINH TV': 'https://i.imgur.com/5qQzerW.png',
   'QPVN': 'https://upload.wikimedia.org/wikipedia/commons/a/af/QPVN_channel_logo.png',
   'VTC1': 'https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/VTC1_logo_2018.png/250px-VTC1_logo_2018.png',
   'VTC2': 'https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/VTC2_logo_2018.png/250px-VTC2_logo_2018.png',
@@ -95,7 +92,7 @@ export const STABLE_LOGOS: Record<string, string> = {
   'CAN THO TV3': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/can_tho_tv3.png',
   'CAO BANG TV': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/cao_bang_tv.png',
   'DA NANG TV1': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/da_nang_tv1.png',
-  'DAK LAK TV': 'https://upload.wikimedia.org/wikipedia/commons/9/91/Dai_PT-TH_Dak_Lak.png',
+  'DAK LAK TV': 'https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/9/91/Dai_PT-TH_Dak_Lak.png&output=png',
   'DIEN BIEN TV': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/dien_bien_tv.png',
   'DONG NAI 1': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/dong_nai_1.png',
   'DONG NAI 2': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/dong_nai_2.png',
@@ -109,15 +106,14 @@ export const STABLE_LOGOS: Record<string, string> = {
   'HANOITV2': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/hanoitv2.png',
   'LAM DONG TV': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/lam_dong_tv.png',
   'LAO SV TV': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/lao_sv_tv.png',
-  'NGHE AN TV': 'https://upload.wikimedia.org/wikipedia/commons/5/54/Logo_NTV_Ngh%E1%BB%87_An_HD_2018.png',
+  'NGHE AN TV': 'https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/5/54/Logo_NTV_Ngh%E1%BB%87_An_HD_2018.png&output=png',
   'SCTV2': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/sctv2.png',
   'SCTV6': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/sctv6.png',
   'TAY NINH TV': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/tay_ninh_tv.png',
-  'TEA TV': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/tea_tv.png',
   'THAI NGUYEN TV': 'https://thainguyentv.vn/modules/frontend/themes/ptthtn/images/logo.png',
   'THUA THIEN HUE TV': 'https://upload.wikimedia.org/wikipedia/commons/e/e9/LogoHueTV_2025.png',
-  'TIEN GIANG TV': 'https://upload.wikimedia.org/wikipedia/commons/7/7e/Logo_THTG_HD.png',
-  'TRA VINH TV': 'https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Logo_%C4%90%C3%A0i_Ph%C3%A1t_thanh_%26_Truy%E1%BB%81n_h%C3%ACnh_Tr%C3%A0_Vinh_-_THTV.svg/250px-Logo_%C4%90%C3%A0i_Ph%C3%A1t_thanh_%26_Truy%E1%BB%81n_h%C3%ACnh_Tr%C3%A0_Vinh_-_THTV.svg.png',
+  'DONG THAP TV2': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/dong_thap_tv.png',
+  'TRA VINH TV': 'https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/4/49/Logo_%C4%90%C3%A0i_Ph%C3%A1t_thanh_%26_Truy%E1%BB%81n_h%C3%ACnh_Tr%C3%A0_Vinh_-_THTV.svg/250px-Logo_%C4%90%C3%A0i_Ph%C3%A1t_thanh_%26_Truy%E1%BB%81n_h%C3%ACnh_Tr%C3%A0_Vinh_-_THTV.svg.png&output=png',
   'UNIQUELY THAI': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/uniquely_thai.png',
   'VIETNAM TODAY': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vietnam_today.png',
   'VINH LONG TV1': 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/thvl1.png',

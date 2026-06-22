@@ -106,7 +106,7 @@
   {
     "id": "htv9",
     "name": "HTV9",
-    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fe/HTV9.png",
+    "logoUrl": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/b/bf/HTV9_logo.webp&output=png",
     "streamUrls": [
       "https://live.fptplay53.net/epzhd1/htv9hd_vhls.smil/chunklist.m3u8"
     ],
@@ -141,25 +141,7 @@
     ],
     "group": "general"
   },
-  {
-    "id": "thvl3",
-    "name": "THVL3",
-    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/thvl3.png",
-    "streamUrls": [
-      "https://live.fptplay53.net/epzch2/vinhlong3_abr.smil/chunklist.m3u8",
-      "https://live.fptplay53.net/live/media/vinhlong3/live247-hls-avc/index.m3u8"
-    ],
-    "group": "entertainment"
-  },
-  {
-    "id": "thvl4",
-    "name": "THVL4",
-    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/thvl4.png",
-    "streamUrls": [
-      "https://live.fptplay53.net/epzhd2/vinhlong4_vhls.smil/chunklist.m3u8"
-    ],
-    "group": "entertainment"
-  },
+
   {
     "id": "an-giang-tv1",
     "name": "AN GIANG TV1",
@@ -190,7 +172,7 @@
   {
     "id": "an-ninh-tv",
     "name": "AN NINH TV",
-    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Logoantv.png",
+    "logoUrl": "https://i.imgur.com/5qQzerW.png",
     "streamUrls": [
       "https://live.fptplay53.net/fnxhd2/anninhtv_vhls.smil/chunklist.m3u8",
       "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8"
@@ -273,7 +255,7 @@
   {
     "id": "dak-lak-tv",
     "name": "DAK LAK TV",
-    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/9/91/Dai_PT-TH_Dak_Lak.png",
+    "logoUrl": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/9/91/Dai_PT-TH_Dak_Lak.png&output=png",
     "streamUrls": [
       "https://cdn.drt.vn/live/285a27750861b964c27af22091662a74f2f/chunklist.m3u8"
     ],
@@ -421,7 +403,7 @@
   {
     "id": "nghe-an-tv",
     "name": "NGHE AN TV",
-    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/5/54/Logo_NTV_Ngh%E1%BB%87_An_HD_2018.png",
+    "logoUrl": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/5/54/Logo_NTV_Ngh%E1%BB%87_An_HD_2018.png&output=png",
     "streamUrls": [
       "https://live.mediatech.vn/live/2859591eef2e92249b682db021f4247c364/chunklist.m3u8"
     ],
@@ -510,15 +492,7 @@
     ],
     "group": "general"
   },
-  {
-    "id": "tea-tv",
-    "name": "TEA TV",
-    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/tea_tv.png",
-    "streamUrls": [
-      "https://livefta.malimarcdn.com/ftaedge00/teatv.sdp/playlist.m3u8"
-    ],
-    "group": "shop"
-  },
+
   {
     "id": "thai-nguyen-tv",
     "name": "THAI NGUYEN TV",
@@ -538,9 +512,9 @@
     "group": "Khác"
   },
   {
-    "id": "tien-giang-tv",
-    "name": "TIEN GIANG TV",
-    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Logo_THTG_HD.png",
+    "id": "dong-thap-tv2",
+    "name": "ĐỒNG THÁP TV2",
+    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/dong_thap_tv.png",
     "streamUrls": [
       "https://618b88f69e53b.streamlock.net/THDT2/thdttv2/chunklist.m3u8"
     ],
@@ -549,7 +523,7 @@
   {
     "id": "tra-vinh-tv",
     "name": "TRA VINH TV",
-    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Logo_%C4%90%C3%A0i_Ph%C3%A1t_thanh_%26_Truy%E1%BB%81n_h%C3%ACnh_Tr%C3%A0_Vinh_-_THTV.svg/250px-Logo_%C4%90%C3%A0i_Ph%C3%A1t_thanh_%26_Truy%E1%BB%81n_h%C3%ACnh_Tr%C3%A0_Vinh_-_THTV.svg.png",
+    "logoUrl": "https://wsrv.nl/?url=upload.wikimedia.org/wikipedia/commons/thumb/4/49/Logo_%C4%90%C3%A0i_Ph%C3%A1t_thanh_%26_Truy%E1%BB%81n_h%C3%ACnh_Tr%C3%A0_Vinh_-_THTV.svg/250px-Logo_%C4%90%C3%A0i_Ph%C3%A1t_thanh_%26_Truy%E1%BB%81n_h%C3%ACnh_Tr%C3%A0_Vinh_-_THTV.svg.png&output=png",
     "streamUrls": [
       "https://live.fptplay53.net/epzsd1/vinhlong5_vhls.smil/chunklist.m3u8"
     ],

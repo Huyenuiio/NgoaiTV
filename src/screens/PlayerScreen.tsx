@@ -27,6 +27,7 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
   const currentUrl = streamUrls[streamIndex];
   
   const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const loadingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
 
   useEffect(() => {
     setStreamIndex(0);
@@ -47,9 +48,8 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
 
     return () => {
       backHandler.remove();
-      if (controlsTimeoutRef.current) {
-        clearTimeout(controlsTimeoutRef.current);
-      }
+      if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
+      if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
     };
   }, [channel, onBack]);
 
@@ -92,9 +92,16 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
   const handleLoadStart = () => {
     setLoading(true);
     setError(false);
+    // Watchdog: nếu sau 15s vẫn chưa phát được → tự động thử backup
+    if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
+    loadingTimeoutRef.current = setTimeout(() => {
+      console.log(`Loading timeout for URL: ${currentUrl}`);
+      handleVideoError({ message: 'Loading timeout' });
+    }, 15000);
   };
 
   const handleReadyForDisplay = () => {
+    if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
     setLoading(false);
   };
 

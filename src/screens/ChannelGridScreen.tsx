@@ -65,33 +65,19 @@ const ChannelLogo = ({ uri }: { uri: string }) => {
     );
   }
 
-  // Load raw.githubusercontent.com images directly (highly reliable, no need for proxy)
-  if (uri.includes('raw.githubusercontent.com/Huyenuiio/NgoaiTV')) {
-    return (
-      <Image
-        source={{ uri }}
-        style={styles.logo}
-        resizeMode="contain"
-        onError={(e) => {
-          console.warn(`Error loading local logo directly: ${uri}`, e.nativeEvent.error);
-          setHasError(true);
-        }}
-      />
-    );
-  }
-
-  // Use wsrv.nl image proxy to bypass Wikimedia Commons OkHttp blocks and use Cloudflare CDN caching
-  const proxiedUri = uri.startsWith('http')
-    ? `https://wsrv.nl/?url=${encodeURIComponent(uri)}`
-    : uri;
-
+  // Pass standard user agent header to prevent Wikimedia Commons OkHttp blocks
   return (
     <Image
-      source={{ uri: proxiedUri }}
+      source={{
+        uri: uri,
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        }
+      }}
       style={styles.logo}
       resizeMode="contain"
       onError={(e) => {
-        console.warn(`Error loading proxied logo: ${uri}`, e.nativeEvent.error);
+        console.warn(`Error loading logo: ${uri}`, e.nativeEvent.error);
         setHasError(true);
       }}
     />
@@ -251,8 +237,7 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
     setRefreshing(true);
     const favList = await getFavoriteChannels();
     setFavorites(favList);
-    // Reload from cache/local file
-    setChannels(verifiedChannelsLocal as MergedChannel[]);
+    await fetchFreshChannels(false);
     setRefreshing(false);
   };
 
@@ -433,7 +418,11 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
       ) : (
         <FlatList
           data={listData}
-          keyExtractor={(item, index) => index.toString()}
+          keyExtractor={(item, index) =>
+            item.type === 'header'
+              ? `header-${item.title}`
+              : `row-${item.channels.map(c => c.id).join('-')}`
+          }
           refreshing={refreshing}
           onRefresh={handleRefresh}
           contentContainerStyle={styles.listContent}

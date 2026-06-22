@@ -8,8 +8,16 @@ import {
   Image,
   ActivityIndicator,
   Dimensions,
+  TextInput,
+  ScrollView,
 } from 'react-native';
-import { MergedChannel, mergeChannelSources, STABLE_LOGOS } from '../services/channelMerger';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+import {
+  MergedChannel,
+  mergeChannelSources,
+  STABLE_LOGOS,
+  normalizeChannelName,
+} from '../services/channelMerger';
 import { parseM3U } from '../services/m3uParser';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import {
@@ -24,9 +32,23 @@ import {
 import verifiedChannelsLocal from '../../channels-verified.json';
 
 // Cấu hình URL chứa file channels-verified.json trên GitHub Raw của bạn.
-// Ví dụ: 'https://raw.githubusercontent.com/<USERNAME>/<REPO>/main/channels-verified.json'
-// Nếu để trống '', app sẽ tự động tải danh sách .m3u gốc và tự gộp trực tiếp trên máy.
 const VERIFIED_CHANNELS_URL = 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/channels-verified.json';
+
+const CATEGORIES = [
+  'Tất cả',
+  'Yêu thích',
+  'Kênh VTV',
+  'Sự kiện trực tiếp',
+  'Kênh Vĩnh Long',
+  'Kênh HTV',
+  'Kênh SCTV',
+  'Kênh VTV Cab (ON)',
+  'Kênh địa phương',
+  'Kênh FM',
+  'Kênh 360 - Giải trí',
+  'Kênh 360 - Thể thao',
+  'Kênh quốc tế (VIP)',
+];
 
 const ChannelLogo = ({ uri }: { uri: string }) => {
   const [hasError, setHasError] = useState(false);
@@ -80,11 +102,24 @@ interface ChannelGridScreenProps {
   onSelectChannel: (channel: MergedChannel) => void;
 }
 
+function removeAccents(str: string): string {
+  if (!str) return '';
+  return str
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .replace(/Đ/g, 'D')
+    .replace(/đ/g, 'd')
+    .toLowerCase();
+}
+
 export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreenProps) {
+  const insets = useSafeAreaInsets();
   const [channels, setChannels] = useState<MergedChannel[]>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedCategory, setSelectedCategory] = useState('Tất cả');
 
   const fetchFreshChannels = useCallback(async (showLoadingState: boolean) => {
     if (showLoadingState) setLoading(true);
@@ -177,7 +212,8 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
 
   const renderChannelItem = ({ item }: { item: MergedChannel }) => {
     const isFav = favorites.includes(item.id);
-    const logoUri = STABLE_LOGOS[item.name] || item.logoUrl;
+    const normalizedName = normalizeChannelName(item.name);
+    const logoUri = STABLE_LOGOS[normalizedName] || item.logoUrl;
     
     return (
       <TouchableOpacity
@@ -201,9 +237,29 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
     );
   };
 
-  // Split channels into favorites and others
-  const favoriteChannels = channels.filter(c => favorites.includes(c.id));
-  const otherChannels = channels.filter(c => !favorites.includes(c.id));
+  // Filter channels based on category and search query
+  const filteredChannels = channels.filter(channel => {
+    // 1. Filter by category
+    if (selectedCategory === 'Yêu thích') {
+      if (!favorites.includes(channel.id)) return false;
+    } else if (selectedCategory !== 'Tất cả') {
+      if (channel.group !== selectedCategory) return false;
+    }
+
+    // 2. Filter by search query (accent-insensitive)
+    if (searchQuery.trim() !== '') {
+      const cleanQuery = removeAccents(searchQuery);
+      const cleanName = removeAccents(channel.name);
+      const cleanGroup = removeAccents(channel.group || '');
+      return cleanName.includes(cleanQuery) || cleanGroup.includes(cleanQuery);
+    }
+
+    return true;
+  });
+
+  // Split channels into favorites and others for grid layout
+  const favoriteChannels = filteredChannels.filter(c => favorites.includes(c.id));
+  const otherChannels = filteredChannels.filter(c => !favorites.includes(c.id));
 
   // Chunk array helper
   const chunkArray = (array: MergedChannel[], size: number): MergedChannel[][] => {
@@ -231,47 +287,127 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
     | { type: 'row'; channels: MergedChannel[] }
   )[] = [];
   
-  if (favoriteRows.length > 0) {
+  if (selectedCategory !== 'Yêu thích' && favoriteRows.length > 0) {
     listData.push({ type: 'header', title: '⭐ KÊNH YÊU THÍCH' });
     favoriteRows.forEach(row => listData.push({ type: 'row', channels: row }));
   }
   
-  if (otherRows.length > 0) {
-    listData.push({ type: 'header', title: '📺 TẤT CẢ KÊNH' });
-    otherRows.forEach(row => listData.push({ type: 'row', channels: row }));
+  const sectionTitle = selectedCategory === 'Tất cả' 
+    ? '📺 TẤT CẢ KÊNH' 
+    : selectedCategory === 'Yêu thích' 
+      ? '⭐ KÊNH YÊU THÍCH'
+      : `📺 ${selectedCategory.toUpperCase()}`;
+
+  if (selectedCategory === 'Yêu thích') {
+    favoriteRows.forEach(row => listData.push({ type: 'row', channels: row }));
+  } else {
+    if (otherRows.length > 0) {
+      listData.push({ type: 'header', title: sectionTitle });
+      otherRows.forEach(row => listData.push({ type: 'row', channels: row }));
+    }
   }
 
   return (
     <View style={styles.container}>
-      <FlatList
-        data={listData}
-        keyExtractor={(item, index) => index.toString()}
-        refreshing={refreshing}
-        onRefresh={handleRefresh}
-        contentContainerStyle={styles.listContent}
-        renderItem={({ item }) => {
-          if (item.type === 'header') {
+      {/* App Header */}
+      <View style={[styles.header, { paddingTop: insets.top || 16 }]}>
+        <Text style={styles.headerTitle}>ElderTV</Text>
+        <Text style={styles.headerSubtitle}>Tivi Thông Minh Cho Người Cao Tuổi</Text>
+      </View>
+
+      {/* Search Input Bar */}
+      <View style={styles.searchContainer}>
+        <Icon name="search" size={28} color="#A0A0AB" style={styles.searchIcon} />
+        <TextInput
+          style={styles.searchInput}
+          placeholder="Tìm tên kênh (VTV1, HTV7...)"
+          placeholderTextColor="#A0A0AB"
+          value={searchQuery}
+          onChangeText={setSearchQuery}
+          clearButtonMode="while-editing"
+          autoCorrect={false}
+          autoCapitalize="none"
+        />
+        {searchQuery.length > 0 && (
+          <TouchableOpacity onPress={() => setSearchQuery('')} style={styles.clearButton}>
+            <Icon name="close" size={28} color="#A0A0AB" />
+          </TouchableOpacity>
+        )}
+      </View>
+
+      {/* Categories Horizontal Scroll */}
+      <View style={styles.categoriesWrapper}>
+        <ScrollView
+          horizontal
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={styles.categoriesContainer}
+        >
+          {CATEGORIES.map(category => {
+            // Hide "Yêu thích" tab if there are no favorites
+            if (category === 'Yêu thích' && favorites.length === 0) return null;
+
+            const isActive = selectedCategory === category;
             return (
-              <View style={styles.sectionHeader}>
-                <Text style={styles.sectionHeaderText}>{item.title}</Text>
+              <TouchableOpacity
+                key={category}
+                style={[
+                  styles.categoryTab,
+                  isActive && styles.activeCategoryTab
+                ]}
+                onPress={() => setSelectedCategory(category)}
+              >
+                <Text
+                  style={[
+                    styles.categoryTabText,
+                    isActive && styles.activeCategoryTabText
+                  ]}
+                >
+                  {category}
+                </Text>
+              </TouchableOpacity>
+            );
+          })}
+        </ScrollView>
+      </View>
+
+      {/* Grid Content */}
+      {filteredChannels.length === 0 ? (
+        <View style={styles.emptyContainer}>
+          <Icon name="search-off" size={64} color="#FFD700" />
+          <Text style={styles.emptyText}>Không tìm thấy kênh phù hợp</Text>
+          <Text style={styles.emptySubtext}>Vui lòng thử nhập từ khóa hoặc chọn nhóm khác</Text>
+        </View>
+      ) : (
+        <FlatList
+          data={listData}
+          keyExtractor={(item, index) => index.toString()}
+          refreshing={refreshing}
+          onRefresh={handleRefresh}
+          contentContainerStyle={styles.listContent}
+          renderItem={({ item }) => {
+            if (item.type === 'header') {
+              return (
+                <View style={styles.sectionHeader}>
+                  <Text style={styles.sectionHeaderText}>{item.title}</Text>
+                </View>
+              );
+            }
+            
+            return (
+              <View style={styles.row}>
+                {item.channels.map(ch => (
+                  <View key={ch.id} style={{ width: cardWidth + 16 }}>
+                    {renderChannelItem({ item: ch })}
+                  </View>
+                ))}
+                {item.channels.length === 1 && (
+                  <View style={styles.placeholderCard} />
+                )}
               </View>
             );
-          }
-          
-          return (
-            <View style={styles.row}>
-              {item.channels.map(ch => (
-                <View key={ch.id} style={{ width: cardWidth + 16 }}>
-                  {renderChannelItem({ item: ch })}
-                </View>
-              ))}
-              {item.channels.length === 1 && (
-                <View style={styles.placeholderCard} />
-              )}
-            </View>
-          );
-        }}
-      />
+          }}
+        />
+      )}
     </View>
   );
 }
@@ -297,7 +433,6 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   header: {
-    paddingTop: 16,
     paddingBottom: 12,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
@@ -317,9 +452,84 @@ const styles = StyleSheet.create({
     marginTop: 4,
     fontWeight: '600',
   },
+  searchContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#1E1E24',
+    marginHorizontal: 16,
+    marginTop: 12,
+    borderRadius: 30,
+    borderWidth: 2,
+    borderColor: '#2D2D35',
+    paddingHorizontal: 16,
+    height: 56,
+  },
+  searchIcon: {
+    marginRight: 10,
+  },
+  searchInput: {
+    flex: 1,
+    color: '#FFFFFF',
+    fontSize: 20,
+    fontWeight: 'bold',
+    height: '100%',
+    paddingVertical: 0,
+  },
+  clearButton: {
+    padding: 4,
+  },
+  categoriesWrapper: {
+    height: 60,
+    marginTop: 10,
+    marginBottom: 4,
+  },
+  categoriesContainer: {
+    paddingHorizontal: 12,
+    alignItems: 'center',
+  },
+  categoryTab: {
+    paddingHorizontal: 18,
+    paddingVertical: 10,
+    marginHorizontal: 4,
+    borderRadius: 20,
+    backgroundColor: '#1E1E24',
+    borderWidth: 1,
+    borderColor: '#2D2D35',
+  },
+  activeCategoryTab: {
+    backgroundColor: '#FFD700',
+    borderColor: '#FFD700',
+  },
+  categoryTabText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#A0A0AB',
+  },
+  activeCategoryTabText: {
+    color: '#121214',
+  },
+  emptyContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 32,
+  },
+  emptyText: {
+    fontSize: 22,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
+    marginTop: 16,
+    textAlign: 'center',
+  },
+  emptySubtext: {
+    fontSize: 16,
+    color: '#A0A0AB',
+    marginTop: 8,
+    textAlign: 'center',
+  },
   listContent: {
-    padding: 16,
-    paddingTop: 32, // Padding to clear the status bar safely
+    paddingHorizontal: 16,
+    paddingBottom: 32,
   },
   sectionHeader: {
     width: '100%',
@@ -381,9 +591,6 @@ const styles = StyleSheet.create({
   placeholderLogo: {
     justifyContent: 'center',
     alignItems: 'center',
-  },
-  placeholderLogoText: {
-    fontSize: 48,
   },
   favoriteBadge: {
     position: 'absolute',

@@ -112,6 +112,57 @@ function removeAccents(str: string): string {
     .toLowerCase();
 }
 
+function getChannelGroup(channel: MergedChannel): string {
+  const name = channel.name.toUpperCase();
+  if (
+    name.includes('VTV5 TAY') || 
+    name.includes('VTV5 TÂY') || 
+    name.includes('VTV6') || 
+    name.includes('VTV7') || 
+    name.includes('VTV8') || 
+    name.includes('VTV9') || 
+    name.includes('VTV10') || 
+    name.includes('VTV1') || 
+    name.includes('VTV2') || 
+    name.includes('VTV3') || 
+    name.includes('VTV4') || 
+    name.includes('VTV5') || 
+    name.includes('VIETNAM TODAY') || 
+    name.includes('ANTV') || 
+    name.includes('QPVN')
+  ) {
+    return 'Kênh VTV';
+  }
+  if (name.includes('TV360+') || name.includes('TV360 PROMO')) {
+    return 'Sự kiện trực tiếp';
+  }
+  if (name.includes('THVL') || name.includes('VINH LONG')) {
+    return 'Kênh Vĩnh Long';
+  }
+  if (name.startsWith('HTV') || name.includes('DU LICH') || name.includes('DU LỊCH') || name.includes('HTC')) {
+    return 'Kênh HTV';
+  }
+  if (name.includes('SCTV')) {
+    return 'Kênh SCTV';
+  }
+  if (name.startsWith('ON ') || name.startsWith('ON SPORTS') || name.includes('ON BIET') || name.includes('ON VIE')) {
+    return 'Kênh VTV Cab (ON)';
+  }
+  if (name.startsWith('FM') || name.includes('VOH') || name.includes('RADIO') || name.includes('AM610') || name.includes('FM9')) {
+    return 'Kênh FM';
+  }
+  if (name.startsWith('360 ') && (name.includes('PHIM') || name.includes('HOAT HINH') || name.includes('HOẠT HÌNH') || name.includes('ANIME') || name.includes('THIEU NHI') || name.includes('THIẾU NHI') || name.includes('K-DRAMA') || name.includes('HAI') || name.includes('HÀI') || name.includes('KINH DIEN') || name.includes('KINH ĐIỂN') || name.includes('HANH DONG') || name.includes('HÀNH ĐỘNG'))) {
+    return 'Kênh 360 - Giải trí';
+  }
+  if (name.startsWith('360 ') && (name.includes('C1') || name.includes('C2') || name.includes('C3') || name.includes('THE THAO') || name.includes('THỂ THAO') || name.includes('CONG THUC') || name.includes('CÔNG THỨC') || name.includes('BUNDESLIGA') || name.includes('GOLF') || name.includes('TENNIS') || name.includes('CHAU A') || name.includes('CHÂU Á'))) {
+    return 'Kênh 360 - Thể thao';
+  }
+  if (name.includes('HBO') || name.includes('CINEMAX') || name.includes('WB TV') || name.includes('AXN') || name.includes('CINEMAWORLD') || name.includes('DREAMWORKS') || name.includes('CNN') || name.includes('FOX') || name.includes('BLOOMBERG')) {
+    return 'Kênh quốc tế (VIP)';
+  }
+  return 'Kênh địa phương';
+}
+
 export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreenProps) {
   const insets = useSafeAreaInsets();
   const [channels, setChannels] = useState<MergedChannel[]>([]);
@@ -239,18 +290,20 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
 
   // Filter channels based on category and search query
   const filteredChannels = channels.filter(channel => {
+    const groupName = getChannelGroup(channel);
+
     // 1. Filter by category
     if (selectedCategory === 'Yêu thích') {
       if (!favorites.includes(channel.id)) return false;
     } else if (selectedCategory !== 'Tất cả') {
-      if (channel.group !== selectedCategory) return false;
+      if (groupName !== selectedCategory) return false;
     }
 
     // 2. Filter by search query (accent-insensitive)
     if (searchQuery.trim() !== '') {
       const cleanQuery = removeAccents(searchQuery);
       const cleanName = removeAccents(channel.name);
-      const cleanGroup = removeAccents(channel.group || '');
+      const cleanGroup = removeAccents(groupName);
       return cleanName.includes(cleanQuery) || cleanGroup.includes(cleanQuery);
     }
 

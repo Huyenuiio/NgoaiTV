@@ -344,15 +344,7 @@
     ],
     "group": "general"
   },
-  {
-    "id": "lao-sv-tv",
-    "name": "LAO SV TV",
-    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/lao_sv_tv.png",
-    "streamUrls": [
-      "https://livefta.malimarcdn.com/ftaedge00/laosvtv.stream/playlist.m3u8"
-    ],
-    "group": "shop"
-  },
+
   {
     "id": "nghe-an-tv",
     "name": "NGHE AN TV",
@@ -430,7 +422,7 @@
   {
     "id": "dong-thap-tv2",
     "name": "ĐỒNG THÁP TV2",
-    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/dong_thap_tv.png",
+    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/dong_thap_tv2.png",
     "streamUrls": [
       "https://618b88f69e53b.streamlock.net/THDT2/thdttv2/chunklist.m3u8"
     ],

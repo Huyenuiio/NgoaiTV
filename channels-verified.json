@@ -85,26 +85,8 @@
     "name": "CTV",
     "logoUrl": "",
     "streamUrls": [
-      "https://live.ctvbolivia.com/hls/ctv.m3u8",
-      "https://streaming.ctvbolivia.com/hlsweb/ctv.m3u8"
-    ],
-    "group": "general"
-  },
-  {
-    "id": "da-nang-tv1",
-    "name": "DA NANG TV1",
-    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/da_nang_tv1.png",
-    "streamUrls": [
-      "https://live.mediatech.vn/live/285b59a111d76974225a8e3004bfc31a509/chunklist.m3u8"
-    ],
-    "group": "general"
-  },
-  {
-    "id": "da-nang-tv2",
-    "name": "DA NANG TV2",
-    "logoUrl": "",
-    "streamUrls": [
-      "https://live.mediatech.vn/live/2859145290d0d7947ef88b6240123b62474/chunklist.m3u8"
+      "https://streaming.ctvbolivia.com/hlsweb/ctv.m3u8",
+      "https://live.ctvbolivia.com/hls/ctv.m3u8"
     ],
     "group": "general"
   },
@@ -173,11 +155,38 @@
     "group": "general"
   },
   {
+    "id": "lao-cai-tv",
+    "name": "LAO CAI TV",
+    "logoUrl": "",
+    "streamUrls": [
+      "https://live.baolaocai.vn/channel2/stream.m3u8"
+    ],
+    "group": "general"
+  },
+  {
+    "id": "lao-sv-tv",
+    "name": "LAO SV TV",
+    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/lao_sv_tv.png",
+    "streamUrls": [
+      "https://livefta.malimarcdn.com/ftaedge00/laosvtv.stream/playlist.m3u8"
+    ],
+    "group": "shop"
+  },
+  {
     "id": "ltv1",
     "name": "LTV1",
     "logoUrl": "",
     "streamUrls": [
       "https://ltvlive3167.bstrm.net/ltvlive/_definst_/ltvlive_ltv06_ltv1_g_x44_43186_default_1326_hls.smil/chunklist.m3u8"
+    ],
+    "group": "general"
+  },
+  {
+    "id": "nghe-an-tv",
+    "name": "NGHE AN TV",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/5/54/Logo_NTV_Ngh%E1%BB%87_An_HD_2018.png",
+    "streamUrls": [
+      "https://live.mediatech.vn/live/2859591eef2e92249b682db021f4247c364/chunklist.m3u8"
     ],
     "group": "general"
   },
@@ -201,24 +210,6 @@
     "group": "Khác"
   },
   {
-    "id": "qtv1",
-    "name": "QTV1",
-    "logoUrl": "",
-    "streamUrls": [
-      "http://video10.qtv.com.cn/drm/qtv1at/manifest.m3u8"
-    ],
-    "group": "news"
-  },
-  {
-    "id": "qtv3",
-    "name": "QTV3",
-    "logoUrl": "",
-    "streamUrls": [
-      "http://video10.qtv.com.cn/drm/qtv3at/manifest.m3u8"
-    ],
-    "group": "movies"
-  },
-  {
     "id": "quang-ngai-tv",
     "name": "QUANG NGAI TV",
     "logoUrl": "",
@@ -228,11 +219,11 @@
     "group": "Khác"
   },
   {
-    "id": "stv",
-    "name": "STV",
-    "logoUrl": "",
+    "id": "tay-ninh-tv",
+    "name": "TAY NINH TV",
+    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/tay_ninh_tv.png",
     "streamUrls": [
-      "https://ctv.dc.beltelecom.by/ctv/ctv.stream/playlist.m3u8"
+      "https://live-hq.evgcdn.net/live/2851dc2c9af68834814a89e61db0faee561/chunklist.m3u8"
     ],
     "group": "general"
   },
@@ -244,6 +235,24 @@
       "https://livefta.malimarcdn.com/ftaedge00/teatv.sdp/playlist.m3u8"
     ],
     "group": "shop"
+  },
+  {
+    "id": "thai-nguyen-tv",
+    "name": "THAI NGUYEN TV",
+    "logoUrl": "https://thainguyentv.vn/modules/frontend/themes/ptthtn/images/logo.png",
+    "streamUrls": [
+      "https://streaming.thainguyentv.vn/hls/livestream.m3u8"
+    ],
+    "group": "general"
+  },
+  {
+    "id": "tien-giang-tv",
+    "name": "TIEN GIANG TV",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Logo_THTG_HD.png",
+    "streamUrls": [
+      "https://618b88f69e53b.streamlock.net/THDT2/thdttv2/chunklist.m3u8"
+    ],
+    "group": "Khác"
   },
   {
     "id": "uniquely-thai",

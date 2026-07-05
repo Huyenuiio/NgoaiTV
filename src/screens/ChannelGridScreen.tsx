@@ -418,7 +418,7 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
       ) : (
         <FlatList
           data={listData}
-          keyExtractor={(item, index) =>
+          keyExtractor={(item) =>
             item.type === 'header'
               ? `header-${item.title}`
               : `row-${item.channels.map(c => c.id).join('-')}`

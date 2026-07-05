@@ -4,6 +4,7 @@ const path = require('path');
 const CHANNELS_API_URL = 'https://iptv-org.github.io/api/channels.json';
 const STREAMS_API_URL = 'https://iptv-org.github.io/api/streams.json';
 const OUTPUT_FILE = path.join(__dirname, '../channels-verified.json');
+const BLACKLIST_FILE = path.join(__dirname, '../blacklist.json');
 
 // Danh sách các kênh ưu tiên hiển thị ở hàng đầu (Đầy đủ VTV, HTV, THVL, VTC)
 const PRIORITY_CHANNELS = [
@@ -349,8 +350,21 @@ async function run() {
 
   // Kiểm tra kết nối luồng phát
   console.log('Verifying all stream links (this might take a few minutes)...');
-  const verifiedChannels = [];
   
+  // Đọc danh sách kênh đã xác thực hiện tại để bảo toàn nếu quét mới bị lỗi/chặn địa lý
+  let existingChannels = [];
+  if (fs.existsSync(OUTPUT_FILE)) {
+    try {
+      existingChannels = JSON.parse(fs.readFileSync(OUTPUT_FILE, 'utf-8'));
+      console.log(`Loaded ${existingChannels.length} existing channels from cache for protection.`);
+    } catch (e) {
+      console.warn('Failed to parse existing verified channels:', e.message);
+    }
+  }
+  const existingMap = new Map(existingChannels.map(ch => [ch.id, ch]));
+  const processedExistingIds = new Set();
+  
+  const verifiedChannels = [];
   const CONCURRENCY = 15;
   let index = 0;
 
@@ -360,6 +374,7 @@ async function run() {
       const channel = mergedChannels[channelIndex];
       
       console.log(`[${channelIndex + 1}/${mergedChannels.length}] Testing streams for ${channel.name}...`);
+      processedExistingIds.add(channel.id);
       
       const workingUrls = [];
       const deadUrls = [];
@@ -380,7 +395,18 @@ async function run() {
         });
         console.log(`-> ${channel.name}: ${workingUrls.length} active stream(s)`);
       } else {
-        console.log(`-> ${channel.name}: DEAD`);
+        const existing = existingMap.get(channel.id);
+        if (existing) {
+          // Giữ lại kênh từ danh sách cũ (bảo toàn các stream từng hoạt động)
+          verifiedChannels.push(existing);
+          console.log(`-> ${channel.name}: DEAD (kept existing working version)`);
+        } else if (process.env.GITHUB_ACTIONS === 'true') {
+          // Giữ lại kênh nếu chạy trên GitHub Actions để tránh xóa nhầm các kênh bị chặn địa lý (như VTV, HTV)
+          verifiedChannels.push(channel);
+          console.log(`-> ${channel.name}: DEAD (kept on GitHub Actions due to geoblocking)`);
+        } else {
+          console.log(`-> ${channel.name}: DEAD (removed)`);
+        }
       }
     }
   }
@@ -388,8 +414,36 @@ async function run() {
   const workers = Array(CONCURRENCY).fill(null).map(() => worker());
   await Promise.all(workers);
 
+  // Bổ sung các kênh tự thêm (custom) hoặc kênh cũ không có trong dữ liệu tải về mới
+  for (const existing of existingChannels) {
+    if (!processedExistingIds.has(existing.id)) {
+      verifiedChannels.push(existing);
+      console.log(`-> Kept custom/legacy channel: ${existing.name}`);
+    }
+  }
+
+  // Đọc danh sách đen (blacklist.json) nếu có để loại bỏ các kênh không muốn hiển thị
+  let blacklist = [];
+  if (fs.existsSync(BLACKLIST_FILE)) {
+    try {
+      blacklist = JSON.parse(fs.readFileSync(BLACKLIST_FILE, 'utf-8'));
+      if (Array.isArray(blacklist)) {
+        blacklist = blacklist.map(id => id.toLowerCase().trim());
+        console.log(`Loaded blacklist with ${blacklist.length} channels.`);
+      } else {
+        blacklist = [];
+      }
+    } catch (e) {
+      console.warn('Failed to parse blacklist.json:', e.message);
+    }
+  }
+  const blacklistSet = new Set(blacklist);
+
+  // Lọc bỏ các kênh nằm trong blacklist
+  const finalChannelsFiltered = verifiedChannels.filter(ch => !blacklistSet.has(ch.id));
+
   // Sắp xếp kênh ưu tiên hàng đầu
-  const finalChannels = verifiedChannels.sort((a, b) => {
+  const finalChannels = finalChannelsFiltered.sort((a, b) => {
     const aIndex = PRIORITY_CHANNELS.indexOf(a.name);
     const bIndex = PRIORITY_CHANNELS.indexOf(b.name);
 
@@ -407,7 +461,7 @@ async function run() {
 
   console.log(`Writing verified channels to ${OUTPUT_FILE}...`);
   fs.writeFileSync(OUTPUT_FILE, JSON.stringify(finalChannels, null, 2), 'utf-8');
-  console.log(`Done! Verified ${finalChannels.length} channels out of ${mergedChannels.length} in raw database.`);
+  console.log(`Done! Verified ${finalChannels.length} channels.`);
 }
 
 run();

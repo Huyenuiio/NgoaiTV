@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import Video from 'react-native-video';
 import { MergedChannel } from '../services/channelMerger';
+import Orientation from 'react-native-orientation-locker';
 
 interface PlayerScreenProps {
   channel: MergedChannel;
@@ -35,8 +36,12 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
     setError(false);
     resetControlsTimer();
 
+    // Force portrait mode when entering the player
+    Orientation.lockToPortrait();
+
     // Register hardware back press handler specifically for this screen
     const backAction = () => {
+      Orientation.lockToPortrait();
       onBack();
       return true; // handled, do not exit app
     };
@@ -50,6 +55,8 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
       backHandler.remove();
       if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
       if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
+      // Force back to portrait mode when leaving the player
+      Orientation.lockToPortrait();
     };
   }, [channel, onBack]);
 
@@ -86,6 +93,8 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
       setError(true);
       setLoading(false);
       setShowControls(true); // Luôn hiện nút quay lại khi có lỗi
+      // If there is an error, make sure we fall back to portrait mode
+      Orientation.lockToPortrait();
     }
   };
 
@@ -103,6 +112,8 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
   const handleReadyForDisplay = () => {
     if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
     setLoading(false);
+    // Auto rotate to landscape when stream plays normally
+    Orientation.lockToLandscape();
   };
 
   return (

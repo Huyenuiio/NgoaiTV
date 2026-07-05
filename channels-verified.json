@@ -346,9 +346,9 @@
     "group": "Khác"
   },
   {
-    "id": "tien-giang-tv",
-    "name": "TIEN GIANG TV",
-    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/7/7e/Logo_THTG_HD.png",
+    "id": "dong-thap-tv2",
+    "name": "ĐỒNG THÁP TV2",
+    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/dong_thap_tv2.png",
     "streamUrls": [
       "https://618b88f69e53b.streamlock.net/THDT2/thdttv2/chunklist.m3u8"
     ],

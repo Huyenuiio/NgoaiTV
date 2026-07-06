@@ -163,7 +163,8 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
     try {
       // 1. Nếu có cấu hình URL GitHub Raw chứa file json sạch đã kiểm tra từ Actions
       if (VERIFIED_CHANNELS_URL) {
-        const response = await fetch(VERIFIED_CHANNELS_URL);
+        // Thêm tham số t=Date.now() để tránh cache của Android và CDN GitHub, lấy dữ liệu mới nhất ngay lập tức
+        const response = await fetch(`${VERIFIED_CHANNELS_URL}?t=${Date.now()}`);
         if (response.ok) {
           const data = await response.json();
           if (Array.isArray(data) && data.length > 0) {

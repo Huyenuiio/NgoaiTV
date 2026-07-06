@@ -159,13 +159,7 @@ async function testStreamUrl(url, timeoutMs = 4000) {
 
     if (subUrl) {
       // Resolve relative URLs
-      let absoluteSubUrl = subUrl;
-      if (!subUrl.startsWith('http://') && !subUrl.startsWith('https://')) {
-        // Resolve relative path
-        const parentUrlObj = new URL(url);
-        const basePath = parentUrlObj.href.substring(0, parentUrlObj.href.lastIndexOf('/') + 1);
-        absoluteSubUrl = basePath + subUrl;
-      }
+      const absoluteSubUrl = new URL(subUrl, url).href;
 
       // Test the sub-playlist or segment URL
       const subController = new AbortController();
@@ -196,12 +190,7 @@ async function testStreamUrl(url, timeoutMs = 4000) {
               }
             }
             if (segmentUrl) {
-              let absoluteSegUrl = segmentUrl;
-              if (!segmentUrl.startsWith('http://') && !segmentUrl.startsWith('https://')) {
-                const subUrlObj = new URL(absoluteSubUrl);
-                const subBasePath = subUrlObj.href.substring(0, subUrlObj.href.lastIndexOf('/') + 1);
-                absoluteSegUrl = subBasePath + segmentUrl;
-              }
+              const absoluteSegUrl = new URL(segmentUrl, absoluteSubUrl).href;
               
               const segController = new AbortController();
               const segTimeoutId = setTimeout(() => segController.abort(), 3000);

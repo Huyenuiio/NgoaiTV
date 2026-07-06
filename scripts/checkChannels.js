@@ -124,8 +124,114 @@ async function testStreamUrl(url, timeoutMs = 4000) {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
       },
     });
+    
+    if (!response.ok) {
+      clearTimeout(timeoutId);
+      return false;
+    }
+
+    // Verify HLS manifest content
+    const text = await response.text();
     clearTimeout(timeoutId);
-    return response.ok;
+
+    if (!text.includes('#EXTM3U')) {
+      // If it doesn't contain #EXTM3U but has a success code, maybe it is a raw stream
+      const contentType = response.headers.get('content-type') || '';
+      if (contentType.includes('video') || contentType.includes('mpeg') || contentType.includes('octet-stream')) {
+        return true;
+      }
+      return false;
+    }
+
+    // If it's a master playlist, it contains sub-playlists.
+    // If it's a media playlist, it contains segment URLs.
+    // Let's find the first sub-playlist or segment URL.
+    const lines = text.split('\n');
+    let subUrl = '';
+    
+    for (let line of lines) {
+      line = line.trim();
+      if (line && !line.startsWith('#')) {
+        subUrl = line;
+        break;
+      }
+    }
+
+    if (subUrl) {
+      // Resolve relative URLs
+      let absoluteSubUrl = subUrl;
+      if (!subUrl.startsWith('http://') && !subUrl.startsWith('https://')) {
+        // Resolve relative path
+        const parentUrlObj = new URL(url);
+        const basePath = parentUrlObj.href.substring(0, parentUrlObj.href.lastIndexOf('/') + 1);
+        absoluteSubUrl = basePath + subUrl;
+      }
+
+      // Test the sub-playlist or segment URL
+      const subController = new AbortController();
+      const subTimeoutId = setTimeout(() => subController.abort(), 3000);
+
+      try {
+        const subResponse = await fetch(absoluteSubUrl, {
+          method: 'GET',
+          signal: subController.signal,
+          headers: {
+            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+          },
+        });
+        
+        if (subResponse.ok) {
+          // If the sub-URL is another playlist (.m3u8), we should check one step further to find a segment (.ts)
+          const subText = await subResponse.text();
+          clearTimeout(subTimeoutId);
+
+          if (subText.includes('#EXTM3U')) {
+            const subLines = subText.split('\n');
+            let segmentUrl = '';
+            for (let subLine of subLines) {
+              subLine = subLine.trim();
+              if (subLine && !subLine.startsWith('#')) {
+                segmentUrl = subLine;
+                break;
+              }
+            }
+            if (segmentUrl) {
+              let absoluteSegUrl = segmentUrl;
+              if (!segmentUrl.startsWith('http://') && !segmentUrl.startsWith('https://')) {
+                const subUrlObj = new URL(absoluteSubUrl);
+                const subBasePath = subUrlObj.href.substring(0, subUrlObj.href.lastIndexOf('/') + 1);
+                absoluteSegUrl = subBasePath + segmentUrl;
+              }
+              
+              const segController = new AbortController();
+              const segTimeoutId = setTimeout(() => segController.abort(), 3000);
+              try {
+                const segResponse = await fetch(absoluteSegUrl, {
+                  method: 'GET',
+                  signal: segController.signal,
+                  headers: {
+                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+                  },
+                });
+                clearTimeout(segTimeoutId);
+                return segResponse.ok;
+              } catch (e) {
+                clearTimeout(segTimeoutId);
+                return false;
+              }
+            }
+          }
+          return true;
+        }
+        clearTimeout(subTimeoutId);
+        return false;
+      } catch (e) {
+        clearTimeout(subTimeoutId);
+        return false;
+      }
+    }
+
+    return true;
   } catch (error) {
     clearTimeout(timeoutId);
     return false;
@@ -396,14 +502,10 @@ async function run() {
         console.log(`-> ${channel.name}: ${workingUrls.length} active stream(s)`);
       } else {
         const existing = existingMap.get(channel.id);
-        if (existing) {
-          // Giữ lại kênh từ danh sách cũ (bảo toàn các stream từng hoạt động)
+        if (existing && process.env.GITHUB_ACTIONS === 'true') {
+          // Giữ lại kênh từ danh sách cũ trên GitHub Actions để tránh bị xoá do chặn địa lý (US/Europe IP)
           verifiedChannels.push(existing);
-          console.log(`-> ${channel.name}: DEAD (kept existing working version)`);
-        } else if (process.env.GITHUB_ACTIONS === 'true') {
-          // Giữ lại kênh nếu chạy trên GitHub Actions để tránh xóa nhầm các kênh bị chặn địa lý (như VTV, HTV)
-          verifiedChannels.push(channel);
-          console.log(`-> ${channel.name}: DEAD (kept on GitHub Actions due to geoblocking)`);
+          console.log(`-> ${channel.name}: DEAD (kept existing on GitHub Actions)`);
         } else {
           console.log(`-> ${channel.name}: DEAD (removed)`);
         }

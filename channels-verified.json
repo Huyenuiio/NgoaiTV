@@ -68,6 +68,24 @@
     "group": "general"
   },
   {
+    "id": "an-giang-tv2",
+    "name": "AN GIANG TV2",
+    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/an_giang_tv2.png",
+    "streamUrls": [
+      "https://tv.angiangtv.vn/live/kgtv2/kgtv2.m3u8"
+    ],
+    "group": "entertainment"
+  },
+  {
+    "id": "an-giang-tv3",
+    "name": "AN GIANG TV3",
+    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/an_giang_tv3.png",
+    "streamUrls": [
+      "https://tv.angiangtv.vn/live/kgtv1/kgtv1.m3u8"
+    ],
+    "group": "entertainment"
+  },
+  {
     "id": "an-ninh-tv",
     "name": "AN NINH TV",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Logoantv.png",
@@ -103,6 +121,15 @@
       "https://stream.thingnet.vn/live/smil:CRTV.smil/chunklist.m3u8"
     ],
     "group": "general"
+  },
+  {
+    "id": "cinemaworld",
+    "name": "CINEMAWORLD",
+    "logoUrl": "",
+    "streamUrls": [
+      "http://103.58.160.157:8278/720-CINEMAWORLD/playlist.m3u8"
+    ],
+    "group": "movies"
   },
   {
     "id": "da-nang-tv1",
@@ -284,8 +311,8 @@
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vietnam_today.png",
     "streamUrls": [
       "https://amagi-live.ondemandkorea.com/amgplt0456.m3u8",
-      "https://vips-livecdn.fptplay.net/live/media/vietnamtoday/live-hls-avc/index.m3u8",
-      "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vietnamtoday-720p.m3u8"
+      "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vietnamtoday-720p.m3u8",
+      "https://vips-livecdn.fptplay.net/live/media/vietnamtoday/live-hls-avc/index.m3u8"
     ],
     "group": "Khác"
   },

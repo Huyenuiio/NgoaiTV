@@ -96,6 +96,15 @@
     "group": "Khác"
   },
   {
+    "id": "axn",
+    "name": "AXN",
+    "logoUrl": "",
+    "streamUrls": [
+      "http://45.162.231.38:7779/AXN/index.m3u8"
+    ],
+    "group": "movies"
+  },
+  {
     "id": "can-tho-tv",
     "name": "CAN THO TV",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/can_tho_tv.png",
@@ -304,6 +313,17 @@
       "https://live.fptplay53.net/epzsd1/hue_hls.smil/chunklist.m3u8"
     ],
     "group": "Khác"
+  },
+  {
+    "id": "tn",
+    "name": "TN",
+    "logoUrl": "",
+    "streamUrls": [
+      "http://45.6.4.35/TN/index.m3u8",
+      "https://latam-cache-sv2-cdn.latamlive.net/TN_ENC_LIVE/index.mpd",
+      "http://playcom.trapemn.tv:1935/transcoderip/tn.stream/playlist.m3u8"
+    ],
+    "group": "news"
   },
   {
     "id": "vietnam-today",

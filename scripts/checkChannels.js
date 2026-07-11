@@ -297,6 +297,8 @@ async function run() {
   console.log('Filtering streams for Vietnamese channels...');
   const channelStreams = new Map();
   const channelDetails = new Map();
+  // Theo dõi các kênh bị geo-block (chỉ xem được trong Việt Nam, IP nước ngoài bị chặn)
+  const geoBlockedChannels = new Set();
 
   for (const str of streams) {
     if (vnChannelIds.has(str.channel)) {
@@ -311,6 +313,11 @@ async function run() {
       const urls = channelStreams.get(normalized);
       if (!urls.includes(str.url)) {
         urls.push(str.url);
+      }
+
+      // Đánh dấu kênh bị geo-block để không xóa khi test từ IP nước ngoài
+      if (str.label && str.label.toLowerCase().includes('geo')) {
+        geoBlockedChannels.add(normalized);
       }
 
       if (!channelDetails.has(normalized)) {
@@ -491,10 +498,15 @@ async function run() {
         console.log(`-> ${channel.name}: ${workingUrls.length} active stream(s)`);
       } else {
         const existing = existingMap.get(channel.id);
+        const isGeoBlocked = geoBlockedChannels.has(channel.name);
         if (existing && process.env.GITHUB_ACTIONS === 'true') {
           // Giữ lại kênh từ danh sách cũ trên GitHub Actions để tránh bị xoá do chặn địa lý (US/Europe IP)
           verifiedChannels.push(existing);
           console.log(`-> ${channel.name}: DEAD (kept existing on GitHub Actions)`);
+        } else if (isGeoBlocked) {
+          // Kênh bị geo-block: giữ lại stream URLs gốc dù test DEAD vì IP nước ngoài bị chặn
+          verifiedChannels.push(channel);
+          console.log(`-> ${channel.name}: DEAD but GEO-BLOCKED (kept stream URLs)`);
         } else {
           console.log(`-> ${channel.name}: DEAD (removed)`);
         }

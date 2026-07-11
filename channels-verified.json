@@ -68,6 +68,15 @@
     "group": "general"
   },
   {
+    "id": "an-giang-tv1",
+    "name": "AN GIANG TV1",
+    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/an_giang_tv1.png",
+    "streamUrls": [
+      "https://tv.angiangtv.vn/live/kgtv/kgtv.m3u8"
+    ],
+    "group": "general"
+  },
+  {
     "id": "an-giang-tv2",
     "name": "AN GIANG TV2",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/an_giang_tv2.png",

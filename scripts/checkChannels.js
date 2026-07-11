@@ -112,6 +112,10 @@ function normalizeChannelName(name) {
   return normalized;
 }
 
+// Trả về: 'alive' | 'geo-blocked' | 'dead'
+// - 'alive'       : stream hoạt động bình thường
+// - 'geo-blocked' : server sống nhưng chặn IP nước ngoài (HTTP 403)
+// - 'dead'        : link thật sự chết (timeout, 404, nội dung sai...)
 async function testStreamUrl(url, timeoutMs = 4000) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
@@ -124,10 +128,16 @@ async function testStreamUrl(url, timeoutMs = 4000) {
         'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
       },
     });
-    
+
+    // 403 Forbidden = server sống nhưng chặn IP → geo-blocked
+    if (response.status === 403) {
+      clearTimeout(timeoutId);
+      return 'geo-blocked';
+    }
+
     if (!response.ok) {
       clearTimeout(timeoutId);
-      return false;
+      return 'dead';
     }
 
     // Verify HLS manifest content
@@ -138,9 +148,9 @@ async function testStreamUrl(url, timeoutMs = 4000) {
       // If it doesn't contain #EXTM3U but has a success code, maybe it is a raw stream
       const contentType = response.headers.get('content-type') || '';
       if (contentType.includes('video') || contentType.includes('mpeg') || contentType.includes('octet-stream')) {
-        return true;
+        return 'alive';
       }
-      return false;
+      return 'dead';
     }
 
     // If it's a master playlist, it contains sub-playlists.
@@ -173,6 +183,12 @@ async function testStreamUrl(url, timeoutMs = 4000) {
             'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
           },
         });
+
+        // 403 ở sub-playlist cũng là geo-blocked
+        if (subResponse.status === 403) {
+          clearTimeout(subTimeoutId);
+          return 'geo-blocked';
+        }
         
         if (subResponse.ok) {
           // If the sub-URL is another playlist (.m3u8), we should check one step further to find a segment (.ts)
@@ -203,27 +219,28 @@ async function testStreamUrl(url, timeoutMs = 4000) {
                   },
                 });
                 clearTimeout(segTimeoutId);
-                return segResponse.ok;
+                if (segResponse.status === 403) return 'geo-blocked';
+                return segResponse.ok ? 'alive' : 'dead';
               } catch (e) {
                 clearTimeout(segTimeoutId);
-                return false;
+                return 'dead';
               }
             }
           }
-          return true;
+          return 'alive';
         }
         clearTimeout(subTimeoutId);
-        return false;
+        return 'dead';
       } catch (e) {
         clearTimeout(subTimeoutId);
-        return false;
+        return 'dead';
       }
     }
 
-    return true;
+    return 'alive';
   } catch (error) {
     clearTimeout(timeoutId);
-    return false;
+    return 'dead';
   }
 }
 
@@ -478,35 +495,48 @@ async function run() {
       console.log(`[${channelIndex + 1}/${mergedChannels.length}] Testing streams for ${channel.name}...`);
       processedExistingIds.add(channel.id);
       
-      const workingUrls = [];
+      const aliveUrls = [];
+      const geoBlockedUrls = [];
       const deadUrls = [];
       
       for (const url of channel.streamUrls) {
-        const isAlive = await testStreamUrl(url);
-        if (isAlive) {
-          workingUrls.push(url);
+        const result = await testStreamUrl(url);
+        if (result === 'alive') {
+          aliveUrls.push(url);
+        } else if (result === 'geo-blocked') {
+          geoBlockedUrls.push(url);
         } else {
           deadUrls.push(url);
         }
       }
 
-      if (workingUrls.length > 0) {
+      if (aliveUrls.length > 0) {
+        // Có stream hoạt động: ưu tiên alive → geo-blocked → dead
         verifiedChannels.push({
           ...channel,
-          streamUrls: [...workingUrls, ...deadUrls]
+          streamUrls: [...aliveUrls, ...geoBlockedUrls, ...deadUrls]
         });
-        console.log(`-> ${channel.name}: ${workingUrls.length} active stream(s)`);
+        console.log(`-> ${channel.name}: ${aliveUrls.length} alive, ${geoBlockedUrls.length} geo-blocked stream(s)`);
+      } else if (geoBlockedUrls.length > 0) {
+        // Server vẫn sống (trả 403) nhưng chặn IP nước ngoài → giữ lại
+        verifiedChannels.push({
+          ...channel,
+          streamUrls: [...geoBlockedUrls, ...deadUrls]
+        });
+        console.log(`-> ${channel.name}: geo-blocked (kept ${geoBlockedUrls.length} stream(s))`);
       } else {
+        // Tất cả đều dead → fallback: kiểm tra nhãn geo-blocked từ iptv-org
+        // (một số server geo-block không trả 403 mà trả timeout/404)
+        const isGeoBlockedByIptvOrg = geoBlockedChannels.has(channel.name);
         const existing = existingMap.get(channel.id);
-        const isGeoBlocked = geoBlockedChannels.has(channel.name);
         if (existing && process.env.GITHUB_ACTIONS === 'true') {
-          // Giữ lại kênh từ danh sách cũ trên GitHub Actions để tránh bị xoá do chặn địa lý (US/Europe IP)
+          // Giữ lại kênh từ danh sách cũ trên GitHub Actions
           verifiedChannels.push(existing);
           console.log(`-> ${channel.name}: DEAD (kept existing on GitHub Actions)`);
-        } else if (isGeoBlocked) {
-          // Kênh bị geo-block: giữ lại stream URLs gốc dù test DEAD vì IP nước ngoài bị chặn
+        } else if (isGeoBlockedByIptvOrg) {
+          // Fallback: iptv-org đánh dấu geo-blocked dù server không trả 403
           verifiedChannels.push(channel);
-          console.log(`-> ${channel.name}: DEAD but GEO-BLOCKED (kept stream URLs)`);
+          console.log(`-> ${channel.name}: DEAD but marked geo-blocked by iptv-org (kept)`);
         } else {
           console.log(`-> ${channel.name}: DEAD (removed)`);
         }

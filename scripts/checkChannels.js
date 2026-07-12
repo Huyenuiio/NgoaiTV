@@ -112,10 +112,47 @@ function normalizeChannelName(name) {
   return normalized;
 }
 
+// Danh sách domain đã biết yêu cầu auth/token → luôn coi là dead dù trả 403
+const AUTH_REQUIRED_DOMAINS = [
+  'vtvprime.vn',        // VTV Prime - cần đăng nhập tài khoản
+  'prima.vn',           // Prima - cần đăng nhập
+];
+
+// Kiểm tra xem 403 là do auth/token hay do geo-block
+// Trả về true nếu cần auth (→ dead), false nếu chỉ là geo-block (→ giữ lại)
+async function is403AuthRequired(url, response) {
+  // 1. Domain đã biết cần auth
+  try {
+    const hostname = new URL(url).hostname;
+    if (AUTH_REQUIRED_DOMAINS.some(domain => hostname === domain || hostname.endsWith('.' + domain))) {
+      return true;
+    }
+  } catch (e) {}
+
+  // 2. Có WWW-Authenticate header → cần auth
+  if (response.headers.get('WWW-Authenticate')) {
+    return true;
+  }
+
+  // 3. Kiểm tra body chứa từ khóa liên quan đến auth/token
+  try {
+    const body = await response.clone().text();
+    const lower = body.toLowerCase();
+    const authKeywords = ['token', 'unauthorized', 'authentication', 'auth required', 'access denied', 'invalid token', 'forbidden', 'no permission'];
+    // Chỉ tính là auth nếu body ngắn (trang lỗi auth) và chứa từ khóa
+    // Body dài thường là nội dung trang web bình thường
+    if (body.length < 2000 && authKeywords.some(kw => lower.includes(kw))) {
+      return true;
+    }
+  } catch (e) {}
+
+  return false;
+}
+
 // Trả về: 'alive' | 'geo-blocked' | 'dead'
 // - 'alive'       : stream hoạt động bình thường
-// - 'geo-blocked' : server sống nhưng chặn IP nước ngoài (HTTP 403)
-// - 'dead'        : link thật sự chết (timeout, 404, nội dung sai...)
+// - 'geo-blocked' : server sống nhưng chặn IP nước ngoài (HTTP 403), IP Việt Nam xem được
+// - 'dead'        : link thật sự chết (timeout, 404, cần auth/token, nội dung sai...)
 async function testStreamUrl(url, timeoutMs = 4000) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
@@ -129,10 +166,11 @@ async function testStreamUrl(url, timeoutMs = 4000) {
       },
     });
 
-    // 403 Forbidden = server sống nhưng chặn IP → geo-blocked
+    // 403 Forbidden: phân biệt geo-block (giữ lại) vs auth/token (bỏ)
     if (response.status === 403) {
       clearTimeout(timeoutId);
-      return 'geo-blocked';
+      const needsAuth = await is403AuthRequired(url, response);
+      return needsAuth ? 'dead' : 'geo-blocked';
     }
 
     if (!response.ok) {
@@ -184,10 +222,11 @@ async function testStreamUrl(url, timeoutMs = 4000) {
           },
         });
 
-        // 403 ở sub-playlist cũng là geo-blocked
+        // 403 ở sub-playlist: phân biệt geo-block vs auth
         if (subResponse.status === 403) {
           clearTimeout(subTimeoutId);
-          return 'geo-blocked';
+          const needsAuth = await is403AuthRequired(absoluteSubUrl, subResponse);
+          return needsAuth ? 'dead' : 'geo-blocked';
         }
         
         if (subResponse.ok) {
@@ -219,7 +258,10 @@ async function testStreamUrl(url, timeoutMs = 4000) {
                   },
                 });
                 clearTimeout(segTimeoutId);
-                if (segResponse.status === 403) return 'geo-blocked';
+                if (segResponse.status === 403) {
+                  const needsAuth = await is403AuthRequired(absoluteSegUrl, segResponse);
+                  return needsAuth ? 'dead' : 'geo-blocked';
+                }
                 return segResponse.ok ? 'alive' : 'dead';
               } catch (e) {
                 clearTimeout(segTimeoutId);

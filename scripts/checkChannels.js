@@ -458,17 +458,32 @@ async function run() {
   }
 
   const REQUESTED_CHANNELS = [
-    'VTV6', 'VTV1 HD', 'VTV3 HD', 'VTV2 HD', 'TV360+1', 'TV360+2', 'ANTV', 'QPVN', 'VTV5 HD', 'Vietnam Today',
-    'VTV1 HD', 'VTV2 HD', 'VTV3 HD', 'VTV4 HD', 'VTV5 HD', 'VTV5 Tây Nguyên HD', 'VTV5 Tây Nam Bộ HD', 'VTV6', 'VTV7 HD', 'VTV8 HD', 'VTV9 HD', 'VTV10', 'Vietnam Today',
-    'TV360+1', 'TV360+2', 'TV360+3', 'TV360+4', 'TV360+5', 'TV360+6', 'TV360+7', 'TV360+8', 'TV360+9', 'TV360+10', 'TV360+11', 'TV360+12', 'TV360+13', 'TV360+14', 'TV360+15', 'TV360 Promo',
+    'VTV6', 'VTV10', 'Vietnam Today', 'ANTV', 'QPVN',
+    'VTV1 HD', 'VTV2 HD', 'VTV3 HD', 'VTV4 HD', 'VTV5 HD',
+    'VTV5 Tây Nguyên HD', 'VTV5 Tây Nam Bộ HD', 'VTV7 HD', 'VTV8 HD', 'VTV9 HD',
+    'TV360+1', 'TV360+2', 'TV360+3', 'TV360+4', 'TV360+5', 'TV360+6', 'TV360+7',
+    'TV360+8', 'TV360+9', 'TV360+10', 'TV360+11', 'TV360+12', 'TV360+13', 'TV360+14', 'TV360+15', 'TV360 Promo',
     'THVL1 HD', 'THVL2 HD',
-    'HTV1', 'HTV2', 'HTV3', 'HTV4', 'HTV7 HD', 'HTV9 HD', 'HTV Thể thao', 'HTV Gia Đình', 'HTV Phụ Nữ', 'HTV Thuần Việt', 'HTV Phim', 'HTV Music', 'HTC (C+)', 'Du lịch & Cuộc sống', 'HTV5 Bchannel',
+    'HTV1', 'HTV2', 'HTV3', 'HTV4', 'HTV7 HD', 'HTV9 HD', 'HTV Thể thao',
+    'HTV Gia Đình', 'HTV Phụ Nữ', 'HTV Thuần Việt', 'HTV Phim', 'HTV Music',
+    'HTC (C+)', 'Du lịch & Cuộc sống', 'HTV5 Bchannel',
     'FM90', 'FM96', 'VOH AM610Khz', 'VOH FM99.9Mhz', 'VOH FM87.7Mhz', 'VOH FM95.6Mhz', 'VOH Radio',
     'SCTV6', 'SCTV2',
-    'ON Football', 'ON Sports', 'ON Sports News', 'ON Golf', 'On Sports+', 'ON Vie Giải Trí', 'ON Phim Việt', 'ON Cine', 'ON Vie Dramas', 'ON BiBi', 'ON Kids', 'ON Movies', 'ON e Channel', 'ON Style', 'ON Music', 'ON Trending TV', 'ON VFamily', 'ON Life', 'ON Info', 'ON O2TV',
-    'QTV3', 'H1 HD', 'H2 HD', 'ATV1', 'ATV2', 'You TV', 'HiTV', 'BTV HD', 'LTV1', 'LTV2', 'LTV HD', 'CTV HD', 'Cần Thơ 1', 'Cần Thơ 2', 'Cần Thơ 3', 'CRTV HD', 'ĐNRT1', 'ĐNRT2', 'DRT', 'ĐTV', 'ĐN1 HD RTV', 'ĐN2 HD RTV', 'THĐT', 'THĐT1', 'GTV', 'BHT TV', 'THP3', 'THP HD', 'Huế TV', 'HY HD', 'KTV HD', 'KTV1', 'LSTV HD', 'THLC', 'Tây Ninh TV', 'NTV', 'TN HD', 'PTV HD', 'Đồng Tháp TV1 (ĐồngTV1)', 'QTV1', 'QTTV', 'STV', 'TN', 'TTV', 'TTV HD', 'Miền Tây TV',
-    '360 Phim Việt', '360 Phim Âu Mỹ', '360 Hoạt Hình', '360 Phim Hoa Ngữ', '360 Hành Động Châu Á', '360 K-Drama', '360 Hài - Tình Cảm', '360 Phim Kinh Điển', '360 Anime', '360 Thiếu Nhi',
-    '360 C1 Châu Âu', '360 C2 Châu Âu', '360 C3 Châu Âu', '360 Thể thao Châu Á', '360 Công thức 1', '360 Bundesliga', '360 Golf', '360 Tennis',
+    'ON Football', 'ON Sports', 'ON Sports News', 'ON Golf', 'On Sports+',
+    'ON Vie Giải Trí', 'ON Phim Việt', 'ON Cine', 'ON Vie Dramas', 'ON BiBi',
+    'ON Kids', 'ON Movies', 'ON e Channel', 'ON Style', 'ON Music',
+    'ON Trending TV', 'ON VFamily', 'ON Life', 'ON Info', 'ON O2TV',
+    'QTV3', 'H1 HD', 'H2 HD', 'ATV1', 'ATV2', 'You TV', 'HiTV', 'BTV HD',
+    'LTV1', 'LTV2', 'LTV HD', 'CTV HD', 'Cần Thơ 1', 'Cần Thơ 2', 'Cần Thơ 3',
+    'CRTV HD', 'ĐNRT1', 'ĐNRT2', 'DRT', 'ĐTV', 'ĐN1 HD RTV', 'ĐN2 HD RTV',
+    'THĐT', 'THĐT1', 'GTV', 'BHT TV', 'THP3', 'THP HD', 'Huế TV',
+    'HY HD', 'KTV HD', 'KTV1', 'LSTV HD', 'THLC', 'Tây Ninh TV', 'NTV',
+    'TN HD', 'PTV HD', 'Đồng Tháp TV1 (ĐồngTV1)', 'QTV1', 'QTTV', 'STV', 'TN', 'TTV', 'TTV HD', 'Miền Tây TV',
+    '360 Phim Việt', '360 Phim Âu Mỹ', '360 Hoạt Hình', '360 Phim Hoa Ngữ',
+    '360 Hành Động Châu Á', '360 K-Drama', '360 Hài - Tình Cảm',
+    '360 Phim Kinh Điển', '360 Anime', '360 Thiếu Nhi',
+    '360 C1 Châu Âu', '360 C2 Châu Âu', '360 C3 Châu Âu',
+    '360 Thể thao Châu Á', '360 Công thức 1', '360 Bundesliga', '360 Golf', '360 Tennis',
     'HBO', 'Cinemax', 'WB TV', 'AXN', 'CinemaWorld', 'DreamWorks', 'CNN', 'FOX', 'Bloomberg'
   ];
 
@@ -560,21 +575,19 @@ async function run() {
       }
 
       if (aliveUrls.length > 0) {
-        // Có stream hoạt động: ưu tiên alive → geo-blocked → dead
-        // eslint-disable-next-line no-unused-vars
-        const { authDeadStrikes: _s1, ...cleanChannel } = channel;
+        // Có stream hoạt động → reset strikes, ưu tiên alive → geo-blocked → dead
         verifiedChannels.push({
-          ...cleanChannel,
+          ...channel,
           streamUrls: [...aliveUrls, ...geoBlockedUrls, ...deadUrls]
+          // không include authDeadStrikes vì channel từ mergedChannels luôn clean
         });
         console.log(`-> ${channel.name}: ${aliveUrls.length} alive, ${geoBlockedUrls.length} geo-blocked stream(s)`);
       } else if (geoBlockedUrls.length > 0) {
-        // Server vẫn sống (trả 403) nhưng chặn IP nước ngoài → giữ lại
-        // eslint-disable-next-line no-unused-vars
-        const { authDeadStrikes: _s2, ...cleanChannel } = channel;
+        // Server vẫn sống (trả 403) nhưng chặn IP nước ngoài → giữ lại, reset strikes
         verifiedChannels.push({
-          ...cleanChannel,
+          ...channel,
           streamUrls: [...geoBlockedUrls, ...deadUrls]
+          // không include authDeadStrikes vì channel từ mergedChannels luôn clean
         });
         console.log(`-> ${channel.name}: geo-blocked (kept ${geoBlockedUrls.length} stream(s))`);
       } else if (authDeadUrls.length > 0) {
@@ -620,8 +633,13 @@ async function run() {
   await Promise.all(workers);
 
   // Bổ sung các kênh tự thêm (custom) hoặc kênh cũ không có trong dữ liệu tải về mới
+  // Nhưng không giữ lại nếu chúng đã bị đánh dấu authDeadStrikes >= 2
   for (const existing of existingChannels) {
     if (!processedExistingIds.has(existing.id)) {
+      if (existing.authDeadStrikes >= 2) {
+        console.log(`-> Skipped legacy channel ${existing.name}: previously confirmed AUTH-DEAD`);
+        continue;
+      }
       verifiedChannels.push(existing);
       console.log(`-> Kept custom/legacy channel: ${existing.name}`);
     }

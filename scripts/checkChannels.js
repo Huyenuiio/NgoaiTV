@@ -149,10 +149,11 @@ async function is403AuthRequired(url, response) {
   return false;
 }
 
-// Trả về: 'alive' | 'geo-blocked' | 'dead'
+// Trả về: 'alive' | 'geo-blocked' | 'auth-dead' | 'dead'
 // - 'alive'       : stream hoạt động bình thường
 // - 'geo-blocked' : server sống nhưng chặn IP nước ngoài (HTTP 403), IP Việt Nam xem được
-// - 'dead'        : link thật sự chết (timeout, 404, cần auth/token, nội dung sai...)
+// - 'auth-dead'   : link yêu cầu token/auth → xác định rõ là dead, không restore từ cache
+// - 'dead'        : link chết không rõ nguyên nhân (timeout, 404, nội dung sai...)
 async function testStreamUrl(url, timeoutMs = 4000) {
   const controller = new AbortController();
   const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
@@ -170,7 +171,7 @@ async function testStreamUrl(url, timeoutMs = 4000) {
     if (response.status === 403) {
       clearTimeout(timeoutId);
       const needsAuth = await is403AuthRequired(url, response);
-      return needsAuth ? 'dead' : 'geo-blocked';
+      return needsAuth ? 'auth-dead' : 'geo-blocked';
     }
 
     if (!response.ok) {
@@ -226,7 +227,7 @@ async function testStreamUrl(url, timeoutMs = 4000) {
         if (subResponse.status === 403) {
           clearTimeout(subTimeoutId);
           const needsAuth = await is403AuthRequired(absoluteSubUrl, subResponse);
-          return needsAuth ? 'dead' : 'geo-blocked';
+          return needsAuth ? 'auth-dead' : 'geo-blocked';
         }
         
         if (subResponse.ok) {
@@ -260,7 +261,7 @@ async function testStreamUrl(url, timeoutMs = 4000) {
                 clearTimeout(segTimeoutId);
                 if (segResponse.status === 403) {
                   const needsAuth = await is403AuthRequired(absoluteSegUrl, segResponse);
-                  return needsAuth ? 'dead' : 'geo-blocked';
+                  return needsAuth ? 'auth-dead' : 'geo-blocked';
                 }
                 return segResponse.ok ? 'alive' : 'dead';
               } catch (e) {
@@ -539,6 +540,7 @@ async function run() {
       
       const aliveUrls = [];
       const geoBlockedUrls = [];
+      const authDeadUrls = [];
       const deadUrls = [];
       
       for (const url of channel.streamUrls) {
@@ -547,6 +549,8 @@ async function run() {
           aliveUrls.push(url);
         } else if (result === 'geo-blocked') {
           geoBlockedUrls.push(url);
+        } else if (result === 'auth-dead') {
+          authDeadUrls.push(url);
         } else {
           deadUrls.push(url);
         }
@@ -566,13 +570,17 @@ async function run() {
           streamUrls: [...geoBlockedUrls, ...deadUrls]
         });
         console.log(`-> ${channel.name}: geo-blocked (kept ${geoBlockedUrls.length} stream(s))`);
+      } else if (authDeadUrls.length > 0) {
+        // Ít nhất 1 URL bị xác định rõ là yêu cầu auth/token → loại bỏ hoàn toàn,
+        // KHÔNG restore từ cache dù đang chạy trên GitHub Actions
+        console.log(`-> ${channel.name}: AUTH-DEAD (${authDeadUrls.length} url(s) require token/auth, removed)`);
       } else {
-        // Tất cả đều dead → fallback: kiểm tra nhãn geo-blocked từ iptv-org
+        // Tất cả dead không rõ nguyên nhân (timeout/404) → fallback: kiểm tra nhãn geo-blocked từ iptv-org
         // (một số server geo-block không trả 403 mà trả timeout/404)
         const isGeoBlockedByIptvOrg = geoBlockedChannels.has(channel.name);
         const existing = existingMap.get(channel.id);
         if (existing && process.env.GITHUB_ACTIONS === 'true') {
-          // Giữ lại kênh từ danh sách cũ trên GitHub Actions
+          // Giữ lại kênh từ danh sách cũ trên GitHub Actions (có thể đang bị geo-block im lặng)
           verifiedChannels.push(existing);
           console.log(`-> ${channel.name}: DEAD (kept existing on GitHub Actions)`);
         } else if (isGeoBlockedByIptvOrg) {

@@ -140,11 +140,14 @@ async function is403AuthRequired(url, response) {
     const lower = body.toLowerCase();
     // Chỉ dùng từ khóa đặc trưng cho auth/token, tránh 'forbidden'/'access denied'
     // vì geo-block server cũng hay dùng những từ đó → dễ false positive
-    const authKeywords = ['token', 'unauthorized', 'authentication', 'auth required',
-      'invalid token', 'no permission', 'login required', 'jwt', 'bearer'];
+    const authKeywords = [
+      /\btoken\b/, /\bunauthorized\b/, /\bauthentication\b/,
+      /\bauth required\b/, /\binvalid token\b/, /\bno permission\b/,
+      /\blogin required\b/, /\bjwt\b/, /\bbearer\b/
+    ];
     // Chỉ tính là auth nếu body ngắn (trang lỗi auth) và chứa từ khóa
     // Body dài thường là nội dung trang web bình thường
-    if (body.length < 2000 && authKeywords.some(kw => lower.includes(kw))) {
+    if (body.length < 2000 && authKeywords.some(kw => kw.test(lower))) {
       return true;
     }
   } catch (e) {}
@@ -576,18 +579,18 @@ async function run() {
 
       if (aliveUrls.length > 0) {
         // Có stream hoạt động → reset strikes, ưu tiên alive → geo-blocked → dead
+        // (channel từ mergedChannels luôn clean, không có authDeadStrikes)
         verifiedChannels.push({
           ...channel,
-          streamUrls: [...aliveUrls, ...geoBlockedUrls, ...deadUrls]
-          // không include authDeadStrikes vì channel từ mergedChannels luôn clean
+          streamUrls: [...aliveUrls, ...geoBlockedUrls, ...deadUrls],
         });
         console.log(`-> ${channel.name}: ${aliveUrls.length} alive, ${geoBlockedUrls.length} geo-blocked stream(s)`);
       } else if (geoBlockedUrls.length > 0) {
         // Server vẫn sống (trả 403) nhưng chặn IP nước ngoài → giữ lại, reset strikes
+        // (channel từ mergedChannels luôn clean, không có authDeadStrikes)
         verifiedChannels.push({
           ...channel,
-          streamUrls: [...geoBlockedUrls, ...deadUrls]
-          // không include authDeadStrikes vì channel từ mergedChannels luôn clean
+          streamUrls: [...geoBlockedUrls, ...deadUrls],
         });
         console.log(`-> ${channel.name}: geo-blocked (kept ${geoBlockedUrls.length} stream(s))`);
       } else if (authDeadUrls.length > 0) {

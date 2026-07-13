@@ -138,7 +138,10 @@ async function is403AuthRequired(url, response) {
   try {
     const body = await response.clone().text();
     const lower = body.toLowerCase();
-    const authKeywords = ['token', 'unauthorized', 'authentication', 'auth required', 'access denied', 'invalid token', 'forbidden', 'no permission'];
+    // Chỉ dùng từ khóa đặc trưng cho auth/token, tránh 'forbidden'/'access denied'
+    // vì geo-block server cũng hay dùng những từ đó → dễ false positive
+    const authKeywords = ['token', 'unauthorized', 'authentication', 'auth required',
+      'invalid token', 'no permission', 'login required', 'jwt', 'bearer'];
     // Chỉ tính là auth nếu body ngắn (trang lỗi auth) và chứa từ khóa
     // Body dài thường là nội dung trang web bình thường
     if (body.length < 2000 && authKeywords.some(kw => lower.includes(kw))) {
@@ -558,22 +561,41 @@ async function run() {
 
       if (aliveUrls.length > 0) {
         // Có stream hoạt động: ưu tiên alive → geo-blocked → dead
+        // eslint-disable-next-line no-unused-vars
+        const { authDeadStrikes: _s1, ...cleanChannel } = channel;
         verifiedChannels.push({
-          ...channel,
+          ...cleanChannel,
           streamUrls: [...aliveUrls, ...geoBlockedUrls, ...deadUrls]
         });
         console.log(`-> ${channel.name}: ${aliveUrls.length} alive, ${geoBlockedUrls.length} geo-blocked stream(s)`);
       } else if (geoBlockedUrls.length > 0) {
         // Server vẫn sống (trả 403) nhưng chặn IP nước ngoài → giữ lại
+        // eslint-disable-next-line no-unused-vars
+        const { authDeadStrikes: _s2, ...cleanChannel } = channel;
         verifiedChannels.push({
-          ...channel,
+          ...cleanChannel,
           streamUrls: [...geoBlockedUrls, ...deadUrls]
         });
         console.log(`-> ${channel.name}: geo-blocked (kept ${geoBlockedUrls.length} stream(s))`);
       } else if (authDeadUrls.length > 0) {
-        // Ít nhất 1 URL bị xác định rõ là yêu cầu auth/token → loại bỏ hoàn toàn,
-        // KHÔNG restore từ cache dù đang chạy trên GitHub Actions
-        console.log(`-> ${channel.name}: AUTH-DEAD (${authDeadUrls.length} url(s) require token/auth, removed)`);
+        // Ít nhất 1 URL bị xác định rõ là auth/token
+        // → Dùng strikes mechanism: cần 2 lần liên tiếp mới xóa hẳn
+        // → Tránh xóa nhầm kênh geo-block bị nhận nhầm là auth-dead
+        const existing = existingMap.get(channel.id);
+        const prevStrikes = (existing && existing.authDeadStrikes) ? existing.authDeadStrikes : 0;
+        const strikes = prevStrikes + 1;
+
+        if (strikes >= 2) {
+          // Đã bị xác định auth-dead 2 lần liên tiếp → xóa hẳn, không restore cache
+          console.log(`-> ${channel.name}: AUTH-DEAD x${strikes} (confirmed after ${strikes} runs, removed permanently)`);
+        } else {
+          // Lần đầu bị phát hiện → giữ lại nhưng đánh dấu, chờ thêm 1 lần nữa
+          verifiedChannels.push({
+            ...(existing || channel),
+            authDeadStrikes: strikes
+          });
+          console.log(`-> ${channel.name}: AUTH-DEAD x${strikes} (warning — will remove next run if still auth-dead)`);
+        }
       } else {
         // Tất cả dead không rõ nguyên nhân (timeout/404) → fallback: kiểm tra nhãn geo-blocked từ iptv-org
         // (một số server geo-block không trả 403 mà trả timeout/404)

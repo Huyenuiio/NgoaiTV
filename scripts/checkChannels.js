@@ -114,7 +114,6 @@ function normalizeChannelName(name) {
 
 // Danh sách domain đã biết yêu cầu auth/token → luôn coi là dead dù trả 403
 const AUTH_REQUIRED_DOMAINS = [
-  'vtvprime.vn',        // VTV Prime - cần đăng nhập tài khoản
   'prima.vn',           // Prima - cần đăng nhập
 ];
 
@@ -160,137 +159,176 @@ async function is403AuthRequired(url, response) {
 // - 'geo-blocked' : server sống nhưng chặn IP nước ngoài (HTTP 403), IP Việt Nam xem được
 // - 'auth-dead'   : link yêu cầu token/auth → xác định rõ là dead, không restore từ cache
 // - 'dead'        : link chết không rõ nguyên nhân (timeout, 404, nội dung sai...)
-async function testStreamUrl(url, timeoutMs = 4000) {
-  const controller = new AbortController();
-  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+async function testStreamUrl(url, timeoutMs = 4000, isExisting = false) {
+  for (let attempt = 1; attempt <= 3; attempt++) {
+    const controller = new AbortController();
+    const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
 
-  try {
-    const response = await fetch(url, {
-      method: 'GET',
-      signal: controller.signal,
-      headers: {
-        'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-      },
-    });
+    try {
+      const response = await fetch(url, {
+        method: 'GET',
+        signal: controller.signal,
+        headers: {
+          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        },
+      });
 
-    // 403 Forbidden: phân biệt geo-block (giữ lại) vs auth/token (bỏ)
-    if (response.status === 403) {
-      clearTimeout(timeoutId);
-      const needsAuth = await is403AuthRequired(url, response);
-      return needsAuth ? 'auth-dead' : 'geo-blocked';
-    }
-
-    if (!response.ok) {
-      clearTimeout(timeoutId);
-      return 'dead';
-    }
-
-    // Verify HLS manifest content
-    const text = await response.text();
-    clearTimeout(timeoutId);
-
-    if (!text.includes('#EXTM3U')) {
-      // If it doesn't contain #EXTM3U but has a success code, maybe it is a raw stream
-      const contentType = response.headers.get('content-type') || '';
-      if (contentType.includes('video') || contentType.includes('mpeg') || contentType.includes('octet-stream')) {
-        return 'alive';
-      }
-      return 'dead';
-    }
-
-    // If it's a master playlist, it contains sub-playlists.
-    // If it's a media playlist, it contains segment URLs.
-    // Let's find the first sub-playlist or segment URL.
-    const lines = text.split('\n');
-    let subUrl = '';
-    
-    for (let line of lines) {
-      line = line.trim();
-      if (line && !line.startsWith('#')) {
-        subUrl = line;
-        break;
-      }
-    }
-
-    if (subUrl) {
-      // Resolve relative URLs
-      const absoluteSubUrl = new URL(subUrl, url).href;
-
-      // Test the sub-playlist or segment URL
-      const subController = new AbortController();
-      const subTimeoutId = setTimeout(() => subController.abort(), 3000);
-
-      try {
-        const subResponse = await fetch(absoluteSubUrl, {
-          method: 'GET',
-          signal: subController.signal,
-          headers: {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-          },
-        });
-
-        // 403 ở sub-playlist: phân biệt geo-block vs auth
-        if (subResponse.status === 403) {
-          clearTimeout(subTimeoutId);
-          const needsAuth = await is403AuthRequired(absoluteSubUrl, subResponse);
-          return needsAuth ? 'auth-dead' : 'geo-blocked';
+      // 403 Forbidden: phân biệt geo-block (giữ lại) vs auth/token (bỏ)
+      if (response.status === 403) {
+        clearTimeout(timeoutId);
+        if (process.env.GITHUB_ACTIONS !== 'true') {
+          return 'dead';
         }
-        
-        if (subResponse.ok) {
-          // If the sub-URL is another playlist (.m3u8), we should check one step further to find a segment (.ts)
-          const subText = await subResponse.text();
-          clearTimeout(subTimeoutId);
+        if (!isExisting) {
+          return 'dead';
+        }
+        const needsAuth = await is403AuthRequired(url, response);
+        return needsAuth ? 'auth-dead' : 'geo-blocked';
+      }
 
-          if (subText.includes('#EXTM3U')) {
-            const subLines = subText.split('\n');
-            let segmentUrl = '';
-            for (let subLine of subLines) {
-              subLine = subLine.trim();
-              if (subLine && !subLine.startsWith('#')) {
-                segmentUrl = subLine;
-                break;
-              }
-            }
-            if (segmentUrl) {
-              const absoluteSegUrl = new URL(segmentUrl, absoluteSubUrl).href;
-              
-              const segController = new AbortController();
-              const segTimeoutId = setTimeout(() => segController.abort(), 3000);
-              try {
-                const segResponse = await fetch(absoluteSegUrl, {
-                  method: 'GET',
-                  signal: segController.signal,
-                  headers: {
-                    'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-                  },
-                });
-                clearTimeout(segTimeoutId);
-                if (segResponse.status === 403) {
-                  const needsAuth = await is403AuthRequired(absoluteSegUrl, segResponse);
-                  return needsAuth ? 'auth-dead' : 'geo-blocked';
-                }
-                return segResponse.ok ? 'alive' : 'dead';
-              } catch (e) {
-                clearTimeout(segTimeoutId);
-                return 'dead';
-              }
-            }
-          }
+      if (!response.ok) {
+        clearTimeout(timeoutId);
+        if (attempt === 3) return 'dead';
+        await new Promise(r => setTimeout(r, 500));
+        continue;
+      }
+
+      // Verify HLS manifest content
+      const text = await response.text();
+      clearTimeout(timeoutId);
+
+      if (!text.includes('#EXTM3U')) {
+        // If it doesn't contain #EXTM3U but has a success code, maybe it is a raw stream
+        const contentType = response.headers.get('content-type') || '';
+        if (contentType.includes('video') || contentType.includes('mpeg') || contentType.includes('octet-stream')) {
           return 'alive';
         }
-        clearTimeout(subTimeoutId);
-        return 'dead';
-      } catch (e) {
-        clearTimeout(subTimeoutId);
-        return 'dead';
+        if (attempt === 3) return 'dead';
+        await new Promise(r => setTimeout(r, 500));
+        continue;
       }
-    }
 
-    return 'alive';
-  } catch (error) {
-    clearTimeout(timeoutId);
-    return 'dead';
+      // If it's a master playlist, it contains sub-playlists.
+      // If it's a media playlist, it contains segment URLs.
+      // Let's find the first sub-playlist or segment URL.
+      const lines = text.split('\n');
+      let subUrl = '';
+      
+      for (let line of lines) {
+        line = line.trim();
+        if (line && !line.startsWith('#')) {
+          subUrl = line;
+          break;
+        }
+      }
+
+      if (subUrl) {
+        // Resolve relative URLs
+        const absoluteSubUrl = new URL(subUrl, url).href;
+
+        // Test the sub-playlist or segment URL
+        const subController = new AbortController();
+        const subTimeoutId = setTimeout(() => subController.abort(), 3000);
+
+        try {
+          const subResponse = await fetch(absoluteSubUrl, {
+            method: 'GET',
+            signal: subController.signal,
+            headers: {
+              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+            },
+          });
+
+          // 403 ở sub-playlist: phân biệt geo-block vs auth
+          if (subResponse.status === 403) {
+            clearTimeout(subTimeoutId);
+            if (process.env.GITHUB_ACTIONS !== 'true') {
+              return 'dead';
+            }
+            if (!isExisting) {
+              return 'dead';
+            }
+            const needsAuth = await is403AuthRequired(absoluteSubUrl, subResponse);
+            return needsAuth ? 'auth-dead' : 'geo-blocked';
+          }
+          
+          if (subResponse.ok) {
+            // If the sub-URL is another playlist (.m3u8), we should check one step further to find a segment (.ts)
+            const subText = await subResponse.text();
+            clearTimeout(subTimeoutId);
+
+            if (subText.includes('#EXTM3U')) {
+              const subLines = subText.split('\n');
+              let segmentUrl = '';
+              for (let subLine of subLines) {
+                subLine = subLine.trim();
+                if (subLine && !subLine.startsWith('#')) {
+                  segmentUrl = subLine;
+                  break;
+                }
+              }
+              if (segmentUrl) {
+                const absoluteSegUrl = new URL(segmentUrl, absoluteSubUrl).href;
+                
+                const segController = new AbortController();
+                const segTimeoutId = setTimeout(() => segController.abort(), 3000);
+                try {
+                  const segResponse = await fetch(absoluteSegUrl, {
+                    method: 'GET',
+                    signal: segController.signal,
+                    headers: {
+                      'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+                    },
+                  });
+                  clearTimeout(segTimeoutId);
+                  if (segResponse.status === 403) {
+                    if (process.env.GITHUB_ACTIONS !== 'true') {
+                      return 'dead';
+                    }
+                    if (!isExisting) {
+                      return 'dead';
+                    }
+                    const needsAuth = await is403AuthRequired(absoluteSegUrl, segResponse);
+                    return needsAuth ? 'auth-dead' : 'geo-blocked';
+                  }
+                  if (segResponse.ok) {
+                    return 'alive';
+                  } else {
+                    if (attempt === 3) return 'dead';
+                    await new Promise(r => setTimeout(r, 500));
+                    continue;
+                  }
+                } catch (e) {
+                  clearTimeout(segTimeoutId);
+                  if (attempt === 3) return 'dead';
+                  await new Promise(r => setTimeout(r, 500));
+                  continue;
+                }
+              }
+            }
+            return 'alive';
+          }
+          clearTimeout(subTimeoutId);
+          if (attempt === 3) return 'dead';
+          await new Promise(r => setTimeout(r, 500));
+          continue;
+        } catch (e) {
+          clearTimeout(subTimeoutId);
+          if (attempt === 3) return 'dead';
+          await new Promise(r => setTimeout(r, 500));
+          continue;
+        }
+      }
+
+      return 'alive';
+    } catch (error) {
+      clearTimeout(timeoutId);
+      if (attempt === 3) return 'dead';
+      await new Promise(r => setTimeout(r, 500));
+      continue;
+    }
   }
+  return 'dead';
 }
 
 async function run() {
@@ -546,6 +584,16 @@ async function run() {
   }
   const existingMap = new Map(existingChannels.map(ch => [ch.id, ch]));
   const processedExistingIds = new Set();
+
+  // Bổ sung các kênh custom/legacy vào danh sách kiểm thử nếu không có trong dữ liệu tải về mới
+  const existingNormNames = new Set(mergedChannels.map(ch => normalizeChannelName(ch.name)));
+  for (const existing of existingChannels) {
+    const normName = normalizeChannelName(existing.name);
+    if (normName && !existingNormNames.has(normName)) {
+      mergedChannels.push(existing);
+      console.log(`-> Added custom/legacy channel to test queue: ${existing.name}`);
+    }
+  }
   
   const verifiedChannels = [];
   const CONCURRENCY = 15;
@@ -564,8 +612,9 @@ async function run() {
       const authDeadUrls = [];
       const deadUrls = [];
       
+      const isExisting = existingMap.has(channel.id);
       for (const url of channel.streamUrls) {
-        const result = await testStreamUrl(url);
+        const result = await testStreamUrl(url, 4000, isExisting);
         if (result === 'alive') {
           aliveUrls.push(url);
         } else if (result === 'geo-blocked') {
@@ -621,8 +670,8 @@ async function run() {
           // Giữ lại kênh từ danh sách cũ trên GitHub Actions (có thể đang bị geo-block im lặng)
           verifiedChannels.push(existing);
           console.log(`-> ${channel.name}: DEAD (kept existing on GitHub Actions)`);
-        } else if (isGeoBlockedByIptvOrg) {
-          // Fallback: iptv-org đánh dấu geo-blocked dù server không trả 403
+        } else if (isGeoBlockedByIptvOrg && process.env.GITHUB_ACTIONS === 'true') {
+          // Fallback: iptv-org đánh dấu geo-blocked dù server không trả 403 (chỉ giữ trên GitHub Actions)
           verifiedChannels.push(channel);
           console.log(`-> ${channel.name}: DEAD but marked geo-blocked by iptv-org (kept)`);
         } else {

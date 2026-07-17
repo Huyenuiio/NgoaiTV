@@ -206,6 +206,33 @@
     "group": "Khác"
   },
   {
+    "id": "cao-bang-tv",
+    "name": "CAO BANG TV",
+    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/cao_bang_tv.png",
+    "streamUrls": [
+      "https://stream.thingnet.vn/live/smil:CRTV.smil/chunklist.m3u8"
+    ],
+    "group": "general"
+  },
+  {
+    "id": "da-nang-tv1",
+    "name": "DA NANG TV1",
+    "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/da_nang_tv1.png",
+    "streamUrls": [
+      "https://live.mediatech.vn/live/285b59a111d76974225a8e3004bfc31a509/chunklist.m3u8"
+    ],
+    "group": "general"
+  },
+  {
+    "id": "da-nang-tv2",
+    "name": "DA NANG TV2",
+    "logoUrl": "",
+    "streamUrls": [
+      "https://live.mediatech.vn/live/2859145290d0d7947ef88b6240123b62474/chunklist.m3u8"
+    ],
+    "group": "general"
+  },
+  {
     "id": "dak-lak-tv",
     "name": "DAK LAK TV",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/9/91/Dai_PT-TH_Dak_Lak.png",

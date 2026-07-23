@@ -620,12 +620,16 @@ async function run() {
       console.log(`[${channelIndex + 1}/${mergedChannels.length}] Testing streams for ${channel.name}...`);
       processedExistingIds.add(channel.id);
       
+      const normName = normalizeChannelName(channel.name);
+      const isKnownGeoBlocked = GEO_BLOCKED_CHANNELS.has(normName);
       const aliveUrls = [];
       const geoBlockedUrls = [];
       const authDeadUrls = [];
       const deadUrls = [];
       
-      const isExisting = existingMap.has(channel.id);
+      // Kênh trong GEO_BLOCKED_CHANNELS: luôn coi là "existing" để 403 được phân loại
+      // là geo-blocked chứ không phải dead (tránh bị xóa ở dòng 193-194)
+      const isExisting = existingMap.has(channel.id) || isKnownGeoBlocked;
       for (const url of channel.streamUrls) {
         const result = await testStreamUrl(url, 4000, isExisting);
         if (result === 'alive') {
@@ -649,12 +653,18 @@ async function run() {
         console.log(`-> ${channel.name}: ${aliveUrls.length} alive, ${geoBlockedUrls.length} geo-blocked stream(s)`);
       } else if (geoBlockedUrls.length > 0) {
         // Server vẫn sống (trả 403) nhưng chặn IP nước ngoài → giữ lại, reset strikes
-        // (channel từ mergedChannels luôn clean, không có authDeadStrikes)
-        verifiedChannels.push({
-          ...channel,
-          streamUrls: [...geoBlockedUrls, ...deadUrls],
-        });
-        console.log(`-> ${channel.name}: geo-blocked (kept ${geoBlockedUrls.length} stream(s))`);
+        if (isKnownGeoBlocked) {
+          // Kênh geo-blocked đã biết: ưu tiên giữ data cũ (có thể đã có thứ tự URL tốt hơn)
+          const toKeep = existingMap.get(channel.id) || { ...channel, streamUrls: [...geoBlockedUrls, ...deadUrls] };
+          verifiedChannels.push(toKeep);
+          console.log(`-> ${channel.name}: KNOWN GEO-BLOCKED (${geoBlockedUrls.length} stream(s) kept for VN viewers)`);
+        } else {
+          verifiedChannels.push({
+            ...channel,
+            streamUrls: [...geoBlockedUrls, ...deadUrls],
+          });
+          console.log(`-> ${channel.name}: geo-blocked (kept ${geoBlockedUrls.length} stream(s))`);
+        }
       } else if (authDeadUrls.length > 0) {
         // Ít nhất 1 URL bị xác định rõ là auth/token
         // → Dùng strikes mechanism: cần 2 lần liên tiếp mới xóa hẳn
@@ -678,14 +688,13 @@ async function run() {
         // Tất cả dead không rõ nguyên nhân (timeout/404) → fallback: kiểm tra nhãn geo-blocked từ iptv-org
         // (một số server geo-block không trả 403 mà trả timeout/404)
         const isGeoBlockedByIptvOrg = geoBlockedChannels.has(channel.name);
-        const isKnownGeoBlocked = GEO_BLOCKED_CHANNELS.has(normalizeChannelName(channel.name));
         const existing = existingMap.get(channel.id);
         if (isKnownGeoBlocked && process.env.GITHUB_ACTIONS === 'true') {
           // Kênh nằm trong danh sách GEO_BLOCKED_CHANNELS → LUÔN giữ lại, không xóa
-          // Những kênh này bị 403/dead từ IP nước ngoài nhưng hoạt động tốt từ Việt Nam
+          // Trường hợp này xảy ra khi server timeout/reset thay vì trả 403
           const toKeep = existing || channel;
           verifiedChannels.push(toKeep);
-          console.log(`-> ${channel.name}: KNOWN GEO-BLOCKED (always kept for VN viewers)`);
+          console.log(`-> ${channel.name}: KNOWN GEO-BLOCKED, all dead/timeout (kept for VN viewers)`);
         } else if (existing && process.env.GITHUB_ACTIONS === 'true') {
           // Giữ lại kênh từ danh sách cũ trên GitHub Actions (có thể đang bị geo-block im lặng)
           verifiedChannels.push(existing);

@@ -117,6 +117,17 @@ const AUTH_REQUIRED_DOMAINS = [
   'prima.vn',           // Prima - cần đăng nhập
 ];
 
+// Danh sách kênh chắc chắn bị geo-block (chỉ xem được từ IP Việt Nam)
+// Bot GitHub chạy từ IP nước ngoài sẽ LUÔN giữ lại những kênh này, không bao giờ xóa
+const GEO_BLOCKED_CHANNELS = new Set([
+  'THVL1',   // Truyền hình Vĩnh Long 1 - FPTPlay geo-blocked
+  'THVL2',   // Truyền hình Vĩnh Long 2 - FPTPlay geo-blocked
+  'HTV9',    // HTV9 - FPTPlay geo-blocked
+  'HTV SPORTS', // HTV Thể Thao - FPTPlay geo-blocked
+  'THUA THIEN HUE TV', // Huế TV - FPTPlay geo-blocked
+  'TRA VINH TV', // Trà Vinh TV - FPTPlay geo-blocked
+]);
+
 // Kiểm tra xem 403 là do auth/token hay do geo-block
 // Trả về true nếu cần auth (→ dead), false nếu chỉ là geo-block (→ giữ lại)
 async function is403AuthRequired(url, response) {
@@ -440,18 +451,20 @@ async function run() {
   }
 
   // Inject verified working stream URLs for THVL (Vinh Long TV) channels
+  // Lưu ý: các URL FPTPlay bị geo-block (403 từ IP nước ngoài) nhưng hoạt động tốt từ Việt Nam
   const thvlHardcoded = {
     'THVL1': {
       urls: [
+        // URL chính - geo-blocked (xem được từ Việt Nam, bot GitHub giữ lại nhờ GEO_BLOCKED_CHANNELS)
+        'https://live.fptplay53.net/epzch2/vinhlong1_abr.smil/chunklist.m3u8',
         'https://live.fptplay53.net/live/media/vinhlong1/live247-hls-avc/index.m3u8',
-        'https://live.fptplay53.net/epzch2/vinhlong1_abr.smil/chunklist.m3u8'
       ],
-      group: 'general'
+      group: 'news'
     },
     'THVL2': {
       urls: [
+        'https://live.fptplay53.net/epzhd2/vinhlong2_vhls.smil/chunklist.m3u8',
         'https://live.fptplay53.net/live/media/vinhlong2/live247-hls-avc/index.m3u8',
-        'https://live.fptplay53.net/epzhd2/vinhlong2_vhls.smil/chunklist.m3u8'
       ],
       group: 'general'
     }
@@ -665,8 +678,15 @@ async function run() {
         // Tất cả dead không rõ nguyên nhân (timeout/404) → fallback: kiểm tra nhãn geo-blocked từ iptv-org
         // (một số server geo-block không trả 403 mà trả timeout/404)
         const isGeoBlockedByIptvOrg = geoBlockedChannels.has(channel.name);
+        const isKnownGeoBlocked = GEO_BLOCKED_CHANNELS.has(normalizeChannelName(channel.name));
         const existing = existingMap.get(channel.id);
-        if (existing && process.env.GITHUB_ACTIONS === 'true') {
+        if (isKnownGeoBlocked && process.env.GITHUB_ACTIONS === 'true') {
+          // Kênh nằm trong danh sách GEO_BLOCKED_CHANNELS → LUÔN giữ lại, không xóa
+          // Những kênh này bị 403/dead từ IP nước ngoài nhưng hoạt động tốt từ Việt Nam
+          const toKeep = existing || channel;
+          verifiedChannels.push(toKeep);
+          console.log(`-> ${channel.name}: KNOWN GEO-BLOCKED (always kept for VN viewers)`);
+        } else if (existing && process.env.GITHUB_ACTIONS === 'true') {
           // Giữ lại kênh từ danh sách cũ trên GitHub Actions (có thể đang bị geo-block im lặng)
           verifiedChannels.push(existing);
           console.log(`-> ${channel.name}: DEAD (kept existing on GitHub Actions)`);

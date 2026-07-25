@@ -459,6 +459,15 @@
     "group": "Khác"
   },
   {
+    "id": "vsbet",
+    "name": "VSBET",
+    "logoUrl": "https://i.imgur.com/sMhL2Nl.png",
+    "streamUrls": [
+      "https://live05.meung.app/live/90865415.m3u8"
+    ],
+    "group": "sports"
+  },
+  {
     "id": "vtv10",
     "name": "VTV10",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vtv10.png",

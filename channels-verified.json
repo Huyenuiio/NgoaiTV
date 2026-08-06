@@ -347,8 +347,8 @@
     "name": "HTV KEY",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_HTV_Key.png",
     "streamUrls": [
-      "https://liveh12.vtvprime.vn/hls/HTVKey/index.m3u8",
-      "https://freem3u.xyz/api/live/play.m3u8?vid=9"
+      "https://freem3u.xyz/api/live/play.m3u8?vid=9",
+      "https://liveh12.vtvprime.vn/hls/HTVKey/index.m3u8"
     ],
     "group": "education"
   },
@@ -407,6 +407,24 @@
       "https://livektv2.baokhanhhoa.vn/hls/ktv1.m3u8"
     ],
     "group": "general"
+  },
+  {
+    "id": "on-kids",
+    "name": "ON KIDS",
+    "logoUrl": "https://i.ibb.co/RGsg8XfM/IMG-2512.webp",
+    "streamUrls": [
+      "https://freem3u.xyz/api/live/play.m3u8?vid=179"
+    ],
+    "group": "kids"
+  },
+  {
+    "id": "on-life",
+    "name": "ON LIFE",
+    "logoUrl": "https://i.ibb.co/XxtcgQQv/IMG-2513.webp",
+    "streamUrls": [
+      "https://freem3u.xyz/api/live/play.m3u8?vid=188"
+    ],
+    "group": "lifestyle"
   },
   {
     "id": "on-movies",

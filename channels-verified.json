@@ -429,7 +429,7 @@
   {
     "id": "on-movies",
     "name": "ON MOVIES",
-    "logoUrl": "",
+    "logoUrl": "https://i.ibb.co/fdbgvtT8/IMG-2523.webp",
     "streamUrls": [
       "https://freem3u.xyz/api/live/play.m3u8?vid=181"
     ],
@@ -464,6 +464,42 @@
     "group": "Khác"
   },
   {
+    "id": "sctv11",
+    "name": "SCTV11",
+    "logoUrl": "https://i.imgur.com/ZmFfy9o.png",
+    "streamUrls": [
+      "https://vtvgolive-sctvdrm.vtvdigital.vn/manifest/sctv11/master.m3u8"
+    ],
+    "group": "Khác"
+  },
+  {
+    "id": "sctv12",
+    "name": "SCTV12",
+    "logoUrl": "https://i.imgur.com/5pDFkH0.png",
+    "streamUrls": [
+      "https://vtvgolive-sctvdrm.vtvdigital.vn/manifest/sctv12/master.m3u8"
+    ],
+    "group": "Khác"
+  },
+  {
+    "id": "sctv13",
+    "name": "SCTV13",
+    "logoUrl": "https://i.imgur.com/aoz1iDw.png",
+    "streamUrls": [
+      "https://vtvgolive-sctvdrm.vtvdigital.vn/manifest/sctv13/master.m3u8"
+    ],
+    "group": "Khác"
+  },
+  {
+    "id": "sctv14",
+    "name": "SCTV14",
+    "logoUrl": "https://i.imgur.com/rIqmRNK.png",
+    "streamUrls": [
+      "https://vtvgolive-sctvdrm.vtvdigital.vn/manifest/sctv14/master.m3u8"
+    ],
+    "group": "Khác"
+  },
+  {
     "id": "sctv16",
     "name": "SCTV16",
     "logoUrl": "https://i.imgur.com/ldCYtvt.png",
@@ -473,11 +509,39 @@
     "group": "Khác"
   },
   {
+    "id": "sctv18",
+    "name": "SCTV18",
+    "logoUrl": "https://i.imgur.com/FfUSlgI.png",
+    "streamUrls": [
+      "https://vtvgolive-sctvdrm.vtvdigital.vn/manifest/sctv18/master.m3u8"
+    ],
+    "group": "Khác"
+  },
+  {
+    "id": "sctv19",
+    "name": "SCTV19",
+    "logoUrl": "https://i.imgur.com/yBAFZRs.png",
+    "streamUrls": [
+      "https://vtvgolive-sctvdrm.vtvdigital.vn/manifest/sctv19/master.m3u8"
+    ],
+    "group": "Khác"
+  },
+  {
     "id": "sctv2",
     "name": "SCTV2",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/sctv2.png",
     "streamUrls": [
+      "https://vtvgolive-sctvdrm.vtvdigital.vn/manifest/sctv2/master.m3u8",
       "https://liveh12.vtvprime.vn/hls/SCTV2/index.m3u8"
+    ],
+    "group": "Khác"
+  },
+  {
+    "id": "sctv20",
+    "name": "SCTV20",
+    "logoUrl": "https://i.imgur.com/7ABZhfZ.png",
+    "streamUrls": [
+      "https://vtvgolive-sctvdrm.vtvdigital.vn/manifest/sctv20/master.m3u8"
     ],
     "group": "Khác"
   },
@@ -504,7 +568,26 @@
     "name": "SCTV6",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/sctv6.png",
     "streamUrls": [
-      "https://live.fptplay53.net/epzhd2/film360_vhls.smil/chunklist.m3u8"
+      "https://live.fptplay53.net/epzhd2/film360_vhls.smil/chunklist.m3u8",
+      "https://vtvgolive-sctvdrm.vtvdigital.vn/manifest/sctv6/master.m3u8"
+    ],
+    "group": "Khác"
+  },
+  {
+    "id": "sctv7",
+    "name": "SCTV7",
+    "logoUrl": "https://i.imgur.com/xbIUZYd.png",
+    "streamUrls": [
+      "https://vtvgolive-sctvdrm.vtvdigital.vn/manifest/sctv7/master.m3u8"
+    ],
+    "group": "Khác"
+  },
+  {
+    "id": "sctv9",
+    "name": "SCTV9",
+    "logoUrl": "https://i.imgur.com/OJMbhow.png",
+    "streamUrls": [
+      "https://vtvgolive-sctvdrm.vtvdigital.vn/manifest/sctv9/master.m3u8"
     ],
     "group": "Khác"
   },

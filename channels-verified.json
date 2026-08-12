@@ -30,9 +30,9 @@
     "name": "VTV3",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vtv3.png",
     "streamUrls": [
+      "https://live-a.fptplay53.net/live/media/vtv3/live247-hls-avc/index.m3u8",
       "https://live.fptplay53.net/live/media/vtv3/live247-hls-avc/index.m3u8",
       "https://vips-livecdn.fptplay.net/live/media/vtv3/live247-hls-avc/index.m3u8",
-      "https://live-a.fptplay53.net/live/media/vtv3/live247-hls-avc/index.m3u8",
       "https://live.fptplay53.net/fnxch2/vtv3hd_abr.smil/chunklist.m3u8",
       "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv3-manifest.m3u8"
     ],
@@ -85,8 +85,7 @@
       "https://live.fptplay53.net/epzhd1/vtv8hd_vhls.smil/chunklist.m3u8",
       "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv8-manifest.m3u8",
       "https://live-a.fptplay53.net/live/media/vtv8/live247-hls-avc/index.m3u8",
-      "https://live.fptplay53.net/live/media/vtv8/live247-hls-avc/index.m3u8",
-      "https://vips-livecdn.fptplay.net/live/media/vtv8/live247-hls-avc/index.m3u8"
+      "https://live.fptplay53.net/live/media/vtv8/live247-hls-avc/index.m3u8"
     ],
     "group": "Khác"
   },
@@ -165,8 +164,8 @@
     "name": "AN NINH TV",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Logoantv.png",
     "streamUrls": [
-      "https://live.fptplay53.net/fnxhd2/anninhtv_vhls.smil/chunklist.m3u8",
-      "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8"
+      "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8",
+      "https://live.fptplay53.net/fnxhd2/anninhtv_vhls.smil/chunklist.m3u8"
     ],
     "group": "Khác"
   },
@@ -177,7 +176,7 @@
     "streamUrls": [
       "http://45.190.28.50/AXN_HD/index.m3u8",
       "http://138.255.2.6:8084/AXN/index.m3u8",
-      "http://170.83.16.50:80/AXN/index.m3u8",
+      "http://170.83.16.50/AXN/index.m3u8",
       "http://170.83.49.66:8083/AXNHD/index.m3u8"
     ],
     "group": "movies"
@@ -233,8 +232,8 @@
     "name": "CINEMAWORLD",
     "logoUrl": "",
     "streamUrls": [
-      "https://cdn.qd.je/163189/cinemaworld",
-      "http://nmk.ioapk.com:5050/4gtv-live069/index.m3u8"
+      "http://nmk.ioapk.com:5050/4gtv-live069/index.m3u8",
+      "https://cdn.qd.je/163189/cinemaworld"
     ],
     "group": "movies"
   },
@@ -365,8 +364,7 @@
     "name": "KHANH HOA TV",
     "logoUrl": "https://i.imgur.com/qLMcGPT.png",
     "streamUrls": [
-      "https://cdnbaokhanhhoa.com/live/1332e3a79e27.m3u8?vhost=video",
-      "https://livektv2.baokhanhhoa.vn/hls/ktv.m3u8"
+      "https://cdnbaokhanhhoa.com/live/1332e3a79e27.m3u8?vhost=video"
     ],
     "group": "general"
   },
@@ -402,8 +400,7 @@
     "name": "NINH THUAN TV",
     "logoUrl": "https://i.imgur.com/HIyUzLM.png",
     "streamUrls": [
-      "https://cdnbaokhanhhoa.com/live/90405a889081.m3u8?vhost=video",
-      "https://livektv2.baokhanhhoa.vn/hls/ktv1.m3u8"
+      "https://cdnbaokhanhhoa.com/live/90405a889081.m3u8?vhost=video"
     ],
     "group": "general"
   },
@@ -448,8 +445,8 @@
     "name": "QPVN",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/af/QPVN_channel_logo.png",
     "streamUrls": [
-      "https://liveh12.vtvprime.vn/hls/QPTV/index.m3u8",
-      "https://qpvn.vn/live/qpvn/master.m3u8"
+      "https://qpvn.vn/live/qpvn/master.m3u8",
+      "https://liveh12.vtvprime.vn/hls/QPTV/index.m3u8"
     ],
     "group": "Khác"
   },
@@ -459,6 +456,15 @@
     "logoUrl": "",
     "streamUrls": [
       "https://live.mediatech.vn/live/285aaa79b4b265a457d81bb72bc32e2c114/chunklist.m3u8"
+    ],
+    "group": "Khác"
+  },
+  {
+    "id": "sctv1",
+    "name": "SCTV1",
+    "logoUrl": "",
+    "streamUrls": [
+      "https://javiptv.s.gy/iptv-m3u-sctv-vn"
     ],
     "group": "Khác"
   },
@@ -632,8 +638,7 @@
     "logoUrl": "",
     "streamUrls": [
       "http://15.204.246.24:8080/TNHD/index.m3u8",
-      "http://playcom.trapemn.tv:1935/transcoderip/tn.stream/playlist.m3u8",
-      "https://latam-cache-sv2-cdn.latamlive.net/TN_ENC_LIVE/index.mpd"
+      "http://playcom.trapemn.tv:1935/transcoderip/tn.stream/playlist.m3u8"
     ],
     "group": "news"
   },

@@ -82,8 +82,8 @@
     "name": "VTV8",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vtv8.png",
     "streamUrls": [
-      "https://live.fptplay53.net/epzhd1/vtv8hd_vhls.smil/chunklist.m3u8",
       "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv8-manifest.m3u8",
+      "https://live.fptplay53.net/epzhd1/vtv8hd_vhls.smil/chunklist.m3u8",
       "https://live-a.fptplay53.net/live/media/vtv8/live247-hls-avc/index.m3u8",
       "https://live.fptplay53.net/live/media/vtv8/live247-hls-avc/index.m3u8"
     ],
@@ -164,8 +164,8 @@
     "name": "AN NINH TV",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Logoantv.png",
     "streamUrls": [
-      "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8",
-      "https://live.fptplay53.net/fnxhd2/anninhtv_vhls.smil/chunklist.m3u8"
+      "https://live.fptplay53.net/fnxhd2/anninhtv_vhls.smil/chunklist.m3u8",
+      "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8"
     ],
     "group": "Khác"
   },
@@ -316,8 +316,7 @@
     "name": "HA TINH TV",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/ha_tinh_tv.png",
     "streamUrls": [
-      "https://cohauw9bgpvod.vcdn.cloud/httv1/index.m3u8",
-      "https://wse.hatinhtv.net/live/httv1/chunklist.m3u8"
+      "https://cohauw9bgpvod.vcdn.cloud/httv1/index.m3u8"
     ],
     "group": "general"
   },
@@ -345,8 +344,8 @@
     "name": "HTV KEY",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/9/9e/Logo_HTV_Key.png",
     "streamUrls": [
-      "https://liveh12.vtvprime.vn/hls/HTVKey/index.m3u8",
-      "https://freem3u.xyz/api/live/play.m3u8?vid=9"
+      "https://freem3u.xyz/api/live/play.m3u8?vid=9",
+      "https://liveh12.vtvprime.vn/hls/HTVKey/index.m3u8"
     ],
     "group": "education"
   },

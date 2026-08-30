@@ -4,12 +4,12 @@
     "name": "VTV1",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vtv1.png",
     "streamUrls": [
-      "https://vtvgolive-vtv.vtvdigital.vn/livestream/digital_04-1080p.m3u8",
       "https://live.fptplay53.net/fnxch2/vtv1hd_abr.smil/chunklist.m3u8",
       "https://live-a.fptplay53.net/live/media/vtv1/live247-hls-avc/index.m3u8",
       "https://live.fptplay53.net/live/media/vtv1/live247-hls-avc/index.m3u8",
       "https://vips-livecdn.fptplay.net/live/media/vtv1/live247-hls-avc/index.m3u8",
       "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv1-manifest.m3u8",
+      "https://vtvgolive-vtv.vtvdigital.vn/livestream/digital_04-1080p.m3u8",
       "https://dethich.pw/vtv1/index.m3u8"
     ],
     "group": "Khác"
@@ -195,8 +195,8 @@
     "logoUrl": "",
     "streamUrls": [
       "http://45.190.28.50/AXN_HD/index.m3u8",
-      "http://170.83.16.50/AXN/index.m3u8",
-      "http://170.83.49.66:8083/AXNHD/index.m3u8"
+      "http://170.83.49.66:8083/AXNHD/index.m3u8",
+      "http://170.83.16.50/AXN/index.m3u8"
     ],
     "group": "movies"
   },

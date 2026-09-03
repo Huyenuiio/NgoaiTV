@@ -194,9 +194,9 @@
     "name": "AXN",
     "logoUrl": "",
     "streamUrls": [
-      "http://45.190.28.50/AXN_HD/index.m3u8",
       "http://170.83.16.50/AXN/index.m3u8",
-      "http://170.83.49.66:8083/AXNHD/index.m3u8"
+      "http://170.83.49.66:8083/AXNHD/index.m3u8",
+      "http://45.190.28.50/AXN_HD/index.m3u8"
     ],
     "group": "movies"
   },
@@ -259,8 +259,8 @@
     "name": "CINEMAWORLD",
     "logoUrl": "",
     "streamUrls": [
-      "http://nmk.ioapk.com:5050/4gtv-live069/index.m3u8",
-      "https://cdn.qd.je/163189/cinemaworld"
+      "https://cdn.qd.je/163189/cinemaworld",
+      "http://nmk.ioapk.com:5050/4gtv-live069/index.m3u8"
     ],
     "group": "movies"
   },

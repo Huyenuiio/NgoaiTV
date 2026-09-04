@@ -194,9 +194,9 @@
     "name": "AXN",
     "logoUrl": "",
     "streamUrls": [
+      "http://45.190.28.50/AXN_HD/index.m3u8",
       "http://170.83.16.50/AXN/index.m3u8",
-      "http://170.83.49.66:8083/AXNHD/index.m3u8",
-      "http://45.190.28.50/AXN_HD/index.m3u8"
+      "http://170.83.49.66:8083/AXNHD/index.m3u8"
     ],
     "group": "movies"
   },

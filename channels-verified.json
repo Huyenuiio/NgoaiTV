@@ -180,8 +180,8 @@
     "name": "AN NINH TV",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Logoantv.png",
     "streamUrls": [
-      "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8",
-      "https://live.fptplay53.net/fnxhd2/anninhtv_vhls.smil/chunklist.m3u8"
+      "https://live.fptplay53.net/fnxhd2/anninhtv_vhls.smil/chunklist.m3u8",
+      "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8"
     ],
     "group": "Khác"
   },
@@ -347,8 +347,8 @@
     "name": "HANOITV1",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/hanoitv1.png",
     "streamUrls": [
-      "https://liveh34.vtvprime.vn/hls/HANOI1TV/index.m3u8",
-      "https://cloudstreamhntv.tek4tv.vn/capture/smil:HN1.smil/chunklist.m3u8"
+      "https://cloudstreamhntv.tek4tv.vn/capture/smil:HN1.smil/chunklist.m3u8",
+      "https://liveh34.vtvprime.vn/hls/HANOI1TV/index.m3u8"
     ],
     "group": "general"
   },
@@ -594,8 +594,8 @@
     "name": "SCTV6",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/sctv6.png",
     "streamUrls": [
-      "https://vtvgolive-sctvdrm.vtvdigital.vn/manifest/sctv6/master.m3u8",
-      "https://live.fptplay53.net/epzhd2/film360_vhls.smil/chunklist.m3u8"
+      "https://live.fptplay53.net/epzhd2/film360_vhls.smil/chunklist.m3u8",
+      "https://vtvgolive-sctvdrm.vtvdigital.vn/manifest/sctv6/master.m3u8"
     ],
     "group": "Khác"
   },

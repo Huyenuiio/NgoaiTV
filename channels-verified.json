@@ -190,8 +190,8 @@
     "name": "AXN",
     "logoUrl": "",
     "streamUrls": [
-      "http://170.83.16.50/AXN/index.m3u8",
-      "http://170.83.49.66:8083/AXNHD/index.m3u8"
+      "http://170.83.49.66:8083/AXNHD/index.m3u8",
+      "http://170.83.16.50/AXN/index.m3u8"
     ],
     "group": "movies"
   },
@@ -466,8 +466,8 @@
     "name": "QPVN",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/af/QPVN_channel_logo.png",
     "streamUrls": [
-      "https://qpvn.vn/live/qpvn/master.m3u8",
-      "https://liveh12.vtvprime.vn/hls/QPTV/index.m3u8"
+      "https://liveh12.vtvprime.vn/hls/QPTV/index.m3u8",
+      "https://qpvn.vn/live/qpvn/master.m3u8"
     ],
     "group": "Khác"
   },
@@ -740,9 +740,9 @@
     "name": "VTV6",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vtv6.png",
     "streamUrls": [
-      "https://live-a.fptplay53.net/live/media/vtv6/live247-hls-avc/index.m3u8",
       "https://live.fptplay53.net/live/media/vtv6/live247-hls-avc/index.m3u8",
       "https://vips-livecdn.fptplay.net/live/media/vtv6/live247-hls-avc/index.m3u8",
+      "https://live-a.fptplay53.net/live/media/vtv6/live247-hls-avc/index.m3u8",
       "https://dethich.pw/vtv6/index.m3u8"
     ],
     "group": "sports"

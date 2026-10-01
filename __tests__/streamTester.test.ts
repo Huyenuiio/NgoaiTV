@@ -19,7 +19,10 @@ describe('streamTester', () => {
 
     const result = await testStreamUrl('http://ok.com/stream.m3u8');
     expect(result).toBe(true);
-    expect(globalThis.fetch).toHaveBeenCalledWith('http://ok.com/stream.m3u8', expect.any(Object));
+    expect(globalThis.fetch).toHaveBeenCalledWith(
+      'http://ok.com/stream.m3u8',
+      expect.any(Object),
+    );
   });
 
   it('should return false when fetch returns not ok', async () => {

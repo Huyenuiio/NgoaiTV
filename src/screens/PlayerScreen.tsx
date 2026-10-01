@@ -8,6 +8,7 @@ import {
   ActivityIndicator,
   StatusBar,
   BackHandler,
+  Platform,
 } from 'react-native';
 import Video from 'react-native-video';
 import { MergedChannel } from '../services/channelMerger';
@@ -16,9 +17,29 @@ import Orientation from 'react-native-orientation-locker';
 interface PlayerScreenProps {
   channel: MergedChannel;
   onBack: () => void;
+  onNextChannel?: () => void;
+  onPrevChannel?: () => void;
 }
 
-export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
+// Helper để chỉ xoay màn hình trên điện thoại, giữ nguyên ngang trên TV Box
+const isTVDevice = Platform.isTV;
+
+const safeLockPortrait = () => {
+  if (!isTVDevice) {
+    Orientation.lockToPortrait();
+  }
+};
+
+const safeLockLandscape = () => {
+  Orientation.lockToLandscape();
+};
+
+export default function PlayerScreen({
+  channel,
+  onBack,
+  onNextChannel,
+  onPrevChannel,
+}: PlayerScreenProps) {
   const [streamIndex, setStreamIndex] = useState(0);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
@@ -26,9 +47,10 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
 
   const streamUrls = channel.streamUrls || [];
   const currentUrl = streamUrls[streamIndex];
-  
+
   const controlsTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const loadingTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const isInitialMount = useRef(true);
 
   useEffect(() => {
     setStreamIndex(0);
@@ -36,29 +58,37 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
     setError(false);
     resetControlsTimer();
 
-    // Force portrait mode when entering the player
-    Orientation.lockToPortrait();
+    // Chỉ ép portrait khi lần đầu vào xem; khi chuyển kênh giữ nguyên landscape để không giật màn hình
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+      safeLockPortrait();
+    }
 
     // Register hardware back press handler specifically for this screen
     const backAction = () => {
-      Orientation.lockToPortrait();
+      safeLockPortrait();
       onBack();
       return true; // handled, do not exit app
     };
 
     const backHandler = BackHandler.addEventListener(
       'hardwareBackPress',
-      backAction
+      backAction,
     );
 
     return () => {
       backHandler.remove();
       if (controlsTimeoutRef.current) clearTimeout(controlsTimeoutRef.current);
       if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
-      // Force back to portrait mode when leaving the player
-      Orientation.lockToPortrait();
     };
   }, [channel, onBack]);
+
+  // Luôn đảm bảo trả về portrait khi rời khỏi PlayerScreen
+  useEffect(() => {
+    return () => {
+      safeLockPortrait();
+    };
+  }, []);
 
   const resetControlsTimer = () => {
     if (controlsTimeoutRef.current) {
@@ -67,7 +97,7 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
     setShowControls(true);
     controlsTimeoutRef.current = setTimeout(() => {
       setShowControls(false);
-    }, 4000); // Tự động ẩn sau 4 giây
+    }, 4000); // Tự động ẩn sau 4 giây giống nút Quay lại
   };
 
   const handleScreenPress = () => {
@@ -83,7 +113,7 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
 
   const handleVideoError = (e: any) => {
     console.log(`Video player error for URL ${currentUrl}:`, e);
-    
+
     if (streamIndex < streamUrls.length - 1) {
       console.log(`Switching to backup stream ${streamIndex + 1}...`);
       setStreamIndex(prev => prev + 1);
@@ -93,8 +123,8 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
       setError(true);
       setLoading(false);
       setShowControls(true); // Luôn hiện nút quay lại khi có lỗi
-      // If there is an error, make sure we fall back to portrait mode
-      Orientation.lockToPortrait();
+      // If there is an error, make sure we fall back to portrait mode safely
+      safeLockPortrait();
     }
   };
 
@@ -113,7 +143,7 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
     if (loadingTimeoutRef.current) clearTimeout(loadingTimeoutRef.current);
     setLoading(false);
     // Auto rotate to landscape when stream plays normally
-    Orientation.lockToLandscape();
+    safeLockLandscape();
   };
 
   return (
@@ -126,8 +156,9 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
           source={{
             uri: currentUrl,
             headers: {
-              'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-            }
+              'User-Agent':
+                'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+            },
           }}
           style={StyleSheet.absoluteFill}
           resizeMode="contain"
@@ -151,14 +182,52 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
         </TouchableWithoutFeedback>
       )}
 
-      {/* Back Button (large hit area, high contrast, auto-hides) */}
+      {/* Thanh điều khiển trên cùng (Nút quay lại & Huy hiệu tên kênh) - Tự ẩn sau 4 giây */}
       {showControls && (
+        <View style={styles.topControlBar}>
+          <TouchableOpacity
+            style={styles.backButton}
+            activeOpacity={0.7}
+            onPress={onBack}
+          >
+            <Text style={styles.backButtonText}>← Quay lại</Text>
+          </TouchableOpacity>
+
+          <View style={styles.channelTitleBadge}>
+            <Text style={styles.channelTitleBadgeText} numberOfLines={1}>
+              📺 {channel.name}
+            </Text>
+          </View>
+        </View>
+      )}
+
+      {/* Nút Kênh trước (Bên trái) - Cùng logic với nút Quay lại, tự ẩn sau 4s */}
+      {showControls && onPrevChannel && (
         <TouchableOpacity
-          style={styles.backButton}
+          style={[styles.channelSwitchBtn, styles.channelSwitchBtnLeft]}
           activeOpacity={0.7}
-          onPress={onBack}
+          onPress={() => {
+            resetControlsTimer();
+            onPrevChannel();
+          }}
         >
-          <Text style={styles.backButtonText}>← Quay lại</Text>
+          <Text style={styles.channelSwitchIcon}>◀</Text>
+          <Text style={styles.channelSwitchText}>Kênh trước</Text>
+        </TouchableOpacity>
+      )}
+
+      {/* Nút Kênh sau (Bên phải) - Cùng logic với nút Quay lại, tự ẩn sau 4s */}
+      {showControls && onNextChannel && (
+        <TouchableOpacity
+          style={[styles.channelSwitchBtn, styles.channelSwitchBtnRight]}
+          activeOpacity={0.7}
+          onPress={() => {
+            resetControlsTimer();
+            onNextChannel();
+          }}
+        >
+          <Text style={styles.channelSwitchText}>Kênh sau</Text>
+          <Text style={styles.channelSwitchIcon}>▶</Text>
         </TouchableOpacity>
       )}
 
@@ -166,7 +235,9 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
       {loading && !error && (
         <View style={styles.overlayContainer} pointerEvents="none">
           <ActivityIndicator size="large" color="#FFD700" />
-          <Text style={styles.overlayText}>Đang kết nối kênh {channel.name}...</Text>
+          <Text style={styles.overlayText}>
+            Đang kết nối kênh {channel.name}...
+          </Text>
           {streamUrls.length > 1 && (
             <Text style={styles.backupText}>
               Đang thử nguồn {streamIndex + 1}/{streamUrls.length}
@@ -181,13 +252,28 @@ export default function PlayerScreen({ channel, onBack }: PlayerScreenProps) {
           <Text style={styles.errorIcon}>⚠️</Text>
           <Text style={styles.errorText}>Kênh này đang bận,</Text>
           <Text style={styles.errorText}>mời chọn kênh khác!</Text>
-          <TouchableOpacity
-            style={styles.errorBackButton}
-            activeOpacity={0.7}
-            onPress={onBack}
-          >
-            <Text style={styles.errorBackButtonText}>Quay lại danh sách</Text>
-          </TouchableOpacity>
+          <View style={styles.errorButtonsRow}>
+            <TouchableOpacity
+              style={styles.errorBackButton}
+              activeOpacity={0.7}
+              onPress={onBack}
+            >
+              <Text style={styles.errorBackButtonText}>Quay lại danh sách</Text>
+            </TouchableOpacity>
+
+            {onNextChannel && (
+              <TouchableOpacity
+                style={styles.errorNextButton}
+                activeOpacity={0.7}
+                onPress={() => {
+                  setError(false);
+                  onNextChannel();
+                }}
+              >
+                <Text style={styles.errorNextButtonText}>Thử kênh tiếp ▶</Text>
+              </TouchableOpacity>
+            )}
+          </View>
         </View>
       )}
     </View>
@@ -199,18 +285,24 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#000000',
   },
-  backButton: {
+  topControlBar: {
     position: 'absolute',
     top: 24,
     left: 24,
-    backgroundColor: 'rgba(0, 0, 0, 0.7)',
-    paddingVertical: 14,
+    right: 24,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    zIndex: 10,
+  },
+  backButton: {
+    backgroundColor: 'rgba(0, 0, 0, 0.75)',
+    paddingVertical: 12,
     paddingHorizontal: 22,
     borderRadius: 30,
     borderWidth: 2,
     borderColor: '#FFFFFF',
     elevation: 8,
-    zIndex: 10, // Higher than video to ensure it is clickable
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 4 },
     shadowOpacity: 0.3,
@@ -220,6 +312,56 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     fontSize: 20,
     fontWeight: 'bold',
+  },
+  channelTitleBadge: {
+    backgroundColor: 'rgba(20, 20, 26, 0.85)',
+    paddingVertical: 10,
+    paddingHorizontal: 20,
+    borderRadius: 24,
+    borderWidth: 1.5,
+    borderColor: '#FFD700',
+    maxWidth: '65%',
+    elevation: 8,
+  },
+  channelTitleBadgeText: {
+    color: '#FFD700',
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  channelSwitchBtn: {
+    position: 'absolute',
+    bottom: '42%',
+    backgroundColor: 'rgba(0, 0, 0, 0.78)',
+    paddingVertical: 14,
+    paddingHorizontal: 20,
+    borderRadius: 30,
+    borderWidth: 2,
+    borderColor: '#FFD700',
+    flexDirection: 'row',
+    alignItems: 'center',
+    elevation: 8,
+    zIndex: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 4 },
+    shadowOpacity: 0.35,
+    shadowRadius: 4.65,
+  },
+  channelSwitchBtnLeft: {
+    left: 20,
+  },
+  channelSwitchBtnRight: {
+    right: 20,
+  },
+  channelSwitchIcon: {
+    color: '#FFD700',
+    fontSize: 22,
+    fontWeight: 'bold',
+  },
+  channelSwitchText: {
+    color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: 'bold',
+    marginHorizontal: 6,
   },
   overlayContainer: {
     ...StyleSheet.absoluteFill,
@@ -256,11 +398,15 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     lineHeight: 38,
   },
+  errorButtonsRow: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    marginTop: 28,
+  },
   errorBackButton: {
-    marginTop: 32,
     backgroundColor: '#FFD700',
     paddingVertical: 16,
-    paddingHorizontal: 32,
+    paddingHorizontal: 28,
     borderRadius: 12,
     borderWidth: 2,
     borderColor: '#FFFFFF',
@@ -268,7 +414,22 @@ const styles = StyleSheet.create({
   },
   errorBackButtonText: {
     color: '#121214',
-    fontSize: 22,
+    fontSize: 20,
+    fontWeight: 'bold',
+  },
+  errorNextButton: {
+    marginLeft: 16,
+    backgroundColor: '#2A2A38',
+    paddingVertical: 16,
+    paddingHorizontal: 28,
+    borderRadius: 12,
+    borderWidth: 2,
+    borderColor: '#FFD700',
+    elevation: 4,
+  },
+  errorNextButtonText: {
+    color: '#FFD700',
+    fontSize: 20,
     fontWeight: 'bold',
   },
 });

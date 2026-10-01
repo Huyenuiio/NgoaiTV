@@ -18,7 +18,9 @@ export async function getChannelsCache(): Promise<MergedChannel[] | null> {
   }
 }
 
-export async function saveChannelsCache(channels: MergedChannel[]): Promise<void> {
+export async function saveChannelsCache(
+  channels: MergedChannel[],
+): Promise<void> {
   try {
     await AsyncStorage.setItem(CHANNELS_CACHE_KEY, JSON.stringify(channels));
   } catch (error) {
@@ -50,7 +52,10 @@ export async function getFavoriteChannels(): Promise<string[]> {
       return JSON.parse(data);
     }
     // Set default favorites on first app launch
-    await AsyncStorage.setItem(FAVORITES_KEY, JSON.stringify(DEFAULT_FAVORITES));
+    await AsyncStorage.setItem(
+      FAVORITES_KEY,
+      JSON.stringify(DEFAULT_FAVORITES),
+    );
     return DEFAULT_FAVORITES;
   } catch (error) {
     console.error('Error reading favorites:', error);

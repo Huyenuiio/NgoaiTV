@@ -17,7 +17,7 @@ export function parseM3U(m3uText: string): Channel[] {
 
     if (line.startsWith('#EXTINF:')) {
       currentChannel = {};
-      
+
       // Extract tvg-id
       const idMatch = line.match(/tvg-id="([^"]*)"/i);
       currentChannel.id = idMatch ? idMatch[1] : '';
@@ -40,11 +40,14 @@ export function parseM3U(m3uText: string): Channel[] {
     } else if (line.startsWith('http://') || line.startsWith('https://')) {
       if (currentChannel) {
         currentChannel.streamUrl = line;
-        
+
         // Ensure standard fields are populated
         const name = currentChannel.name || 'Kênh không tên';
-        const id = currentChannel.id || name.toLowerCase().replace(/[^a-z0-9]/g, '-') || `channel-${channels.length}`;
-        
+        const id =
+          currentChannel.id ||
+          name.toLowerCase().replace(/[^a-z0-9]/g, '-') ||
+          `channel-${channels.length}`;
+
         channels.push({
           id,
           name,

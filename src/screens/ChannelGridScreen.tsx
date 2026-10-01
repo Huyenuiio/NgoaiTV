@@ -32,7 +32,8 @@ import {
 import verifiedChannelsLocal from '../../channels-verified.json';
 
 // Cấu hình URL chứa file channels-verified.json trên GitHub Raw của bạn.
-const VERIFIED_CHANNELS_URL = 'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/channels-verified.json';
+const VERIFIED_CHANNELS_URL =
+  'https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/channels-verified.json';
 
 const CATEGORIES = [
   'Tất cả',
@@ -48,6 +49,16 @@ const CATEGORIES = [
   'Kênh 360 - Giải trí',
   'Kênh 360 - Thể thao',
   'Kênh quốc tế (VIP)',
+];
+
+// Danh sách các kênh quốc dân phổ biến để người già bấm xem nhanh ngay lập tức
+const POPULAR_SHORTCUT_NAMES = [
+  'VTV1',
+  'VTV3',
+  'THVL1',
+  'HTV7',
+  'VTV2',
+  'HTV9',
 ];
 
 const ChannelLogo = ({ uri }: { uri: string }) => {
@@ -71,12 +82,13 @@ const ChannelLogo = ({ uri }: { uri: string }) => {
       source={{
         uri: uri,
         headers: {
-          'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
-        }
+          'User-Agent':
+            'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36',
+        },
       }}
       style={styles.logo}
       resizeMode="contain"
-      onError={(e) => {
+      onError={e => {
         console.warn(`Error loading logo: ${uri}`, e.nativeEvent.error);
         setHasError(true);
       }}
@@ -85,7 +97,10 @@ const ChannelLogo = ({ uri }: { uri: string }) => {
 };
 
 interface ChannelGridScreenProps {
-  onSelectChannel: (channel: MergedChannel) => void;
+  onSelectChannel: (
+    channel: MergedChannel,
+    channelList?: MergedChannel[],
+  ) => void;
 }
 
 function removeAccents(str: string): string {
@@ -101,20 +116,20 @@ function removeAccents(str: string): string {
 function getChannelGroup(channel: MergedChannel): string {
   const name = channel.name.toUpperCase();
   if (
-    name.includes('VTV5 TAY') || 
-    name.includes('VTV5 TÂY') || 
-    name.includes('VTV6') || 
-    name.includes('VTV7') || 
-    name.includes('VTV8') || 
-    name.includes('VTV9') || 
-    name.includes('VTV10') || 
-    name.includes('VTV1') || 
-    name.includes('VTV2') || 
-    name.includes('VTV3') || 
-    name.includes('VTV4') || 
-    name.includes('VTV5') || 
-    name.includes('VIETNAM TODAY') || 
-    name.includes('ANTV') || 
+    name.includes('VTV5 TAY') ||
+    name.includes('VTV5 TÂY') ||
+    name.includes('VTV6') ||
+    name.includes('VTV7') ||
+    name.includes('VTV8') ||
+    name.includes('VTV9') ||
+    name.includes('VTV10') ||
+    name.includes('VTV1') ||
+    name.includes('VTV2') ||
+    name.includes('VTV3') ||
+    name.includes('VTV4') ||
+    name.includes('VTV5') ||
+    name.includes('VIETNAM TODAY') ||
+    name.includes('ANTV') ||
     name.includes('QPVN')
   ) {
     return 'Kênh VTV';
@@ -125,31 +140,88 @@ function getChannelGroup(channel: MergedChannel): string {
   if (name.includes('THVL') || name.includes('VINH LONG')) {
     return 'Kênh Vĩnh Long';
   }
-  if (name.startsWith('HTV') || name.includes('DU LICH') || name.includes('DU LỊCH') || name.includes('HTC')) {
+  if (
+    name.startsWith('HTV') ||
+    name.includes('DU LICH') ||
+    name.includes('DU LỊCH') ||
+    name.includes('HTC')
+  ) {
     return 'Kênh HTV';
   }
   if (name.includes('SCTV')) {
     return 'Kênh SCTV';
   }
-  if (name.startsWith('ON ') || name.startsWith('ON SPORTS') || name.includes('ON BIET') || name.includes('ON VIE')) {
+  if (
+    name.startsWith('ON ') ||
+    name.startsWith('ON SPORTS') ||
+    name.includes('ON BIET') ||
+    name.includes('ON VIE')
+  ) {
     return 'Kênh VTV Cab (ON)';
   }
-  if (name.startsWith('FM') || name.includes('VOH') || name.includes('RADIO') || name.includes('AM610') || name.includes('FM9')) {
+  if (
+    name.startsWith('FM') ||
+    name.includes('VOH') ||
+    name.includes('RADIO') ||
+    name.includes('AM610') ||
+    name.includes('FM9')
+  ) {
     return 'Kênh FM';
   }
-  if (name.startsWith('360 ') && (name.includes('PHIM') || name.includes('HOAT HINH') || name.includes('HOẠT HÌNH') || name.includes('ANIME') || name.includes('THIEU NHI') || name.includes('THIẾU NHI') || name.includes('K-DRAMA') || name.includes('HAI') || name.includes('HÀI') || name.includes('KINH DIEN') || name.includes('KINH ĐIỂN') || name.includes('HANH DONG') || name.includes('HÀNH ĐỘNG'))) {
+  if (
+    name.startsWith('360 ') &&
+    (name.includes('PHIM') ||
+      name.includes('HOAT HINH') ||
+      name.includes('HOẠT HÌNH') ||
+      name.includes('ANIME') ||
+      name.includes('THIEU NHI') ||
+      name.includes('THIẾU NHI') ||
+      name.includes('K-DRAMA') ||
+      name.includes('HAI') ||
+      name.includes('HÀI') ||
+      name.includes('KINH DIEN') ||
+      name.includes('KINH ĐIỂN') ||
+      name.includes('HANH DONG') ||
+      name.includes('HÀNH ĐỘNG'))
+  ) {
     return 'Kênh 360 - Giải trí';
   }
-  if (name.startsWith('360 ') && (name.includes('C1') || name.includes('C2') || name.includes('C3') || name.includes('THE THAO') || name.includes('THỂ THAO') || name.includes('CONG THUC') || name.includes('CÔNG THỨC') || name.includes('BUNDESLIGA') || name.includes('GOLF') || name.includes('TENNIS') || name.includes('CHAU A') || name.includes('CHÂU Á'))) {
+  if (
+    name.startsWith('360 ') &&
+    (name.includes('C1') ||
+      name.includes('C2') ||
+      name.includes('C3') ||
+      name.includes('THE THAO') ||
+      name.includes('THỂ THAO') ||
+      name.includes('CONG THUC') ||
+      name.includes('CÔNG THỨC') ||
+      name.includes('BUNDESLIGA') ||
+      name.includes('GOLF') ||
+      name.includes('TENNIS') ||
+      name.includes('CHAU A') ||
+      name.includes('CHÂU Á'))
+  ) {
     return 'Kênh 360 - Thể thao';
   }
-  if (name.includes('HBO') || name.includes('CINEMAX') || name.includes('WB TV') || name.includes('AXN') || name.includes('CINEMAWORLD') || name.includes('DREAMWORKS') || name.includes('CNN') || name.includes('FOX') || name.includes('BLOOMBERG')) {
+  if (
+    name.includes('HBO') ||
+    name.includes('CINEMAX') ||
+    name.includes('WB TV') ||
+    name.includes('AXN') ||
+    name.includes('CINEMAWORLD') ||
+    name.includes('DREAMWORKS') ||
+    name.includes('CNN') ||
+    name.includes('FOX') ||
+    name.includes('BLOOMBERG')
+  ) {
     return 'Kênh quốc tế (VIP)';
   }
   return 'Kênh địa phương';
 }
 
-export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreenProps) {
+export default function ChannelGridScreen({
+  onSelectChannel,
+}: ChannelGridScreenProps) {
   const insets = useSafeAreaInsets();
   const [channels, setChannels] = useState<MergedChannel[]>([]);
   const [favorites, setFavorites] = useState<string[]>([]);
@@ -164,18 +236,26 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
       // 1. Nếu có cấu hình URL GitHub Raw chứa file json sạch đã kiểm tra từ Actions
       if (VERIFIED_CHANNELS_URL) {
         // Thêm tham số t=Date.now() để tránh cache của Android và CDN GitHub, lấy dữ liệu mới nhất ngay lập tức
-        const response = await fetch(`${VERIFIED_CHANNELS_URL}?t=${Date.now()}`);
+        const response = await fetch(
+          `${VERIFIED_CHANNELS_URL}?t=${Date.now()}`,
+        );
         if (response.ok) {
           const data = await response.json();
           if (Array.isArray(data) && data.length > 0) {
             setChannels(prev => {
               // Bảo vệ: Chỉ ghi đè nếu danh sách tải về hợp lệ (ít nhất 20 kênh) hoặc không bị sụt giảm quá đột ngột (trên 50%)
-              if (prev.length === 0 || data.length >= 20 || data.length >= prev.length * 0.5) {
+              if (
+                prev.length === 0 ||
+                data.length >= 20 ||
+                data.length >= prev.length * 0.5
+              ) {
                 saveChannelsCache(data);
                 saveLastUpdated(Date.now());
                 return data;
               }
-              console.warn('Danh sách kênh online tải về bị thiếu kênh quá nhiều, giữ lại danh sách hiện tại');
+              console.warn(
+                'Danh sách kênh online tải về bị thiếu kênh quá nhiều, giữ lại danh sách hiện tại',
+              );
               return prev;
             });
             return;
@@ -184,7 +264,9 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
       }
 
       // 2. Dự phòng: Tự động tải file .m3u gốc và gộp kênh ngay trên điện thoại (đảm bảo hoạt động)
-      const response = await fetch('https://iptv-org.github.io/iptv/countries/vn.m3u');
+      const response = await fetch(
+        'https://iptv-org.github.io/iptv/countries/vn.m3u',
+      );
       if (response.ok) {
         const text = await response.text();
         const parsed = parseM3U(text);
@@ -196,7 +278,9 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
         }
       }
     } catch {
-      console.log('Background fetch failed (offline or remote error), using cache');
+      console.log(
+        'Background fetch failed (offline or remote error), using cache',
+      );
     } finally {
       if (showLoadingState) setLoading(false);
     }
@@ -242,7 +326,7 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
     setRefreshing(false);
   };
 
-  const handleLongPress = async (channel: MergedChannel) => {
+  const handleToggleFavorite = async (channel: MergedChannel) => {
     const updatedFavs = await toggleFavoriteChannel(channel.id);
     setFavorites(updatedFavs);
   };
@@ -251,26 +335,42 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
     const isFav = favorites.includes(item.id);
     const normalizedName = normalizeChannelName(item.name);
     const logoUri = STABLE_LOGOS[normalizedName] || item.logoUrl;
-    
+
     return (
-      <TouchableOpacity
-        style={[styles.channelCard, isFav && styles.favoriteCard]}
-        activeOpacity={0.7}
-        onPress={() => onSelectChannel(item)}
-        onLongPress={() => handleLongPress(item)}
-      >
-        <View style={styles.imageContainer}>
-          <ChannelLogo uri={logoUri} />
-          {isFav && (
-            <View style={styles.favoriteBadge}>
-              <Text style={styles.favoriteBadgeText}>⭐</Text>
-            </View>
-          )}
-        </View>
-        <Text style={styles.channelName} numberOfLines={2}>
-          {item.name}
-        </Text>
-      </TouchableOpacity>
+      <View style={[styles.channelCard, isFav && styles.favoriteCard]}>
+        <TouchableOpacity
+          style={styles.cardInner}
+          activeOpacity={0.7}
+          onPress={() =>
+            onSelectChannel(
+              item,
+              filteredChannels.length > 0 ? filteredChannels : channels,
+            )
+          }
+          onLongPress={() => handleToggleFavorite(item)}
+        >
+          <View style={styles.imageContainer}>
+            <ChannelLogo uri={logoUri} />
+          </View>
+          <Text style={styles.channelName} numberOfLines={2}>
+            {item.name}
+          </Text>
+        </TouchableOpacity>
+
+        {/* Nút bấm ngôi sao 1 chạm (Tách biệt độc lập không sợ chạm nhầm phát kênh) */}
+        <TouchableOpacity
+          style={[styles.favoriteBtn, isFav && styles.favoriteBtnActive]}
+          activeOpacity={0.6}
+          hitSlop={{ top: 12, bottom: 12, left: 12, right: 12 }}
+          onPress={() => handleToggleFavorite(item)}
+        >
+          <Icon
+            name={isFav ? 'star' : 'star-border'}
+            size={22}
+            color={isFav ? '#121214' : '#FFD700'}
+          />
+        </TouchableOpacity>
+      </View>
     );
   };
 
@@ -297,11 +397,16 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
   });
 
   // Split channels into favorites and others for grid layout
-  const favoriteChannels = filteredChannels.filter(c => favorites.includes(c.id));
+  const favoriteChannels = filteredChannels.filter(c =>
+    favorites.includes(c.id),
+  );
   const otherChannels = filteredChannels.filter(c => !favorites.includes(c.id));
 
   // Chunk array helper
-  const chunkArray = (array: MergedChannel[], size: number): MergedChannel[][] => {
+  const chunkArray = (
+    array: MergedChannel[],
+    size: number,
+  ): MergedChannel[][] => {
     const chunked = [];
     for (let i = 0; i < array.length; i += size) {
       chunked.push(array.slice(i, i + size));
@@ -325,15 +430,16 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
     | { type: 'header'; title: string }
     | { type: 'row'; channels: MergedChannel[] }
   )[] = [];
-  
+
   if (selectedCategory !== 'Yêu thích' && favoriteRows.length > 0) {
     listData.push({ type: 'header', title: '⭐ KÊNH YÊU THÍCH' });
     favoriteRows.forEach(row => listData.push({ type: 'row', channels: row }));
   }
-  
-  const sectionTitle = selectedCategory === 'Tất cả' 
-    ? '📺 TẤT CẢ KÊNH' 
-    : selectedCategory === 'Yêu thích' 
+
+  const sectionTitle =
+    selectedCategory === 'Tất cả'
+      ? '📺 TẤT CẢ KÊNH'
+      : selectedCategory === 'Yêu thích'
       ? '⭐ KÊNH YÊU THÍCH'
       : `📺 ${selectedCategory.toUpperCase()}`;
 
@@ -347,16 +453,64 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
     }
   }
 
+  // Kênh phổ biến quốc dân xem nhanh (Don Norman: Recognition over Recall)
+  const quickChannels = POPULAR_SHORTCUT_NAMES.map(name =>
+    channels.find(c => {
+      const norm = normalizeChannelName(c.name);
+      return (
+        norm === name || norm.replace(/\s+/g, '') === name.replace(/\s+/g, '')
+      );
+    }),
+  ).filter(Boolean) as MergedChannel[];
+
   return (
     <View style={styles.container}>
       {/* App Header */}
       <View style={[styles.header, { paddingTop: insets.top || 16 }]}>
         <Text style={styles.headerTitle}>Grandmother TV</Text>
+        <Text style={styles.headerTip}>
+          💡 Chạm kênh để xem • Bấm ⭐ góc thẻ để lưu yêu thích
+        </Text>
       </View>
+
+      {/* Hàng kênh quốc dân xem nhanh (Dành riêng cho người già không cần gõ tìm kiếm) */}
+      {quickChannels.length > 0 &&
+        searchQuery === '' &&
+        selectedCategory === 'Tất cả' && (
+          <View style={styles.quickAccessWrapper}>
+            <View style={styles.quickAccessHeader}>
+              <Text style={styles.quickAccessTitle}>⚡ KÊNH XEM NHANH:</Text>
+              <Text style={styles.quickAccessSub}>Bấm xem ngay</Text>
+            </View>
+            <ScrollView
+              horizontal
+              showsHorizontalScrollIndicator={false}
+              contentContainerStyle={styles.quickButtonsContainer}
+            >
+              {quickChannels.map(qc => (
+                <TouchableOpacity
+                  key={`quick-${qc.id}`}
+                  style={styles.quickChannelBtn}
+                  activeOpacity={0.7}
+                  onPress={() => onSelectChannel(qc, channels)}
+                >
+                  <Text style={styles.quickChannelText}>
+                    {normalizeChannelName(qc.name)}
+                  </Text>
+                </TouchableOpacity>
+              ))}
+            </ScrollView>
+          </View>
+        )}
 
       {/* Search Input Bar */}
       <View style={styles.searchContainer}>
-        <Icon name="search" size={28} color="#A0A0AB" style={styles.searchIcon} />
+        <Icon
+          name="search"
+          size={28}
+          color="#A0A0AB"
+          style={styles.searchIcon}
+        />
         <TextInput
           style={styles.searchInput}
           placeholder="Tìm tên kênh (VTV1, HTV7...)"
@@ -368,7 +522,10 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
           autoCapitalize="none"
         />
         {searchQuery.length > 0 && (
-          <TouchableOpacity onPress={() => setSearchQuery('')} style={styles.clearButton}>
+          <TouchableOpacity
+            onPress={() => setSearchQuery('')}
+            style={styles.clearButton}
+          >
             <Icon name="close" size={28} color="#A0A0AB" />
           </TouchableOpacity>
         )}
@@ -378,7 +535,7 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
       <View style={styles.categoriesWrapper}>
         <ScrollView
           horizontal
-          showsHorizontalScrollIndicator={false}
+          showsHorizontalScrollIndicator={true}
           contentContainerStyle={styles.categoriesContainer}
         >
           {CATEGORIES.map(category => {
@@ -391,14 +548,14 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
                 key={category}
                 style={[
                   styles.categoryTab,
-                  isActive && styles.activeCategoryTab
+                  isActive && styles.activeCategoryTab,
                 ]}
                 onPress={() => setSelectedCategory(category)}
               >
                 <Text
                   style={[
                     styles.categoryTabText,
-                    isActive && styles.activeCategoryTabText
+                    isActive && styles.activeCategoryTabText,
                   ]}
                 >
                   {category}
@@ -414,12 +571,14 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
         <View style={styles.emptyContainer}>
           <Icon name="search-off" size={64} color="#FFD700" />
           <Text style={styles.emptyText}>Không tìm thấy kênh phù hợp</Text>
-          <Text style={styles.emptySubtext}>Vui lòng thử nhập từ khóa hoặc chọn nhóm khác</Text>
+          <Text style={styles.emptySubtext}>
+            Vui lòng thử nhập từ khóa hoặc chọn nhóm khác
+          </Text>
         </View>
       ) : (
         <FlatList
           data={listData}
-          keyExtractor={(item) =>
+          keyExtractor={item =>
             item.type === 'header'
               ? `header-${item.title}`
               : `row-${item.channels.map(c => c.id).join('-')}`
@@ -435,7 +594,7 @@ export default function ChannelGridScreen({ onSelectChannel }: ChannelGridScreen
                 </View>
               );
             }
-            
+
             return (
               <View style={styles.row}>
                 {item.channels.map(ch => (
@@ -494,6 +653,60 @@ const styles = StyleSheet.create({
     color: '#A0A0AB',
     marginTop: 4,
     fontWeight: '600',
+  },
+  headerTip: {
+    fontSize: 13,
+    color: '#FFD700',
+    marginTop: 6,
+    textAlign: 'center',
+    fontWeight: '600',
+  },
+  quickAccessWrapper: {
+    marginTop: 10,
+    marginHorizontal: 16,
+    backgroundColor: '#1A1A22',
+    borderRadius: 16,
+    padding: 12,
+    borderWidth: 1.5,
+    borderColor: '#3D3D48',
+  },
+  quickAccessHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: 8,
+    paddingHorizontal: 4,
+  },
+  quickAccessTitle: {
+    fontSize: 14,
+    fontWeight: 'bold',
+    color: '#FFD700',
+    letterSpacing: 1,
+  },
+  quickAccessSub: {
+    fontSize: 12,
+    color: '#A0A0AB',
+    fontStyle: 'italic',
+  },
+  quickButtonsContainer: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingVertical: 2,
+  },
+  quickChannelBtn: {
+    backgroundColor: '#252530',
+    paddingHorizontal: 16,
+    paddingVertical: 10,
+    borderRadius: 12,
+    marginRight: 10,
+    borderWidth: 1.5,
+    borderColor: '#FFD700',
+    elevation: 3,
+  },
+  quickChannelText: {
+    fontSize: 16,
+    fontWeight: 'bold',
+    color: '#FFFFFF',
   },
   searchContainer: {
     flexDirection: 'row',
@@ -596,9 +809,7 @@ const styles = StyleSheet.create({
   channelCard: {
     backgroundColor: '#1E1E24',
     borderRadius: 16,
-    padding: 16,
     margin: 8,
-    alignItems: 'center',
     borderWidth: 2,
     borderColor: '#2D2D35',
     elevation: 4,
@@ -606,6 +817,12 @@ const styles = StyleSheet.create({
     shadowOffset: { width: 0, height: 2 },
     shadowOpacity: 0.25,
     shadowRadius: 3.84,
+    position: 'relative',
+  },
+  cardInner: {
+    padding: 16,
+    alignItems: 'center',
+    width: '100%',
   },
   placeholderCard: {
     width: cardWidth + 16,
@@ -635,20 +852,28 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  favoriteBadge: {
+  favoriteBtn: {
     position: 'absolute',
-    top: -8,
-    right: -8,
-    backgroundColor: '#FFD700',
-    borderRadius: 12,
-    width: 24,
-    height: 24,
+    top: 8,
+    right: 8,
+    backgroundColor: '#2A2A32',
+    borderRadius: 18,
+    width: 36,
+    height: 36,
     justifyContent: 'center',
     alignItems: 'center',
-    elevation: 2,
+    elevation: 6,
+    borderWidth: 1.5,
+    borderColor: '#4A4A58',
+    zIndex: 10,
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.35,
+    shadowRadius: 3,
   },
-  favoriteBadgeText: {
-    fontSize: 14,
+  favoriteBtnActive: {
+    backgroundColor: '#FFD700',
+    borderColor: '#FFFFFF',
   },
   channelName: {
     fontSize: 20,

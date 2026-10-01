@@ -1,4 +1,7 @@
-import { getChannelsCache, toggleFavoriteChannel } from '../src/storage/asyncStorage';
+import {
+  getChannelsCache,
+  toggleFavoriteChannel,
+} from '../src/storage/asyncStorage';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
 jest.mock('@react-native-async-storage/async-storage', () => ({
@@ -12,8 +15,12 @@ describe('asyncStorage', () => {
   });
 
   it('should fetch channels cache', async () => {
-    const mockChannels = [{ id: 'vtv1', name: 'VTV1', logoUrl: '', streamUrls: [], group: '' }];
-    (AsyncStorage.getItem as jest.Mock).mockResolvedValue(JSON.stringify(mockChannels));
+    const mockChannels = [
+      { id: 'vtv1', name: 'VTV1', logoUrl: '', streamUrls: [], group: '' },
+    ];
+    (AsyncStorage.getItem as jest.Mock).mockResolvedValue(
+      JSON.stringify(mockChannels),
+    );
 
     const result = await getChannelsCache();
     expect(result).toEqual(mockChannels);
@@ -21,10 +28,15 @@ describe('asyncStorage', () => {
   });
 
   it('should toggle favorite channel', async () => {
-    (AsyncStorage.getItem as jest.Mock).mockResolvedValue(JSON.stringify(['vtv1', 'vtv3']));
-    
+    (AsyncStorage.getItem as jest.Mock).mockResolvedValue(
+      JSON.stringify(['vtv1', 'vtv3']),
+    );
+
     const result = await toggleFavoriteChannel('vtv1');
     expect(result).toEqual(['vtv3']);
-    expect(AsyncStorage.setItem).toHaveBeenCalledWith('favorite_channels', JSON.stringify(['vtv3']));
+    expect(AsyncStorage.setItem).toHaveBeenCalledWith(
+      'favorite_channels',
+      JSON.stringify(['vtv3']),
+    );
   });
 });

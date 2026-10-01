@@ -466,8 +466,12 @@ export default function ChannelGridScreen({
   return (
     <View style={styles.container}>
       {/* App Header */}
-      <View style={[styles.header, { paddingTop: insets.top || 16 }]}>
-        <Text style={styles.headerTitle}>Grandmother TV</Text>
+      <View style={[styles.header, { paddingTop: insets.top || 12 }]}>
+        <Image
+          source={require('../../assets/logo.png')}
+          style={styles.headerLogo}
+          resizeMode="contain"
+        />
         <Text style={styles.headerTip}>
           💡 Chạm kênh để xem • Bấm ⭐ góc thẻ để lưu yêu thích
         </Text>
@@ -635,18 +639,17 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   header: {
-    paddingBottom: 12,
+    paddingBottom: 8,
     paddingHorizontal: 16,
     borderBottomWidth: 1,
     borderBottomColor: '#2A2A30',
     backgroundColor: '#1A1A1E',
     alignItems: 'center',
   },
-  headerTitle: {
-    fontSize: 32,
-    fontWeight: 'bold',
-    color: '#FFD700', // Gold title
-    letterSpacing: 1.5,
+  headerLogo: {
+    width: 175,
+    height: 34,
+    marginBottom: 4,
   },
   headerSubtitle: {
     fontSize: 16,

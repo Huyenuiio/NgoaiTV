@@ -8,7 +8,6 @@ import {
   Image,
   ActivityIndicator,
   Dimensions,
-  TextInput,
   ScrollView,
 } from 'react-native';
 import { useSafeAreaInsets } from 'react-native-safe-area-context';
@@ -101,16 +100,6 @@ interface ChannelGridScreenProps {
     channel: MergedChannel,
     channelList?: MergedChannel[],
   ) => void;
-}
-
-function removeAccents(str: string): string {
-  if (!str) return '';
-  return str
-    .normalize('NFD')
-    .replace(/[\u0300-\u036f]/g, '')
-    .replace(/Đ/g, 'D')
-    .replace(/đ/g, 'd')
-    .toLowerCase();
 }
 
 function getChannelGroup(channel: MergedChannel): string {
@@ -227,7 +216,6 @@ export default function ChannelGridScreen({
   const [favorites, setFavorites] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [refreshing, setRefreshing] = useState(false);
-  const [searchQuery, setSearchQuery] = useState('');
   const [selectedCategory, setSelectedCategory] = useState('Tất cả');
 
   const fetchFreshChannels = useCallback(async (showLoadingState: boolean) => {
@@ -374,23 +362,15 @@ export default function ChannelGridScreen({
     );
   };
 
-  // Filter channels based on category and search query
+  // Filter channels based on category
   const filteredChannels = channels.filter(channel => {
     const groupName = getChannelGroup(channel);
 
-    // 1. Filter by category
+    // Filter by category
     if (selectedCategory === 'Yêu thích') {
       if (!favorites.includes(channel.id)) return false;
     } else if (selectedCategory !== 'Tất cả') {
       if (groupName !== selectedCategory) return false;
-    }
-
-    // 2. Filter by search query (accent-insensitive)
-    if (searchQuery.trim() !== '') {
-      const cleanQuery = removeAccents(searchQuery);
-      const cleanName = removeAccents(channel.name);
-      const cleanGroup = removeAccents(groupName);
-      return cleanName.includes(cleanQuery) || cleanGroup.includes(cleanQuery);
     }
 
     return true;
@@ -478,62 +458,32 @@ export default function ChannelGridScreen({
       </View>
 
       {/* Hàng kênh quốc dân xem nhanh (Dành riêng cho người già không cần gõ tìm kiếm) */}
-      {quickChannels.length > 0 &&
-        searchQuery === '' &&
-        selectedCategory === 'Tất cả' && (
-          <View style={styles.quickAccessWrapper}>
-            <View style={styles.quickAccessHeader}>
-              <Text style={styles.quickAccessTitle}>⚡ KÊNH XEM NHANH:</Text>
-              <Text style={styles.quickAccessSub}>Bấm xem ngay</Text>
-            </View>
-            <ScrollView
-              horizontal
-              showsHorizontalScrollIndicator={false}
-              contentContainerStyle={styles.quickButtonsContainer}
-            >
-              {quickChannels.map(qc => (
-                <TouchableOpacity
-                  key={`quick-${qc.id}`}
-                  style={styles.quickChannelBtn}
-                  activeOpacity={0.7}
-                  onPress={() => onSelectChannel(qc, channels)}
-                >
-                  <Text style={styles.quickChannelText}>
-                    {normalizeChannelName(qc.name)}
-                  </Text>
-                </TouchableOpacity>
-              ))}
-            </ScrollView>
+      {quickChannels.length > 0 && selectedCategory === 'Tất cả' && (
+        <View style={styles.quickAccessWrapper}>
+          <View style={styles.quickAccessHeader}>
+            <Text style={styles.quickAccessTitle}>⚡ KÊNH XEM NHANH:</Text>
+            <Text style={styles.quickAccessSub}>Bấm xem ngay</Text>
           </View>
-        )}
-
-      {/* Search Input Bar */}
-      <View style={styles.searchContainer}>
-        <Icon
-          name="search"
-          size={28}
-          color="#A0A0AB"
-          style={styles.searchIcon}
-        />
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Tìm tên kênh (VTV1, HTV7...)"
-          placeholderTextColor="#A0A0AB"
-          value={searchQuery}
-          onChangeText={setSearchQuery}
-          clearButtonMode="while-editing"
-          autoCorrect={false}
-          autoCapitalize="none"
-        />
-        {searchQuery.length > 0 && (
-          <TouchableOpacity
-            onPress={() => setSearchQuery('')}
-            style={styles.clearButton}
+          <ScrollView
+            horizontal
+            showsHorizontalScrollIndicator={false}
+            contentContainerStyle={styles.quickButtonsContainer}
           >
-            <Icon name="close" size={28} color="#A0A0AB" />
-          </TouchableOpacity>
-        )}
-      </View>
+            {quickChannels.map(qc => (
+              <TouchableOpacity
+                key={`quick-${qc.id}`}
+                style={styles.quickChannelBtn}
+                activeOpacity={0.7}
+                onPress={() => onSelectChannel(qc, channels)}
+              >
+                <Text style={styles.quickChannelText}>
+                  {normalizeChannelName(qc.name)}
+                </Text>
+              </TouchableOpacity>
+            ))}
+          </ScrollView>
+        </View>
+      )}
 
       {/* Categories Horizontal Scroll */}
       <View style={styles.categoriesWrapper}>
@@ -576,7 +526,7 @@ export default function ChannelGridScreen({
           <Icon name="search-off" size={64} color="#FFD700" />
           <Text style={styles.emptyText}>Không tìm thấy kênh phù hợp</Text>
           <Text style={styles.emptySubtext}>
-            Vui lòng thử nhập từ khóa hoặc chọn nhóm khác
+            Vui lòng chọn nhóm kênh khác ở thanh danh mục phía trên
           </Text>
         </View>
       ) : (
@@ -710,32 +660,6 @@ const styles = StyleSheet.create({
     fontSize: 16,
     fontWeight: 'bold',
     color: '#FFFFFF',
-  },
-  searchContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    backgroundColor: '#1E1E24',
-    marginHorizontal: 16,
-    marginTop: 12,
-    borderRadius: 30,
-    borderWidth: 2,
-    borderColor: '#2D2D35',
-    paddingHorizontal: 16,
-    height: 56,
-  },
-  searchIcon: {
-    marginRight: 10,
-  },
-  searchInput: {
-    flex: 1,
-    color: '#FFFFFF',
-    fontSize: 20,
-    fontWeight: 'bold',
-    height: '100%',
-    paddingVertical: 0,
-  },
-  clearButton: {
-    padding: 4,
   },
   categoriesWrapper: {
     height: 60,

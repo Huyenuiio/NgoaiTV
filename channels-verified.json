@@ -659,8 +659,7 @@
     "logoUrl": "",
     "streamUrls": [
       "http://playcom.trapemn.tv:1935/transcoderip/tn.stream/playlist.m3u8",
-      "http://15.204.246.24:8080/TNHD/index.m3u8",
-      "http://181.209.105.115:2525/play/tn/index.m3u8"
+      "http://15.204.246.24:8080/TNHD/index.m3u8"
     ],
     "group": "news"
   },

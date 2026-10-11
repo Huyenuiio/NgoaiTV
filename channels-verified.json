@@ -4,9 +4,6 @@
     "name": "VTV1",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vtv1.png",
     "streamUrls": [
-      "https://live.fptplay53.net/fnxch2/vtv1hd_abr.smil/chunklist.m3u8",
-      "https://live-a.fptplay53.net/live/media/vtv1/live247-hls-avc/index.m3u8",
-      "https://live.fptplay53.net/live/media/vtv1/live247-hls-avc/index.m3u8",
       "https://vips-livecdn.fptplay.net/live/media/vtv1/live247-hls-avc/index.m3u8",
       "https://dethich.pw/vtv1/index.m3u8"
     ],
@@ -18,9 +15,6 @@
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vtv2.png",
     "streamUrls": [
       "http://125hvt.ddns.net:21585/vtv2/playlist.m3u8",
-      "https://live.fptplay53.net/fnxch2/vtv2hd_abr.smil/chunklist.m3u8",
-      "https://live-a.fptplay53.net/live/media/vtv2/live247-hls-avc/index.m3u8",
-      "https://live.fptplay53.net/live/media/vtv2/live247-hls-avc/index.m3u8",
       "https://vips-livecdn.fptplay.net/live/media/vtv2/live247-hls-avc/index.m3u8",
       "https://dethich.pw/vtv2/index.m3u8"
     ],
@@ -31,9 +25,6 @@
     "name": "VTV3",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vtv3.png",
     "streamUrls": [
-      "https://live.fptplay53.net/fnxch2/vtv3hd_abr.smil/chunklist.m3u8",
-      "https://live-a.fptplay53.net/live/media/vtv3/live247-hls-avc/index.m3u8",
-      "https://live.fptplay53.net/live/media/vtv3/live247-hls-avc/index.m3u8",
       "https://vips-livecdn.fptplay.net/live/media/vtv3/live247-hls-avc/index.m3u8",
       "https://dethich.pw/vtv3/index.m3u8"
     ],
@@ -44,9 +35,6 @@
     "name": "VTV4",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vtv4.png",
     "streamUrls": [
-      "https://live.fptplay53.net/fnxch2/vtv4hd_abr.smil/chunklist.m3u8",
-      "https://live-a.fptplay53.net/live/media/vtv4/live247-hls-avc/index.m3u8",
-      "https://live.fptplay53.net/live/media/vtv4/live247-hls-avc/index.m3u8",
       "https://vips-livecdn.fptplay.net/live/media/vtv4/live247-hls-avc/index.m3u8",
       "https://dethich.pw/vtv4/index.m3u8"
     ],
@@ -57,8 +45,6 @@
     "name": "VTV5",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vtv5.png",
     "streamUrls": [
-      "https://live.fptplay53.net/epzch2/vtv5hd_abr.smil/chunklist.m3u8",
-      "https://live-a.fptplay53.net/live/media/vtv5/live247-hls-avc/index.m3u8",
       "https://vips-livecdn.fptplay.net/live/media/vtv5/live247-hls-avc/index.m3u8",
       "https://live.fptplay53.net/live/media/vtv5/live247-hls-avc/index.m3u8",
       "https://dethich.pw/vtv5/index.m3u8"
@@ -178,7 +164,6 @@
     "name": "AN NINH TV",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Logoantv.png",
     "streamUrls": [
-      "https://live.fptplay53.net/fnxhd2/anninhtv_vhls.smil/chunklist.m3u8",
       "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8"
     ],
     "group": "Khác"
@@ -601,8 +586,7 @@
     "name": "SCTV6",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/sctv6.png",
     "streamUrls": [
-      "https://vtvgolive-sctvdrm.vtvdigital.vn/manifest/sctv6/master.m3u8",
-      "https://live.fptplay53.net/epzhd2/film360_vhls.smil/chunklist.m3u8"
+      "https://vtvgolive-sctvdrm.vtvdigital.vn/manifest/sctv6/master.m3u8"
     ],
     "group": "Khác"
   },
@@ -676,7 +660,6 @@
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Logo_%C4%90%C3%A0i_Ph%C3%A1t_thanh_%26_Truy%E1%BB%81n_h%C3%ACnh_Tr%C3%A0_Vinh_-_THTV.svg/250px-Logo_%C4%90%C3%A0i_Ph%C3%A1t_thanh_%26_Truy%E1%BB%81n_h%C3%ACnh_Tr%C3%A0_Vinh_-_THTV.svg.png",
     "streamUrls": [
       "https://freem3u.xyz/api/live/play.m3u8?vid=91",
-      "https://live.fptplay53.net/epzsd1/vinhlong5_vhls.smil/chunklist.m3u8",
       "https://dethich.pw/thvl5/index.m3u8"
     ],
     "group": "culture"

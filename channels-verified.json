@@ -240,6 +240,7 @@
     "name": "CNN",
     "logoUrl": "",
     "streamUrls": [
+      "http://212.5.144.156:8080/cnn/index.m3u8",
       "https://tvsen6.aynaott.com/cnn/index.m3u8"
     ],
     "group": "news"
@@ -317,6 +318,15 @@
       "https://618b88f69e53b.streamlock.net/THDT2/thdttv2/chunklist.m3u8"
     ],
     "group": "Khác"
+  },
+  {
+    "id": "gia-lai-tv",
+    "name": "GIA LAI TV",
+    "logoUrl": "https://i.imgur.com/oUSJX0X.png",
+    "streamUrls": [
+      "http://tldigital-17th06day-tl9648290.duckdns.org/tv.m3u8"
+    ],
+    "group": "general"
   },
   {
     "id": "ha-tinh-tv",
@@ -651,8 +661,7 @@
     "name": "TN",
     "logoUrl": "",
     "streamUrls": [
-      "http://playcom.trapemn.tv:1935/transcoderip/tn.stream/playlist.m3u8",
-      "http://15.204.246.24:8080/TNHD/index.m3u8"
+      "http://158.172.155.130:8000/play/a0dp/index.m3u8"
     ],
     "group": "news"
   },

@@ -690,8 +690,8 @@
     "name": "VIETNAM TODAY",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vietnam_today.png",
     "streamUrls": [
-      "https://vips-livecdn.fptplay.net/live/media/vietnamtoday/live-hls-avc/index.m3u8",
-      "https://amagi-live.ondemandkorea.com/amgplt0456.m3u8"
+      "https://amagi-live.ondemandkorea.com/amgplt0456.m3u8",
+      "https://vips-livecdn.fptplay.net/live/media/vietnamtoday/live-hls-avc/index.m3u8"
     ],
     "group": "Khác"
   },

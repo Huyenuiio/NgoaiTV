@@ -290,7 +290,9 @@
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/dong_nai_tv1.png",
     "streamUrls": [
       "http://118.107.85.4:1935/live/smil:DNTV1.smil/chunklist.m3u8",
-      "https://vtvgolive-ott3.vtvdigital.vn/live/dongnai1tv/chunklist_2.m3u8"
+      "https://vtvgolive-ott3.vtvdigital.vn/live/dongnai1tv/chunklist_2.m3u8",
+      "https://freem3u.xyz/api/live/play.m3u8?vid=53",
+      "https://vtvgoliveapp1-aws-plus-tn.vtvdigital.vn/aws-dp/dongnai1tv/playlist.m3u8"
     ],
     "group": "news"
   },
@@ -344,8 +346,7 @@
     "name": "HANOITV1",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/hanoitv1.png",
     "streamUrls": [
-      "https://liveh34.vtvprime.vn/hls/HANOI1TV/index.m3u8",
-      "https://cloudstreamhntv.tek4tv.vn/capture/smil:HN1.smil/chunklist.m3u8"
+      "https://liveh34.vtvprime.vn/hls/HANOI1TV/index.m3u8"
     ],
     "group": "general"
   },
@@ -396,6 +397,15 @@
     "group": "general"
   },
   {
+    "id": "lang-son-tv",
+    "name": "LANG SON TV",
+    "logoUrl": "https://i.imgur.com/Sj7EjYT.png",
+    "streamUrls": [
+      "https://stream.langsontv.vn/live/285c78da0c246524c90917842f8de03bd21/playlist.m3u8"
+    ],
+    "group": "general"
+  },
+  {
     "id": "lao-cai-tv",
     "name": "LAO CAI TV",
     "logoUrl": "",
@@ -418,7 +428,8 @@
     "name": "NGHE AN TV",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/5/54/Logo_NTV_Ngh%E1%BB%87_An_HD_2018.png",
     "streamUrls": [
-      "https://live.mediatech.vn/live/2859591eef2e92249b682db021f4247c364/chunklist.m3u8"
+      "https://live.mediatech.vn/live/2859591eef2e92249b682db021f4247c364/chunklist.m3u8",
+      "https://67tz1gnwrvxic.cmccdn.net/hls/NGHEANTV/03.m3u8"
     ],
     "group": "general"
   },
@@ -472,8 +483,17 @@
     "name": "QPVN",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/af/QPVN_channel_logo.png",
     "streamUrls": [
-      "https://qpvn.vn/live/qpvn/master.m3u8",
-      "https://liveh12.vtvprime.vn/hls/QPTV/index.m3u8"
+      "https://liveh12.vtvprime.vn/hls/QPTV/index.m3u8",
+      "https://qpvn.vn/live/qpvn/master.m3u8"
+    ],
+    "group": "Khác"
+  },
+  {
+    "id": "quang-nam-tv",
+    "name": "QUANG NAM TV",
+    "logoUrl": "https://i.imgur.com/uWiOoVg.png",
+    "streamUrls": [
+      "https://freem3u.xyz/api/live/play.m3u8?vid=80"
     ],
     "group": "Khác"
   },
@@ -563,8 +583,7 @@
     "name": "SCTV2",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/sctv2.png",
     "streamUrls": [
-      "https://vtvgolive-sctvdrm.vtvdigital.vn/manifest/sctv2/master.m3u8",
-      "https://liveh12.vtvprime.vn/hls/SCTV2/index.m3u8"
+      "https://vtvgolive-sctvdrm.vtvdigital.vn/manifest/sctv2/master.m3u8"
     ],
     "group": "Khác"
   },
@@ -729,8 +748,7 @@
     "name": "VTV5 TAY NGUYEN",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vtv5_tay_nguyen.png",
     "streamUrls": [
-      "https://vips-livecdn.fptplay.net/live/media/vtv5tn/live-hls-avc/index.m3u8",
-      "https://vtvgolive-failover.vtvdigital.vn/vtvgo/vtv5tn-manifest.m3u8"
+      "https://vips-livecdn.fptplay.net/live/media/vtv5tn/live-hls-avc/index.m3u8"
     ],
     "group": "Khác"
   },

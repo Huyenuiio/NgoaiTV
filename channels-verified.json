@@ -291,8 +291,8 @@
     "streamUrls": [
       "http://118.107.85.4:1935/live/smil:DNTV1.smil/chunklist.m3u8",
       "https://vtvgolive-ott3.vtvdigital.vn/live/dongnai1tv/chunklist_2.m3u8",
-      "https://freem3u.xyz/api/live/play.m3u8?vid=53",
-      "https://vtvgoliveapp1-aws-plus-tn.vtvdigital.vn/aws-dp/dongnai1tv/playlist.m3u8"
+      "https://vtvgoliveapp1-aws-plus-tn.vtvdigital.vn/aws-dp/dongnai1tv/playlist.m3u8",
+      "https://freem3u.xyz/api/live/play.m3u8?vid=53"
     ],
     "group": "news"
   },
@@ -301,7 +301,8 @@
     "name": "DONG NAI TV2",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/dong_nai_tv2.png",
     "streamUrls": [
-      "https://vtvgolive-ott3.vtvdigital.vn/live/dongnai2tv/chunklist_2.m3u8"
+      "https://vtvgolive-ott3.vtvdigital.vn/live/dongnai2tv/chunklist_2.m3u8",
+      "https://freem3u.xyz/api/live/play.m3u8?vid=255"
     ],
     "group": "sports"
   },
@@ -443,6 +444,15 @@
     "group": "general"
   },
   {
+    "id": "on-cine",
+    "name": "ON CINE",
+    "logoUrl": "https://i.ibb.co/Jw0J5fnW/IMG-2509.png",
+    "streamUrls": [
+      "https://freem3u.xyz/api/live/play.m3u8?vid=176"
+    ],
+    "group": "series"
+  },
+  {
     "id": "on-kids",
     "name": "ON KIDS",
     "logoUrl": "https://i.ibb.co/RGsg8XfM/IMG-2512.webp",
@@ -470,6 +480,15 @@
     "group": "movies"
   },
   {
+    "id": "on-music",
+    "name": "ON MUSIC",
+    "logoUrl": "https://i.ibb.co/DHk2gv86/IMG-2524.webp",
+    "streamUrls": [
+      "https://freem3u.xyz/api/live/play.m3u8?vid=185"
+    ],
+    "group": "music"
+  },
+  {
     "id": "on-vie-drama",
     "name": "ON VIE DRAMA",
     "logoUrl": "https://i.ibb.co/VptvgFVx/IMG-2530.webp",
@@ -483,8 +502,8 @@
     "name": "QPVN",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/af/QPVN_channel_logo.png",
     "streamUrls": [
-      "https://liveh12.vtvprime.vn/hls/QPTV/index.m3u8",
-      "https://qpvn.vn/live/qpvn/master.m3u8"
+      "https://qpvn.vn/live/qpvn/master.m3u8",
+      "https://liveh12.vtvprime.vn/hls/QPTV/index.m3u8"
     ],
     "group": "Khác"
   },

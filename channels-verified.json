@@ -157,8 +157,8 @@
     "name": "AN NINH TV",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Logoantv.png",
     "streamUrls": [
-      "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8",
-      "https://freem3u.xyz/api/live/play.m3u8?vid=20"
+      "https://freem3u.xyz/api/live/play.m3u8?vid=20",
+      "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8"
     ],
     "group": "Khác"
   },
@@ -291,8 +291,8 @@
     "streamUrls": [
       "http://118.107.85.4:1935/live/smil:DNTV1.smil/chunklist.m3u8",
       "https://vtvgolive-ott3.vtvdigital.vn/live/dongnai1tv/chunklist_2.m3u8",
-      "https://vtvgoliveapp1-aws-plus-tn.vtvdigital.vn/aws-dp/dongnai1tv/playlist.m3u8",
-      "https://freem3u.xyz/api/live/play.m3u8?vid=53"
+      "https://freem3u.xyz/api/live/play.m3u8?vid=53",
+      "https://vtvgoliveapp1-aws-plus-tn.vtvdigital.vn/aws-dp/dongnai1tv/playlist.m3u8"
     ],
     "group": "news"
   },

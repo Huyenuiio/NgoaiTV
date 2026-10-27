@@ -291,8 +291,8 @@
     "streamUrls": [
       "http://118.107.85.4:1935/live/smil:DNTV1.smil/chunklist.m3u8",
       "https://vtvgolive-ott3.vtvdigital.vn/live/dongnai1tv/chunklist_2.m3u8",
-      "https://freem3u.xyz/api/live/play.m3u8?vid=53",
-      "https://vtvgoliveapp1-aws-plus-tn.vtvdigital.vn/aws-dp/dongnai1tv/playlist.m3u8"
+      "https://vtvgoliveapp1-aws-plus-tn.vtvdigital.vn/aws-dp/dongnai1tv/playlist.m3u8",
+      "https://freem3u.xyz/api/live/play.m3u8?vid=53"
     ],
     "group": "news"
   },
@@ -385,6 +385,15 @@
     "logoUrl": "https://i.imgur.com/qLMcGPT.png",
     "streamUrls": [
       "https://cdnbaokhanhhoa.com/live/1332e3a79e27.m3u8?vhost=video"
+    ],
+    "group": "general"
+  },
+  {
+    "id": "kon-tum-tv",
+    "name": "KON TUM TV",
+    "logoUrl": "https://i.imgur.com/lLlu6ZA.png",
+    "streamUrls": [
+      "https://247.dpdns.org/module/IPTV/?id=QNgTV2&accKenh=vuminhthanh1"
     ],
     "group": "general"
   },
@@ -487,6 +496,15 @@
       "https://freem3u.xyz/api/live/play.m3u8?vid=185"
     ],
     "group": "music"
+  },
+  {
+    "id": "on-o2tv",
+    "name": "ON O2TV",
+    "logoUrl": "https://raw.githubusercontent.com/HaNoiIPTV/HaNoiIPTV.m3u/refs/heads/master/VTVCab7%20-%20ON%20O2TV.png",
+    "streamUrls": [
+      "https://freem3u.xyz/api/live/play.m3u8?vid=136"
+    ],
+    "group": "lifestyle"
   },
   {
     "id": "on-style-tv",

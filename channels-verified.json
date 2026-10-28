@@ -5,6 +5,7 @@
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vtv1.png",
     "streamUrls": [
       "https://vips-livecdn.fptplay.net/live/media/vtv1/live247-hls-avc/index.m3u8",
+      "https://livesct.vtvprime.vn/Live_DASHDRM1/VTV1_HD/manifest.mpd",
       "https://dethich.pw/vtv1/index.m3u8"
     ],
     "group": "Khác"
@@ -157,6 +158,7 @@
     "name": "AN NINH TV",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Logoantv.png",
     "streamUrls": [
+      "https://live.tvon.vn/g2/vtv1/video_hd_compat/playlist.m3u8",
       "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8",
       "https://freem3u.xyz/api/live/play.m3u8?vid=20"
     ],
@@ -507,6 +509,15 @@
     "group": "lifestyle"
   },
   {
+    "id": "on-phim-viet",
+    "name": "ON PHIM VIET",
+    "logoUrl": "https://i.ibb.co/Swvp1vwM/IMG-2525.jpg",
+    "streamUrls": [
+      "https://vmttv.dpdns.org/tv360/?id=175"
+    ],
+    "group": "series"
+  },
+  {
     "id": "on-style-tv",
     "name": "ON STYLE TV",
     "logoUrl": "https://i.ibb.co/JFw65Mtk/IMG-2529.webp",
@@ -776,6 +787,7 @@
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vietnam_today.png",
     "streamUrls": [
       "https://amagi-live.ondemandkorea.com/amgplt0456.m3u8",
+      "https://live.tvon.vn/s8/hls/vntoday/index.m3u8",
       "https://vips-livecdn.fptplay.net/live/media/vietnamtoday/live-hls-avc/index.m3u8"
     ],
     "group": "Khác"

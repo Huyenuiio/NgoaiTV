@@ -158,9 +158,9 @@
     "name": "AN NINH TV",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Logoantv.png",
     "streamUrls": [
+      "https://freem3u.xyz/api/live/play.m3u8?vid=20",
       "https://live.tvon.vn/g2/vtv1/video_hd_compat/playlist.m3u8",
-      "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8",
-      "https://freem3u.xyz/api/live/play.m3u8?vid=20"
+      "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8"
     ],
     "group": "Khác"
   },
@@ -281,8 +281,7 @@
     "name": "DIEN BIEN TV",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/dien_bien_tv.png",
     "streamUrls": [
-      "https://stream.langsontv.vn/live/2855dfeccb7f49a41a2b0441b3bfeda413c/playlist.m3u8",
-      "https://truyenhinh.vnptvas.vn/live.m3u8?c=vstv362&deviceId=&deviceType=&gcId=1532&location=NA&pkg=pkg11.hni&q=high&requestTime=1586309420781&time=1586395820&token=LX-ibJYRUq9pflRtYAxfYQ&type=tv&userId="
+      "https://stream.langsontv.vn/live/2855dfeccb7f49a41a2b0441b3bfeda413c/playlist.m3u8"
     ],
     "group": "general"
   },
@@ -382,6 +381,15 @@
     "group": "sports"
   },
   {
+    "id": "htv5",
+    "name": "HTV5",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/c/c3/HTV5_Bchannel.png",
+    "streamUrls": [
+      "https://freem3u.xyz/api/live/play.m3u8?vid=151"
+    ],
+    "group": "culture"
+  },
+  {
     "id": "khanh-hoa-tv",
     "name": "KHANH HOA TV",
     "logoUrl": "https://i.imgur.com/qLMcGPT.png",
@@ -462,6 +470,15 @@
       "https://freem3u.xyz/api/live/play.m3u8?vid=176"
     ],
     "group": "series"
+  },
+  {
+    "id": "on-e-channel",
+    "name": "ON E CHANNEL",
+    "logoUrl": "https://raw.githubusercontent.com/HaNoiIPTV/HaNoiIPTV.m3u/refs/heads/master/VTVCab5%20-%20ON%20E%20Channel.png",
+    "streamUrls": [
+      "https://freem3u.xyz/api/live/play.m3u8?vid=182"
+    ],
+    "group": "entertainment"
   },
   {
     "id": "on-kids",

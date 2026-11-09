@@ -158,8 +158,8 @@
     "name": "AN NINH TV",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Logoantv.png",
     "streamUrls": [
-      "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8",
-      "https://freem3u.xyz/api/live/play.m3u8?vid=20"
+      "https://freem3u.xyz/api/live/play.m3u8?vid=20",
+      "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8"
     ],
     "group": "Khác"
   },
@@ -168,8 +168,8 @@
     "name": "AXN",
     "logoUrl": "",
     "streamUrls": [
-      "http://170.83.49.66:8083/AXNHD/index.m3u8",
-      "http://170.83.16.50/AXN/index.m3u8"
+      "http://170.83.16.50/AXN/index.m3u8",
+      "http://170.83.49.66:8083/AXNHD/index.m3u8"
     ],
     "group": "movies"
   },
@@ -373,7 +373,7 @@
     "name": "HTV SPORTS",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/vi/3/3f/HTV_THETHAO_2014.png",
     "streamUrls": [
-      "https://vmttv.dpdns.org/tv360/?id=htv-the-thao",
+      "https://vmttv.dpdns.org/tv360?id=htv-the-thao",
       "https://dethich.pw/htvthethao/index.m3u8"
     ],
     "group": "sports"

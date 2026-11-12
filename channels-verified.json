@@ -4,7 +4,6 @@
     "name": "VTV1",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vtv1.png",
     "streamUrls": [
-      "https://vips-livecdn.fptplay.net/live/media/vtv1/live247-hls-avc/index.m3u8",
       "https://livesct.vtvprime.vn/Live_DASHDRM1/VTV1_HD/manifest.mpd",
       "https://dethich.pw/vtv1/index.m3u8"
     ],
@@ -16,7 +15,6 @@
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vtv2.png",
     "streamUrls": [
       "http://125hvt.ddns.net:21585/vtv2/playlist.m3u8",
-      "https://vips-livecdn.fptplay.net/live/media/vtv2/live247-hls-avc/index.m3u8",
       "https://dethich.pw/vtv2/index.m3u8"
     ],
     "group": "Khác"
@@ -290,9 +288,9 @@
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/dong_nai_tv1.png",
     "streamUrls": [
       "http://118.107.85.4:1935/live/smil:DNTV1.smil/chunklist.m3u8",
+      "https://freem3u.xyz/api/live/play.m3u8?vid=53",
       "https://vtvgolive-ott3.vtvdigital.vn/live/dongnai1tv/chunklist_2.m3u8",
-      "https://vtvgoliveapp1-aws-plus-tn.vtvdigital.vn/aws-dp/dongnai1tv/playlist.m3u8",
-      "https://freem3u.xyz/api/live/play.m3u8?vid=53"
+      "https://vtvgoliveapp1-aws-plus-tn.vtvdigital.vn/aws-dp/dongnai1tv/playlist.m3u8"
     ],
     "group": "news"
   },
@@ -489,6 +487,15 @@
     "group": "entertainment"
   },
   {
+    "id": "on-info-tv",
+    "name": "ON INFO TV",
+    "logoUrl": "https://raw.githubusercontent.com/HaNoiIPTV/HaNoiIPTV.m3u/refs/heads/master/VTVCab9%20-%20ON%20Info%20TV.png",
+    "streamUrls": [
+      "https://freem3u.xyz/api/live/play.m3u8?vid=189"
+    ],
+    "group": "business"
+  },
+  {
     "id": "on-kids",
     "name": "ON KIDS",
     "logoUrl": "https://i.ibb.co/RGsg8XfM/IMG-2512.webp",
@@ -550,6 +557,15 @@
       "https://freem3u.xyz/api/live/play.m3u8?vid=184"
     ],
     "group": "lifestyle"
+  },
+  {
+    "id": "on-trending-tv",
+    "name": "ON TRENDING TV",
+    "logoUrl": "https://raw.githubusercontent.com/HaNoiIPTV/HaNoiIPTV.m3u/refs/heads/master/VTVCab17%20-%20ON%20Trending%20TV.png",
+    "streamUrls": [
+      "https://freem3u.xyz/api/live/play.m3u8?vid=186"
+    ],
+    "group": "Khác"
   },
   {
     "id": "on-vie-dramas",
@@ -804,7 +820,6 @@
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vietnam_today.png",
     "streamUrls": [
       "https://amagi-live.ondemandkorea.com/amgplt0456.m3u8",
-      "https://vips-livecdn.fptplay.net/live/media/vietnamtoday/live-hls-avc/index.m3u8",
       "https://live.tvon.vn/s8/hls/vntoday/index.m3u8"
     ],
     "group": "Khác"

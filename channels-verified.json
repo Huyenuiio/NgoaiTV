@@ -4,6 +4,7 @@
     "name": "VTV1",
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/vtv1.png",
     "streamUrls": [
+      "https://luuchieu.truyenhinhso.vn/media/live/C90B082632CD4A75F4B3EDB3/index.m3u8",
       "https://livesct.vtvprime.vn/Live_DASHDRM1/VTV1_HD/manifest.mpd",
       "https://dethich.pw/vtv1/index.m3u8"
     ],
@@ -156,8 +157,8 @@
     "name": "AN NINH TV",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Logoantv.png",
     "streamUrls": [
-      "https://freem3u.xyz/api/live/play.m3u8?vid=20",
-      "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8"
+      "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8",
+      "https://freem3u.xyz/api/live/play.m3u8?vid=20"
     ],
     "group": "Khác"
   },

@@ -569,6 +569,15 @@
     "group": "Khác"
   },
   {
+    "id": "on-v-family",
+    "name": "ON V FAMILY",
+    "logoUrl": "https://raw.githubusercontent.com/HaNoiIPTV/HaNoiIPTV.m3u/refs/heads/master/VTVCab20%20-%20ON%20VFamily.png",
+    "streamUrls": [
+      "https://vmttv.dpdns.org/tv360?id=187"
+    ],
+    "group": "entertainment"
+  },
+  {
     "id": "on-vie-dramas",
     "name": "ON VIE DRAMAS",
     "logoUrl": "",

@@ -83,11 +83,22 @@
     "group": "Khác"
   },
   {
+    "id": "htv7",
+    "name": "HTV7",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d4/Logo_HTV7.svg/250px-Logo_HTV7.svg.png",
+    "streamUrls": [
+      "https://freem3u.xyz/api/live/play.m3u8?vid=193",
+      "https://dethich.pw/htv7/index.m3u8",
+      "https://1011154949.vnns.net/CDN-FPT02/HTV7-HD-1080p/playlist.m3u8"
+    ],
+    "group": "general"
+  },
+  {
     "id": "htv9",
     "name": "HTV9",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/f/fe/HTV9.png",
     "streamUrls": [
-      "https://live.fptplay53.net/epzhd1/htv9hd_vhls.smil/chunklist.m3u8",
+      "https://freem3u.xyz/api/live/play.m3u8?vid=194",
       "https://dethich.pw/htv9/index.m3u8"
     ],
     "group": "news"
@@ -157,8 +168,8 @@
     "name": "AN NINH TV",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Logoantv.png",
     "streamUrls": [
-      "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8",
-      "https://freem3u.xyz/api/live/play.m3u8?vid=20"
+      "https://freem3u.xyz/api/live/play.m3u8?vid=20",
+      "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8"
     ],
     "group": "Khác"
   },
@@ -288,9 +299,9 @@
     "logoUrl": "https://raw.githubusercontent.com/Huyenuiio/NgoaiTV/main/assets/logos/dong_nai_tv1.png",
     "streamUrls": [
       "http://118.107.85.4:1935/live/smil:DNTV1.smil/chunklist.m3u8",
+      "https://freem3u.xyz/api/live/play.m3u8?vid=53",
       "https://vtvgolive-ott3.vtvdigital.vn/live/dongnai1tv/chunklist_2.m3u8",
-      "https://vtvgoliveapp1-aws-plus-tn.vtvdigital.vn/aws-dp/dongnai1tv/playlist.m3u8",
-      "https://freem3u.xyz/api/live/play.m3u8?vid=53"
+      "https://vtvgoliveapp1-aws-plus-tn.vtvdigital.vn/aws-dp/dongnai1tv/playlist.m3u8"
     ],
     "group": "news"
   },
@@ -376,6 +387,16 @@
       "https://dethich.pw/htvthethao/index.m3u8"
     ],
     "group": "sports"
+  },
+  {
+    "id": "htv3",
+    "name": "HTV3",
+    "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/6/65/HTV3-2018.png",
+    "streamUrls": [
+      "https://freem3u.xyz/api/live/play.m3u8?vid=192",
+      "https://dethich.pw/htv3/index.m3u8"
+    ],
+    "group": "series"
   },
   {
     "id": "htv5",

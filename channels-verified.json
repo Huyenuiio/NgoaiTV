@@ -166,8 +166,8 @@
     "name": "AN NINH TV",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/a/a8/Logoantv.png",
     "streamUrls": [
-      "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8",
-      "https://freem3u.xyz/api/live/play.m3u8?vid=20"
+      "https://freem3u.xyz/api/live/play.m3u8?vid=20",
+      "https://liveh12.vtvprime.vn/hls/ANNINHTV/index.m3u8"
     ],
     "group": "Khác"
   },
@@ -298,8 +298,8 @@
     "streamUrls": [
       "http://118.107.85.4:1935/live/smil:DNTV1.smil/chunklist.m3u8",
       "https://vtvgolive-ott3.vtvdigital.vn/live/dongnai1tv/chunklist_2.m3u8",
-      "https://vtvgoliveapp1-aws-plus-tn.vtvdigital.vn/aws-dp/dongnai1tv/playlist.m3u8",
-      "https://freem3u.xyz/api/live/play.m3u8?vid=53"
+      "https://freem3u.xyz/api/live/play.m3u8?vid=53",
+      "https://vtvgoliveapp1-aws-plus-tn.vtvdigital.vn/aws-dp/dongnai1tv/playlist.m3u8"
     ],
     "group": "news"
   },
@@ -470,6 +470,15 @@
     "group": "shop"
   },
   {
+    "id": "music-box",
+    "name": "MUSIC BOX",
+    "logoUrl": "https://i.ibb.co/cSHpm7qf/Music-Box.webp",
+    "streamUrls": [
+      "http://antm.dynu.net:14285/rtp/232.84.3.144:9588"
+    ],
+    "group": "music"
+  },
+  {
     "id": "nghe-an-tv",
     "name": "NGHE AN TV",
     "logoUrl": "https://upload.wikimedia.org/wikipedia/commons/5/54/Logo_NTV_Ngh%E1%BB%87_An_HD_2018.png",
@@ -574,9 +583,19 @@
     "name": "ON PHIM VIET",
     "logoUrl": "https://i.ibb.co/Swvp1vwM/IMG-2525.jpg",
     "streamUrls": [
-      "https://vmttv.dpdns.org/tv360/?id=175"
+      "https://vmttv.dpdns.org/tv360?id=175"
     ],
     "group": "series"
+  },
+  {
+    "id": "on-sports",
+    "name": "ON SPORTS",
+    "logoUrl": "https://raw.githubusercontent.com/HaNoiIPTV/HaNoiIPTV.m3u/refs/heads/master/On%20Sports%2B.png",
+    "streamUrls": [
+      "http://antm.dynu.net:14285/rtp/232.84.1.208:9222",
+      "http://antm.dynu.net:14285/rtp/232.84.1.220:9294"
+    ],
+    "group": "sports"
   },
   {
     "id": "on-style-tv",
